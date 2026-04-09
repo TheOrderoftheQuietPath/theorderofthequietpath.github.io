@@ -1291,7 +1291,8 @@ async function hdCalculate(){
   document.getElementById('hdi-dearth').textContent=`Poort ${dGates['earth']}.${dLines['earth']} — ${GATE_NAMES[dGates['earth']]||''}`;
 
   // Bodygraph
-  drawBodygraph(centerDef);
+  const _acs=(activeChannels||[]).map(ch=>({gates:[ch.g1,ch.g2],type:ch.both?"both":ch.byP?"personality":"design"}));
+  drawBodygraph(centerDef,_acs,[]);
 
   // Center summary
   const defCenters=Object.entries(centerDef).filter(([,v])=>v!=='undefined').map(([k])=>k);
@@ -1337,104 +1338,83 @@ function countComponents(centerDef,activeChannels){
 // SVG BODYGRAPH DRAWING
 // ═══════════════════════════════════════════════
 // BG geometry
-const BG_CH={
-  // HEAD ↔ AJNA (3 vertical parallels)
-  "47-64":[[190,62],[190,70]],"24-61":[[200,62],[200,70]],"4-63":[[210,62],[210,70]],
-  // AJNA ↔ THROAT (3 vertical parallels)
-  "17-62":[[190,114],[182,122]],"23-43":[[200,114],[200,122]],"11-56":[[210,114],[218,122]],
-  // THROAT ↔ G (4 vertical parallels)
-  "1-8":[[178,174],[178,210]],"7-31":[[190,174],[190,210]],
-  "13-33":[[210,174],[210,210]],"10-20":[[222,174],[222,210]],
-  // THROAT → WILL (diagonal right-down)
-  "21-45":[[236,136],[262,234]],
-  // THROAT → SOLAR (long diagonal right)
-  "35-36":[[236,150],[308,298]],"12-22":[[236,164],[308,318]],
-  // THROAT → SPLEEN (long diagonal left)
-  "16-48":[[164,142],[92,298]],"20-57":[[164,158],[92,318]],
-  // G ↔ WILL (short diagonal)
-  "25-51":[[250,250],[262,250]],
-  // G → SPLEEN (diagonal left)
-  "10-57":[[150,250],[92,318]],
-  // G ↔ SACRAL (4 vertical parallels)
-  "2-14":[[178,290],[178,298]],"5-15":[[190,290],[190,298]],
-  "10-34":[[210,290],[210,298]],"29-46":[[222,290],[222,298]],
-  // WILL ↔ SOLAR (diagonal down)
-  "37-40":[[298,253],[260,328]],
-  // WILL → SPLEEN (long diagonal left)
-  "26-44":[[262,272],[92,328]],
-  // SOLAR → SACRAL
-  "6-59":[[260,328],[236,322]],
-  // SACRAL → SPLEEN (diagonals left)
-  "27-50":[[164,318],[92,338]],"34-57":[[164,326],[92,328]],
-  // SACRAL ↔ ROOT (3 vertical parallels)
-  "3-60":[[188,350],[188,370]],"9-52":[[200,350],[200,370]],"42-53":[[212,350],[212,370]],
-  // SPLEEN → ROOT (diagonals)
-  "18-58":[[100,358],[164,382]],"28-38":[[114,358],[164,396]],"32-54":[[128,354],[164,410]],
-  // SOLAR → ROOT (diagonals)
-  "30-41":[[304,358],[236,382]],"39-55":[[290,360],[236,396]],"19-49":[[274,360],[236,410]],
+// ── BODYGRAPH v4: precise geometry, gates on center edges ───────────────────
+const HD_CHANNELS=[
+  [64,47],[61,24],[63,4],
+  [17,62],[43,23],[11,56],
+  [8,1],[33,13],[31,7],[10,20],
+  [21,45],
+  [35,36],[12,22],
+  [16,48],[20,57],
+  [25,51],
+  [10,57],
+  [2,14],[15,5],[46,29],[34,20],
+  [37,40],
+  [26,44],
+  [59,6],
+  [27,50],[34,57],
+  [42,53],[3,60],[9,52],
+  [18,58],[28,38],[32,54],
+  [30,41],[39,55],[49,19],
+];
+const HD_GATE_POS={
+  64:[182,62], 61:[200,62], 63:[218,62],
+  47:[182,70], 24:[200,70],  4:[218,70],
+  17:[184,108],43:[200,116],11:[216,108],
+  62:[178,124],23:[200,124],56:[222,124],
+  16:[162,142],20:[162,158],
+  45:[238,142],35:[238,154],12:[238,166],
+   8:[180,176],33:[200,176],31:[220,176],
+   1:[190,205],13:[200,200], 7:[210,205],
+  25:[250,242],
+  10:[150,242],
+   2:[190,279],15:[200,284],46:[210,279],
+  21:[258,211],51:[258,239],40:[294,225],26:[266,244],
+  36:[310,346],22:[310,368],37:[306,394],
+   6:[256,368],
+  49:[266,398],55:[282,398],30:[298,398],
+  14:[182,290], 5:[200,290],29:[218,290],
+  34:[162,290],
+  27:[162,310],
+  59:[238,306],
+  42:[182,342], 3:[200,342], 9:[218,342],
+  48:[ 94,342],50:[ 94,356],18:[ 94,370],28:[100,390],32:[108,400],
+  57:[144,362],44:[142,376],
+  60:[182,406],52:[200,406],53:[218,406],
+  58:[162,420],38:[162,434],54:[162,448],
+  41:[238,420],39:[238,434],19:[238,448],
 };
-const BG_SHAPES={
-  Head:{shape:"tri",pts:[[200,16],[172,62],[228,62]]},
-  Ajna:{shape:"tri",pts:[[172,70],[228,70],[200,114]]},
-  Throat:{shape:"rect",x:164,y:122,w:72,h:52},
-  G:{shape:"diamond",cx:200,cy:250,hw:50,hh:40},
-  Will:{shape:"tri",pts:[[262,234],[262,272],[298,253]]},
-  Solar:{shape:"tri",pts:[[308,298],[308,358],[260,328]]},
-  Sacral:{shape:"rect",x:164,y:298,w:72,h:52},
-  Spleen:{shape:"tri",pts:[[92,298],[92,358],[140,328]]},
-  Root:{shape:"rect",x:164,y:370,w:72,h:52},
+const HD_SHAPES={
+  Head:  {shape:"tri", pts:[[200,16],[168,62],[232,62]]},
+  Ajna:  {shape:"tri", pts:[[168,70],[232,70],[200,116]]},
+  Throat:{shape:"rect",x:162,y:124,w:76,h:52},
+  G:     {shape:"dia", cx:200,cy:242,hw:52,hh:42},
+  Will:  {shape:"tri", pts:[[258,206],[258,244],[294,225]]},
+  Solar: {shape:"tri", pts:[[310,338],[310,398],[256,368]]},
+  Sacral:{shape:"rect",x:162,y:290,w:76,h:52},
+  Spleen:{shape:"tri", pts:[[90,338],[90,398],[144,368]]},
+  Root:  {shape:"rect",x:162,y:406,w:76,h:52},
 };
-const BG_LABELS={Head:"Hoofd",Ajna:"Ajna",Throat:"Keel",G:"G",Will:"Ego",Solar:"Zon.Pl.",Sacral:"Sacraal",Spleen:"Milt",Root:"Wortel"};
-const BG_GATE_POS={
-  // HEAD (near base y=62)
-  64:[190,60,"middle"],  61:[200,58,"middle"], 63:[210,60,"middle"],
-  // AJNA top & apex
-  47:[188,68,"end"],   24:[200,68,"middle"],  4:[212,68,"start"],
-  17:[188,116,"end"],  43:[200,116,"middle"], 11:[212,116,"start"],
-  // THROAT – top, sides, bottom
-  62:[178,120,"end"],  23:[200,120,"middle"], 56:[222,120,"start"],
-  16:[161,142,"end"],  20:[161,158,"end"],
-  45:[238,133,"start"],35:[238,149,"start"],  12:[238,165,"start"],
-   8:[176,176,"end"],  31:[190,176,"end"],    33:[210,176,"start"],
-  // G – top edge, sides, bottom edge
-   1:[176,208,"end"],   7:[190,208,"end"],    13:[210,208,"start"], 10:[224,208,"start"],
-  25:[252,250,"start"],
-   2:[176,292,"end"],  15:[190,292,"end"],    46:[210,292,"start"],
-  // WILL – left edge & apex
-  21:[260,238,"end"],  51:[260,252,"end"],    26:[260,268,"end"],
-  40:[300,253,"start"],
-  // SOLAR – right edge, apex, bottom
-  36:[310,300,"start"],22:[310,318,"start"],
-  37:[258,328,"end"],
-   6:[310,338,"start"],
-  30:[306,360,"start"],55:[292,362,"start"],  49:[277,362,"start"],
-  // SACRAL – top, sides, bottom
-  14:[176,296,"end"],   5:[190,296,"end"],    34:[210,296,"start"], 29:[224,296,"start"],
-  27:[161,320,"end"],  59:[238,320,"start"],
-  42:[188,352,"end"],   3:[200,352,"middle"],  9:[212,352,"start"],
-  // SPLEEN – left edge & bottom
-  48:[90,304,"end"],   57:[90,319,"end"],     44:[90,334,"end"],    50:[90,348,"end"],
-  28:[116,360,"end"],  32:[130,356,"end"],    18:[100,360,"end"],
-  // ROOT – top, sides
-  60:[188,368,"end"],  52:[200,368,"middle"], 53:[212,368,"start"],
-  58:[161,382,"end"],  38:[161,396,"end"],    54:[161,410,"end"],
-  41:[238,382,"start"],39:[238,396,"start"],  19:[238,410,"start"],
+const HD_LABELS={
+  Head:"Hoofd",Ajna:"Ajna",Throat:"Keel",G:"G",Will:"Ego",
+  Solar:"Zon.Pl.",Sacral:"Sacraal",Spleen:"Milt",Root:"Wortel"
 };
-function centerPoint(s){
+function hd_cp(s){
   if(s.shape==="rect")return [s.x+s.w/2,s.y+s.h/2];
-  if(s.shape==="diamond")return [s.cx,s.cy];
+  if(s.shape==="dia") return [s.cx,s.cy];
   const p=s.pts;return [(p[0][0]+p[1][0]+p[2][0])/3,(p[0][1]+p[1][1]+p[2][1])/3];
 }
-const CENTER_POS=BG_SHAPES;
+const BG_SHAPES=HD_SHAPES,BG_LABELS=HD_LABELS,CENTER_POS=HD_SHAPES;
+function centerPoint(s){return hd_cp(s);}
 function drawBodygraph(centerDef,activeChannels,halfChannels){
   const svg=document.getElementById("hd-bodygraph-svg");
   if(!svg)return;
   svg.innerHTML="";
   const ns="http://www.w3.org/2000/svg";
-  function el(tag,attrs,text){
+  function el(tag,a,txt){
     const e=document.createElementNS(ns,tag);
-    if(attrs)Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,String(v)));
-    if(text!=null)e.textContent=text;
+    if(a)Object.entries(a).forEach(([k,v])=>e.setAttribute(k,String(v)));
+    if(txt!=null)e.textContent=txt;
     return e;
   }
   const chMap={};
@@ -1448,66 +1428,72 @@ function drawBodygraph(centerDef,activeChannels,halfChannels){
     const k=[Math.min(g[0],g[1]),Math.max(g[0],g[1])].join("-");
     if(!chMap[k])chMap[k]={type:ch.type,state:"half"};
   });
-  const activeGateSet=new Set(Object.keys(chMap).flatMap(k=>k.split("-").map(Number)));
-  function chColor(t){
-    if(t==="personality")return "#1a1410";
-    if(t==="design")return "#b03030";
-    if(t==="both")return "#7a3810";
-    return "#d0c8be";
-  }
-  function centerFill(d){
-    if(d==="personality")return "#c9956c";
-    if(d==="design")return "#c05050";
-    if(d==="both")return "#904020";
-    return "#eae6e0";
-  }
-  function centerStroke(d){return d==="undefined"?"#c0b8ac":"#7a6858";}
+  const activeGates=new Set(Object.keys(chMap).flatMap(k=>k.split("-").map(Number)));
+  function chCol(t){return t==="personality"?"#1a1410":t==="design"?"#b03030":t==="both"?"#7a3810":"#ccc4b8";}
+  function cFill(d){return d==="personality"?"#c9956c":d==="design"?"#c05050":d==="both"?"#904020":"#eae6e0";}
+  function cStr(d){return d==="undefined"?"#c0b8ac":"#7a6858";}
   svg.appendChild(el("path",{
-    d:"M200,8 C180,8 168,20 168,34 C168,50 178,62 192,66 L180,78 C154,82 132,96 127,118 C120,142 126,164 136,178 L118,198 C102,210 88,228 86,250 L80,290 C78,306 86,322 98,330 L98,388 C96,404 100,420 106,430 L134,496 L152,496 L154,444 L162,442 L162,496 L200,496 L238,496 L238,442 L246,444 L248,496 L266,496 L294,430 C300,420 304,404 302,388 L302,330 C314,322 322,306 320,290 L314,250 C312,228 298,210 282,198 L264,178 C274,164 280,142 273,118 C268,96 246,82 220,78 L208,66 C222,62 232,50 232,34 C232,20 220,8 200,8 Z",
-    fill:"#f4f2ee",stroke:"#c8c0b4","stroke-width":"1",opacity:"0.55"
+    d:"M200,8 C180,8 168,20 168,34 C168,50 178,62 192,66 L180,78 C154,82 132,96 127,118 C120,142 126,164 136,178 L118,198 C102,210 88,228 86,250 L80,288 C78,304 86,320 98,328 L98,384 C96,400 100,416 106,426 L136,472 L152,472 L155,428 L161,427 L161,472 L200,472 L239,472 L239,427 L245,428 L248,472 L264,472 L294,426 C300,416 304,400 302,384 L302,328 C314,320 322,304 320,288 L314,250 C312,228 298,210 282,198 L264,178 C274,164 280,142 273,118 C268,96 246,82 220,78 L208,66 C222,62 232,50 232,34 C232,20 220,8 200,8 Z",
+    fill:"#f4f2ee",stroke:"#c8c0b4","stroke-width":"1",opacity:"0.5"
   }));
-  Object.entries(BG_CH).forEach(([rawKey,pts])=>{
-    const normKey=rawKey.split("-").map(Number).sort((a,b)=>a-b).join("-");
-    const info=chMap[normKey];
+  HD_CHANNELS.forEach(([g1,g2])=>{
+    const p1=HD_GATE_POS[g1],p2=HD_GATE_POS[g2];
+    if(!p1||!p2)return;
+    const k=[Math.min(g1,g2),Math.max(g1,g2)].join("-");
+    const info=chMap[k];
     const isFull=info&&info.state==="full";
     const isHalf=info&&info.state==="half";
-    const color=info?chColor(info.type):"#d0c8be";
-    const w=isFull?4:isHalf?2.5:1.5;
-    const attrs={x1:pts[0][0],y1:pts[0][1],x2:pts[1][0],y2:pts[1][1],stroke:color,"stroke-width":w,"stroke-linecap":"round"};
-    if(isHalf)attrs["stroke-dasharray"]="5,3";
-    svg.appendChild(el("line",attrs));
+    const color=info?chCol(info.type):"#ccc4b8";
+    const w=isFull?3.5:isHalf?2:1.2;
+    const a={x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:color,"stroke-width":w,"stroke-linecap":"round"};
+    if(isHalf)a["stroke-dasharray"]="6,4";
+    svg.appendChild(el("line",a));
     if(isFull&&info.type==="both"){
-      const dx=pts[1][0]-pts[0][0],dy=pts[1][1]-pts[0][1];
-      const len=Math.hypot(dx,dy)||1;
+      const dx=p2[0]-p1[0],dy=p2[1]-p1[1],len=Math.hypot(dx,dy)||1;
       const ox=-dy/len*3,oy=dx/len*3;
-      svg.appendChild(el("line",{x1:pts[0][0]+ox,y1:pts[0][1]+oy,x2:pts[1][0]+ox,y2:pts[1][1]+oy,stroke:"#b03030","stroke-width":"2","stroke-linecap":"round"}));
+      svg.appendChild(el("line",{x1:p1[0]+ox,y1:p1[1]+oy,x2:p2[0]+ox,y2:p2[1]+oy,
+        stroke:"#b03030","stroke-width":"2","stroke-linecap":"round"}));
     }
   });
-  Object.entries(BG_SHAPES).forEach(([name,s])=>{
-    const def=centerDef[name]||"undefined";
-    const fill=centerFill(def),stroke=centerStroke(def);
+  Object.entries(HD_SHAPES).forEach(([name,s])=>{
+    const def=(centerDef&&centerDef[name])||"undefined";
+    const fill=cFill(def),stroke=cStr(def);
     const g=el("g",{});
-    let shape;
+    let sh;
     if(s.shape==="rect"){
-      shape=el("rect",{x:s.x,y:s.y,width:s.w,height:s.h,fill,stroke,"stroke-width":"1.5",rx:"2"});
-    }else if(s.shape==="diamond"){
-      shape=el("path",{d:"M"+s.cx+","+(s.cy-s.hh)+" L"+(s.cx+s.hw)+","+s.cy+" L"+s.cx+","+(s.cy+s.hh)+" L"+(s.cx-s.hw)+","+s.cy+" Z",fill,stroke,"stroke-width":"1.5"});
+      sh=el("rect",{x:s.x,y:s.y,width:s.w,height:s.h,fill,stroke,"stroke-width":"1.5",rx:"1"});
+    }else if(s.shape==="dia"){
+      sh=el("path",{
+        d:"M"+s.cx+","+(s.cy-s.hh)+" L"+(s.cx+s.hw)+","+s.cy+" L"+s.cx+","+(s.cy+s.hh)+" L"+(s.cx-s.hw)+","+s.cy+" Z",
+        fill,stroke,"stroke-width":"1.5"
+      });
     }else{
       const[a,b,c]=s.pts;
-      shape=el("path",{d:"M"+a[0]+","+a[1]+" L"+b[0]+","+b[1]+" L"+c[0]+","+c[1]+" Z",fill,stroke,"stroke-width":"1.5"});
+      sh=el("path",{d:"M"+a[0]+","+a[1]+" L"+b[0]+","+b[1]+" L"+c[0]+","+c[1]+" Z",
+                     fill,stroke,"stroke-width":"1.5"});
     }
-    g.appendChild(shape);
-    const[lx,ly]=centerPoint(s);
-    g.appendChild(el("text",{x:lx,y:ly+4,"text-anchor":"middle","font-size":"7","font-family":"Jost,sans-serif","font-weight":"600",fill:def==="undefined"?"#9a9088":"#1e1a14"},BG_LABELS[name]));
+    g.appendChild(sh);
+    const[lx,ly]=hd_cp(s);
+    g.appendChild(el("text",{x:lx,y:ly+4,"text-anchor":"middle",
+      "font-size":"7","font-family":"Jost,sans-serif","font-weight":"600",
+      fill:def==="undefined"?"#9a9088":"#1e1a14"},HD_LABELS[name]));
     svg.appendChild(g);
   });
-  Object.entries(BG_GATE_POS).forEach(([gate,pos])=>{
-    if(!activeGateSet.has(parseInt(gate)))return;
-    const[x,y,anchor]=pos;
-    svg.appendChild(el("text",{x,y,"text-anchor":anchor||"middle","font-size":"6.5","font-family":"Jost,sans-serif","font-weight":"700",fill:"#3a3028"},gate));
+  Object.entries(HD_GATE_POS).forEach(([gate,pos])=>{
+    const gn=parseInt(gate);
+    if(!activeGates.has(gn))return;
+    const[x,y]=pos;
+    const matchedTypes=Object.keys(chMap)
+      .filter(k=>k.split("-").map(Number).includes(gn))
+      .map(k=>chMap[k].type);
+    const tp=matchedTypes.includes("both")||(matchedTypes.includes("personality")&&matchedTypes.includes("design"))
+      ?"both":matchedTypes[0]||"personality";
+    const dotCol=tp==="personality"?"#c9956c":tp==="design"?"#c05050":"#904020";
+    svg.appendChild(el("circle",{cx:x,cy:y,r:"6",fill:dotCol,opacity:"0.92"}));
+    svg.appendChild(el("text",{x,y:y+3.5,"text-anchor":"middle",
+      "font-size":"5.5","font-family":"Jost,sans-serif","font-weight":"700",fill:"#fff"},gate));
   });
 }
-
 // ─── SHARED BIRTH FORM HELPERS ───
 function getBirthData() {
   return {
