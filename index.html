@@ -1429,27 +1429,28 @@ const HD_GATE_POS={
   41:[238,386],39:[238,398],19:[238,410],
 };
 const HD_SHAPES = {
-  // Hoofd & Ajna (Slanker, 60 breed)
-  Head:   { shape: "tri",  pts: [[180, 20], [150, 70], [210, 70]] },
-  Ajna:   { shape: "tri",  pts: [[180, 120], [150, 70], [210, 70]] },
+  // Hoofd & Ajna (Driehoeken wijzen naar beneden)
+  Head:   { shape: "tri",  pts: [[200, 20], [160, 60], [240, 60]] },
+  Ajna:   { shape: "tri",  pts: [[200, 140], [160, 60], [240, 60]] },
   
-  // Throat (Square 60x60)
-  Throat: { shape: "rect", x: 150, y: 120, w: 60, h: 60 },
+  // Throat (Square)
+  Throat: { shape: "rect", x: 160, y: 140, w: 60, h: 60 },
   
-  // G-Centrum (Diamant slanker)
-  G:      { shape: "dia",  cx: 180, cy: 220, hw: 30, hh: 40 },
+  // G-Centrum (Diamant)
+  G:      { shape: "dia",  cx: 200, cy: 200, hw: 30, hh: 50 },
   
   // Ego (Rechts), Milt (Links), Zonnevlecht (Rechtsonder)
-  Ego:    { shape: "tri",  pts: [[210, 200], [260, 230], [210, 260]] },
-  Spleen: { shape: "tri",  pts: [[150, 240], [100, 270], [150, 300]] },
-  Solar:  { shape: "tri",  pts: [[210, 280], [260, 310], [210, 340]] },
+  Ego:    { shape: "tri",  pts: [[240, 240], [300, 280], [240, 320]] },
+  Spleen: { shape: "tri",  pts: [[160, 280], [100, 320], [160, 360]] },
+  Solar:  { shape: "tri",  pts: [[240, 320], [300, 360], [240, 400]] },
   
-  // Sacraal (Square 60x60)
-  Sacral: { shape: "rect", x: 150, y: 280, w: 60, h: 60 },
+  // Sacraal (Square)
+  Sacral: { shape: "rect", x: 160, y: 320, w: 60, h: 60 },
   
-  // Wortel (Square 60x60)
-  Root:   { shape: "rect", x: 150, y: 380, w: 60, h: 60 },
+  // Wortel (Square)
+  Root:   { shape: "rect", x: 160, y: 440, w: 60, h: 60 },
 };
+
 const HD_LABELS={
   Head:"Hoofd",Ajna:"Ajna",Throat:"Keel",G:"G",Will:"Ego",
   Solar:"Zon.Pl.",Sacral:"Sacraal",Spleen:"Milt",Root:"Wortel"
