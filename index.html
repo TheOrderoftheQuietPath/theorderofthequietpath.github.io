@@ -1428,22 +1428,27 @@ const HD_GATE_POS={
   // ROOT right (connect to Solar)
   41:[238,386],39:[238,398],19:[238,410],
 };
-
 const HD_SHAPES = {
-  // Triangles (Head, Ajna, Will, Solar, Spleen)
-  Head:   { shape: "tri",  pts: [[200, 20], [162, 70], [238, 70]] },
-  Ajna:   { shape: "tri",  pts: [[162, 80], [238, 80], [200, 130]] },
+  // Hoofd & Ajna (Slanker, 60 breed)
+  Head:   { shape: "tri",  pts: [[180, 20], [150, 70], [210, 70]] },
+  Ajna:   { shape: "tri",  pts: [[180, 120], [150, 70], [210, 70]] },
   
-  // Squares (Throat, Sacral, Root - w en h gelijk)
-  Throat: { shape: "rect", x: 162, y: 140, w: 76, h: 76 },
-  Sacral: { shape: "rect", x: 162, y: 310, w: 76, h: 76 },
-  Root:   { shape: "rect", x: 162, y: 410, w: 76, h: 76 },
+  // Throat (Square 60x60)
+  Throat: { shape: "rect", x: 150, y: 120, w: 60, h: 60 },
   
-  // Overige vormen
-  G:      { shape: "dia",  cx: 200, cy: 260, hw: 40, hh: 55 },
-  Will:   { shape: "tri",  pts: [[250, 230], [250, 280], [300, 255]] },
-  Solar:  { shape: "tri",  pts: [[310, 310], [310, 380], [250, 345]] },
-  Spleen: { shape: "tri",  pts: [[90, 310], [90, 380], [150, 345]] },
+  // G-Centrum (Diamant slanker)
+  G:      { shape: "dia",  cx: 180, cy: 220, hw: 30, hh: 40 },
+  
+  // Ego (Rechts), Milt (Links), Zonnevlecht (Rechtsonder)
+  Ego:    { shape: "tri",  pts: [[210, 200], [260, 230], [210, 260]] },
+  Spleen: { shape: "tri",  pts: [[150, 240], [100, 270], [150, 300]] },
+  Solar:  { shape: "tri",  pts: [[210, 280], [260, 310], [210, 340]] },
+  
+  // Sacraal (Square 60x60)
+  Sacral: { shape: "rect", x: 150, y: 280, w: 60, h: 60 },
+  
+  // Wortel (Square 60x60)
+  Root:   { shape: "rect", x: 150, y: 380, w: 60, h: 60 },
 };
 const HD_LABELS={
   Head:"Hoofd",Ajna:"Ajna",Throat:"Keel",G:"G",Will:"Ego",
