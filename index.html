@@ -1339,61 +1339,106 @@ function countComponents(centerDef,activeChannels){
 // ═══════════════════════════════════════════════
 // BG geometry
 // ── BODYGRAPH v4: precise geometry, gates on center edges ───────────────────
+// ── BODYGRAPH v5: deterministic gate coordinates, channel-first rendering ──
+// ViewBox 0 0 400 500
+// Every gate has one fixed (x,y). Channels = straight lines between gate pairs.
+
+// 36 canonical channels as [g1, g2] pairs
 const HD_CHANNELS=[
-  [64,47],[61,24],[63,4],
-  [17,62],[43,23],[11,56],
-  [8,1],[33,13],[31,7],[10,20],
-  [21,45],
-  [35,36],[12,22],
-  [16,48],[20,57],
-  [25,51],
-  [10,57],
-  [2,14],[15,5],[46,29],[34,20],
-  [37,40],
-  [26,44],
-  [59,6],
-  [27,50],[34,57],
-  [42,53],[3,60],[9,52],
-  [18,58],[28,38],[32,54],
-  [30,41],[39,55],[49,19],
+  [64,47],[61,24],[63,4],           // Head ↔ Ajna
+  [17,62],[43,23],[11,56],           // Ajna ↔ Throat
+  [8,1],[33,13],[31,7],[10,20],      // Throat ↔ G
+  [45,21],                           // Throat ↔ Will
+  [35,36],[12,22],                   // Throat ↔ Solar
+  [16,48],[20,57],                   // Throat ↔ Spleen
+  [25,51],                           // G ↔ Will
+  [10,57],                           // G ↔ Spleen
+  [2,14],[15,5],[46,29],             // G ↔ Sacral
+  [34,20],                           // Sacral ↔ Throat (Charisma)
+  [37,40],                           // Solar ↔ Will
+  [26,44],                           // Will ↔ Spleen
+  [59,6],                            // Sacral ↔ Solar
+  [27,50],[34,57],                   // Sacral ↔ Spleen
+  [42,53],[3,60],[9,52],             // Sacral ↔ Root
+  [18,58],[28,38],[32,54],           // Spleen ↔ Root
+  [30,41],[39,55],[49,19],           // Solar ↔ Root
 ];
+
+// All 64 gates: exact pixel positions on their center's edge
+// HEAD triangle: apex(200,16) base-left(172,62) base-right(228,62)
+// AJNA triangle: top-left(172,70) top-right(228,70) apex(200,114)
+// THROAT rect: (162,122)-(238,170)
+// G diamond: top(200,198) right(252,240) bottom(200,282) left(148,240)
+// WILL triangle: (256,208)-(256,250)-(292,229)
+// SOLAR triangle: right-top(310,308) right-bot(310,372) apex-left(256,340)
+// SACRAL rect: (162,288)-(238,336)
+// SPLEEN triangle: left-top(90,308) left-bot(90,372) apex-right(144,340)
+// ROOT rect: (162,374)-(238,422)
 const HD_GATE_POS={
-  64:[182,62], 61:[200,62], 63:[218,62],
-  47:[182,70], 24:[200,70],  4:[218,70],
-  17:[184,108],43:[200,116],11:[216,108],
-  62:[178,124],23:[200,124],56:[222,124],
-  16:[162,142],20:[162,158],
-  45:[238,142],35:[238,154],12:[238,166],
-   8:[180,176],33:[200,176],31:[220,176],
-   1:[190,205],13:[200,200], 7:[210,205],
-  25:[250,242],
-  10:[150,242],
-   2:[190,279],15:[200,284],46:[210,279],
-  21:[258,211],51:[258,239],40:[294,225],26:[266,244],
-  36:[310,346],22:[310,368],37:[306,394],
-   6:[256,368],
-  49:[266,398],55:[282,398],30:[298,398],
-  14:[182,290], 5:[200,290],29:[218,290],
-  34:[162,290],
-  27:[162,310],
-  59:[238,306],
-  42:[182,342], 3:[200,342], 9:[218,342],
-  48:[ 94,342],50:[ 94,356],18:[ 94,370],28:[100,390],32:[108,400],
-  57:[144,362],44:[142,376],
-  60:[182,406],52:[200,406],53:[218,406],
-  58:[162,420],38:[162,434],54:[162,448],
-  41:[238,420],39:[238,434],19:[238,448],
+  // HEAD (base of triangle, y=62)
+  64:[184,62], 61:[200,62], 63:[216,62],
+  // AJNA top (y=70, connect to Head)
+  47:[184,70], 24:[200,70],  4:[216,70],
+  // AJNA bottom (near apex y=114, connect to Throat)
+  17:[185,108],43:[200,114],11:[215,108],
+  // THROAT top (y=122, connect to Ajna)
+  62:[178,122],23:[200,122],56:[222,122],
+  // THROAT left (connect to Spleen/G)
+  16:[162,138],20:[162,152],
+  // THROAT right (connect to Will/Solar)
+  45:[238,134],35:[238,146],12:[238,158],
+  // THROAT bottom (y=170, connect to G)
+   8:[178,170],33:[200,170],31:[222,170],
+  // G top (connect to Throat)
+   1:[191,205],13:[200,198], 7:[209,205],
+  // G right (connect to Will)
+  25:[252,240],
+  // G left (connect to Throat 20 and Spleen 57)
+  10:[148,240],
+  // G bottom (connect to Sacral)
+   2:[191,275],15:[200,282],46:[209,275],
+  // WILL left (connect to Throat 45, G 25... wait 51 connects to G 25)
+  21:[256,213],51:[256,245],
+  // WILL right apex (connect to Solar 37)
+  40:[292,229],
+  // WILL lower (connect to Spleen 44)
+  26:[268,246],
+  // SOLAR right edge (connect to Throat 35/12)
+  36:[310,316],22:[310,332],
+  // SOLAR apex left (connect to Sacral 59, Will 37)
+   6:[258,340],37:[264,332],
+  // SOLAR right-bottom (connect to Root)
+  49:[310,350],55:[310,362],30:[298,372],
+  // SACRAL top (connect to G)
+  14:[178,288], 5:[200,288],29:[222,288],
+  // SACRAL left (connect to Spleen and Throat)
+  34:[162,300],27:[162,314],
+  // SACRAL right (connect to Solar)
+  59:[238,304],
+  // SACRAL bottom (connect to Root)
+  42:[178,336], 3:[200,336], 9:[222,336],
+  // SPLEEN left edge
+  48:[ 90,316],57:[ 90,332],50:[ 90,348],28:[ 98,368],
+  // SPLEEN apex/right (connect to Will 26, Root 32/18)
+  44:[142,344],32:[126,368],18:[108,372],
+  // ROOT top (connect to Sacral)
+  60:[178,374],52:[200,374],53:[222,374],
+  // ROOT left (connect to Spleen)
+  58:[162,386],38:[162,398],54:[162,410],
+  // ROOT right (connect to Solar)
+  41:[238,386],39:[238,398],19:[238,410],
 };
+
 const HD_SHAPES={
-  Head:  {shape:"tri", pts:[[200,16],[168,62],[232,62]]},
-  Ajna:  {shape:"tri", pts:[[168,70],[232,70],[200,116]]},
-  Throat:{shape:"rect",x:162,y:124,w:76,h:52},
-  G:     {shape:"dia", cx:200,cy:242,hw:52,hh:42},
-  Will:  {shape:"tri", pts:[[258,206],[258,244],[294,225]]},
-  Solar: {shape:"tri", pts:[[310,338],[310,398],[256,368]]},
-  Sacral:{shape:"rect",x:162,y:290,w:76,h:52},
-  Spleen:{shape:"tri", pts:[[90,338],[90,398],[144,368]]},
-  Root:  {shape:"rect",x:162,y:406,w:76,h:52},
+  Head:  {shape:"tri", pts:[[200,16],[172,62],[228,62]]},
+  Ajna:  {shape:"tri", pts:[[172,70],[228,70],[200,114]]},
+  Throat:{shape:"rect",x:162,y:122,w:76,h:48},
+  G:     {shape:"dia", cx:200,cy:240,hw:52,hh:42},
+  Will:  {shape:"tri", pts:[[256,208],[256,250],[292,229]]},
+  Solar: {shape:"tri", pts:[[310,308],[310,372],[256,340]]},
+  Sacral:{shape:"rect",x:162,y:288,w:76,h:48},
+  Spleen:{shape:"tri", pts:[[90,308],[90,372],[144,340]]},
+  Root:  {shape:"rect",x:162,y:374,w:76,h:48},
 };
 const HD_LABELS={
   Head:"Hoofd",Ajna:"Ajna",Throat:"Keel",G:"G",Will:"Ego",
@@ -1406,6 +1451,7 @@ function hd_cp(s){
 }
 const BG_SHAPES=HD_SHAPES,BG_LABELS=HD_LABELS,CENTER_POS=HD_SHAPES;
 function centerPoint(s){return hd_cp(s);}
+
 function drawBodygraph(centerDef,activeChannels,halfChannels){
   const svg=document.getElementById("hd-bodygraph-svg");
   if(!svg)return;
@@ -1417,6 +1463,8 @@ function drawBodygraph(centerDef,activeChannels,halfChannels){
     if(txt!=null)e.textContent=txt;
     return e;
   }
+
+  // Build channel map: "min-max" -> {type, state}
   const chMap={};
   (activeChannels||[]).forEach(ch=>{
     const g=ch.gates||[];if(g.length<2)return;
@@ -1429,13 +1477,23 @@ function drawBodygraph(centerDef,activeChannels,halfChannels){
     if(!chMap[k])chMap[k]={type:ch.type,state:"half"};
   });
   const activeGates=new Set(Object.keys(chMap).flatMap(k=>k.split("-").map(Number)));
-  function chCol(t){return t==="personality"?"#1a1410":t==="design"?"#b03030":t==="both"?"#7a3810":"#ccc4b8";}
-  function cFill(d){return d==="personality"?"#c9956c":d==="design"?"#c05050":d==="both"?"#904020":"#eae6e0";}
-  function cStr(d){return d==="undefined"?"#c0b8ac":"#7a6858";}
+
+  // LAYER 1: body silhouette background
   svg.appendChild(el("path",{
-    d:"M200,8 C180,8 168,20 168,34 C168,50 178,62 192,66 L180,78 C154,82 132,96 127,118 C120,142 126,164 136,178 L118,198 C102,210 88,228 86,250 L80,288 C78,304 86,320 98,328 L98,384 C96,400 100,416 106,426 L136,472 L152,472 L155,428 L161,427 L161,472 L200,472 L239,472 L239,427 L245,428 L248,472 L264,472 L294,426 C300,416 304,400 302,384 L302,328 C314,320 322,304 320,288 L314,250 C312,228 298,210 282,198 L264,178 C274,164 280,142 273,118 C268,96 246,82 220,78 L208,66 C222,62 232,50 232,34 C232,20 220,8 200,8 Z",
+    d:"M200,8 C180,8 168,20 168,34 C168,50 178,62 192,66 "+
+      "L180,78 C154,82 132,96 127,118 C120,142 126,164 136,178 "+
+      "L118,198 C102,210 88,228 86,250 L80,286 C78,302 86,318 98,326 "+
+      "L98,380 C96,396 100,412 106,422 L136,468 L152,468 L154,424 "+
+      "L162,422 L162,468 L200,468 L238,468 L238,422 L246,424 "+
+      "L248,468 L264,468 L294,422 C300,412 304,396 302,380 "+
+      "L302,326 C314,318 322,302 320,286 L314,250 "+
+      "C312,228 298,210 282,198 L264,178 C274,164 280,142 273,118 "+
+      "C268,96 246,82 220,78 L208,66 C222,62 232,50 232,34 "+
+      "C232,20 220,8 200,8 Z",
     fill:"#f4f2ee",stroke:"#c8c0b4","stroke-width":"1",opacity:"0.5"
   }));
+
+  // LAYER 2: all channel lines (gate-to-gate, no center-to-center)
   HD_CHANNELS.forEach(([g1,g2])=>{
     const p1=HD_GATE_POS[g1],p2=HD_GATE_POS[g2];
     if(!p1||!p2)return;
@@ -1443,30 +1501,42 @@ function drawBodygraph(centerDef,activeChannels,halfChannels){
     const info=chMap[k];
     const isFull=info&&info.state==="full";
     const isHalf=info&&info.state==="half";
-    const color=info?chCol(info.type):"#ccc4b8";
-    const w=isFull?3.5:isHalf?2:1.2;
-    const a={x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:color,"stroke-width":w,"stroke-linecap":"round"};
-    if(isHalf)a["stroke-dasharray"]="6,4";
-    svg.appendChild(el("line",a));
+
     if(isFull&&info.type==="both"){
+      // Split line: draw two parallel lines (personality=black, design=red)
       const dx=p2[0]-p1[0],dy=p2[1]-p1[1],len=Math.hypot(dx,dy)||1;
-      const ox=-dy/len*3,oy=dx/len*3;
+      const ox=-dy/len*2,oy=dx/len*2;
+      svg.appendChild(el("line",{x1:p1[0]-ox,y1:p1[1]-oy,x2:p2[0]-ox,y2:p2[1]-oy,
+        stroke:"#1a1410","stroke-width":"1.8","stroke-linecap":"round"}));
       svg.appendChild(el("line",{x1:p1[0]+ox,y1:p1[1]+oy,x2:p2[0]+ox,y2:p2[1]+oy,
-        stroke:"#b03030","stroke-width":"2","stroke-linecap":"round"}));
+        stroke:"#b03030","stroke-width":"1.8","stroke-linecap":"round"}));
+    } else {
+      const color=isFull?(info.type==="personality"?"#1a1410":"#b03030")
+                 :isHalf?(info.type==="personality"?"#7a6858":"#c05050")
+                 :"#d4cec8";
+      const w=isFull?2.5:isHalf?1.5:1;
+      const a={x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],
+               stroke:color,"stroke-width":w,"stroke-linecap":"round"};
+      if(isHalf)a["stroke-dasharray"]="5,4";
+      svg.appendChild(el("line",a));
     }
   });
+
+  // LAYER 3: center shapes (drawn over channels)
   Object.entries(HD_SHAPES).forEach(([name,s])=>{
     const def=(centerDef&&centerDef[name])||"undefined";
-    const fill=cFill(def),stroke=cStr(def);
+    // Fill: defined = colored, undefined = off-white
+    const fill=def==="personality"?"#c9956c":def==="design"?"#c05050":def==="both"?"#904020":"#eae6e0";
+    const stroke=def==="undefined"?"#c0b8ac":"#7a6858";
     const g=el("g",{});
     let sh;
     if(s.shape==="rect"){
       sh=el("rect",{x:s.x,y:s.y,width:s.w,height:s.h,fill,stroke,"stroke-width":"1.5",rx:"1"});
     }else if(s.shape==="dia"){
       sh=el("path",{
-        d:"M"+s.cx+","+(s.cy-s.hh)+" L"+(s.cx+s.hw)+","+s.cy+" L"+s.cx+","+(s.cy+s.hh)+" L"+(s.cx-s.hw)+","+s.cy+" Z",
-        fill,stroke,"stroke-width":"1.5"
-      });
+        d:"M"+s.cx+","+(s.cy-s.hh)+" L"+(s.cx+s.hw)+","+s.cy+
+          " L"+s.cx+","+(s.cy+s.hh)+" L"+(s.cx-s.hw)+","+s.cy+" Z",
+        fill,stroke,"stroke-width":"1.5"});
     }else{
       const[a,b,c]=s.pts;
       sh=el("path",{d:"M"+a[0]+","+a[1]+" L"+b[0]+","+b[1]+" L"+c[0]+","+c[1]+" Z",
@@ -1479,19 +1549,23 @@ function drawBodygraph(centerDef,activeChannels,halfChannels){
       fill:def==="undefined"?"#9a9088":"#1e1a14"},HD_LABELS[name]));
     svg.appendChild(g);
   });
+
+  // LAYER 4: gate circles (always drawn, filled only if active)
   Object.entries(HD_GATE_POS).forEach(([gate,pos])=>{
     const gn=parseInt(gate);
-    if(!activeGates.has(gn))return;
     const[x,y]=pos;
+    const isActive=activeGates.has(gn);
+    if(!isActive)return; // only show active gates
     const matchedTypes=Object.keys(chMap)
       .filter(k=>k.split("-").map(Number).includes(gn))
       .map(k=>chMap[k].type);
-    const tp=matchedTypes.includes("both")||(matchedTypes.includes("personality")&&matchedTypes.includes("design"))
-      ?"both":matchedTypes[0]||"personality";
-    const dotCol=tp==="personality"?"#c9956c":tp==="design"?"#c05050":"#904020";
-    svg.appendChild(el("circle",{cx:x,cy:y,r:"6",fill:dotCol,opacity:"0.92"}));
+    const tp=(matchedTypes.includes("both")||
+             (matchedTypes.includes("personality")&&matchedTypes.includes("design")))
+             ?"both":matchedTypes[0]||"personality";
+    const fill=tp==="personality"?"#c9956c":tp==="design"?"#c05050":"#904020";
+    svg.appendChild(el("circle",{cx:x,cy:y,r:"5.5",fill,stroke:"#fff","stroke-width":"0.8"}));
     svg.appendChild(el("text",{x,y:y+3.5,"text-anchor":"middle",
-      "font-size":"5.5","font-family":"Jost,sans-serif","font-weight":"700",fill:"#fff"},gate));
+      "font-size":"5","font-family":"Jost,sans-serif","font-weight":"700",fill:"#fff"},gate));
   });
 }
 // ─── SHARED BIRTH FORM HELPERS ───
