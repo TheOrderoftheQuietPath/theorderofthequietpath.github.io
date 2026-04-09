@@ -1429,16 +1429,21 @@ const HD_GATE_POS={
   41:[238,386],39:[238,398],19:[238,410],
 };
 
-const HD_SHAPES={
-  Head:  {shape:"tri", pts:[[200,16],[172,62],[228,62]]},
-  Ajna:  {shape:"tri", pts:[[172,70],[228,70],[200,114]]},
-  Throat:{shape:"rect",x:162,y:122,w:76,h:48},
-  G:     {shape:"dia", cx:200,cy:240,hw:52,hh:42},
-  Will:  {shape:"tri", pts:[[256,208],[256,250],[292,229]]},
-  Solar: {shape:"tri", pts:[[310,308],[310,372],[256,340]]},
-  Sacral:{shape:"rect",x:162,y:288,w:76,h:48},
-  Spleen:{shape:"tri", pts:[[90,308],[90,372],[144,340]]},
-  Root:  {shape:"rect",x:162,y:374,w:76,h:48},
+const HD_SHAPES = {
+  // Triangles (Head, Ajna, Will, Solar, Spleen)
+  Head:   { shape: "tri",  pts: [[200, 20], [162, 70], [238, 70]] },
+  Ajna:   { shape: "tri",  pts: [[162, 80], [238, 80], [200, 130]] },
+  
+  // Squares (Throat, Sacral, Root - w en h gelijk)
+  Throat: { shape: "rect", x: 162, y: 140, w: 76, h: 76 },
+  Sacral: { shape: "rect", x: 162, y: 310, w: 76, h: 76 },
+  Root:   { shape: "rect", x: 162, y: 410, w: 76, h: 76 },
+  
+  // Overige vormen
+  G:      { shape: "dia",  cx: 200, cy: 260, hw: 40, hh: 55 },
+  Will:   { shape: "tri",  pts: [[250, 230], [250, 280], [300, 255]] },
+  Solar:  { shape: "tri",  pts: [[310, 310], [310, 380], [250, 345]] },
+  Spleen: { shape: "tri",  pts: [[90, 310], [90, 380], [150, 345]] },
 };
 const HD_LABELS={
   Head:"Hoofd",Ajna:"Ajna",Throat:"Keel",G:"G",Will:"Ego",
