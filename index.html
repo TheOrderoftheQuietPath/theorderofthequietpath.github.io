@@ -486,38 +486,8 @@
         <p class="section-tag" data-nl="Gratis tools" data-en="Free tools">Gratis tools</p>
         <h2 class="section-title" data-nl="Jouw kosmisch <em>profiel</em> in seconden" data-en="Your cosmic <em>profile</em> in seconds">Jouw kosmisch <em>profiel</em> in seconden</h2>
         <div class="divider"></div>
-        <p class="section-sub" data-nl="Vul je geboortegegevens eenmalig in. De calculators houden rekening met exacte planetenstanden, tijdzones en culturele varianten. Het resultaat geeft al waardevolle inzichten — een verdiepende persoonlijke analyse is beschikbaar op aanvraag." data-en="Enter your birth data once. The calculators account for exact planetary positions, time zones and cultural variants. The result already gives valuable insights — an in-depth personal analysis is available on request.">Vul je geboortegegevens eenmalig in. De calculators houden rekening met exacte planetenstanden, tijdzones en culturele varianten. Het resultaat geeft al waardevolle inzichten &#8212; een verdiepende persoonlijke analyse is beschikbaar op aanvraag.</p>
+        <p class="section-sub" data-nl="Elke calculator heeft zijn eigen invoerformulier — zo heeft een probleem bij één calculator geen invloed op de anderen." data-en="Each calculator has its own input form — a problem in one does not affect the others.">Elke calculator heeft zijn eigen invoerformulier &#8212; zo heeft een probleem bij één calculator geen invloed op de anderen.</p>
       </div>
-      <!-- SHARED BIRTH INPUT FORM -->
-      <div class="birth-form reveal" id="shared-birth-form">
-        <h3 data-nl="Jouw geboortegegevens" data-en="Your birth data">Jouw geboortegegevens</h3>
-        <p class="form-sub" data-nl="Vul je gegevens eenmalig in — alle calculators gebruiken dezelfde data." data-en="Fill in your details once — all calculators use the same data.">Vul je gegevens eenmalig in — alle calculators gebruiken dezelfde data.</p>
-        <div class="birth-form-grid two">
-          <div class="birth-field"><label data-nl="Voornaam" data-en="First name">Voornaam</label><input type="text" id="bf-firstname" placeholder="Voornaam"/></div>
-          <div class="birth-field"><label data-nl="Achternaam" data-en="Last name">Achternaam</label><input type="text" id="bf-lastname" placeholder="Achternaam"/></div>
-        </div>
-        <div class="birth-form-grid four">
-          <div class="birth-field"><label data-nl="Dag" data-en="Day">Dag</label><input type="number" id="bf-day" min="1" max="31" placeholder="DD"/></div>
-          <div class="birth-field"><label data-nl="Maand" data-en="Month">Maand</label><input type="number" id="bf-month" min="1" max="12" placeholder="MM"/></div>
-          <div class="birth-field"><label data-nl="Jaar" data-en="Year">Jaar</label><input type="number" id="bf-year" min="1900" max="2030" placeholder="YYYY"/></div>
-          <div class="birth-field"><label data-nl="Uur (lokaal)" data-en="Hour (local)">Uur (lokaal)</label><input type="number" id="bf-hour" min="0" max="23" placeholder="0–23"/></div>
-        </div>
-        <div class="birth-form-grid two">
-          <div class="birth-field"><label data-nl="Minuten" data-en="Minutes">Minuten</label><input type="number" id="bf-minute" min="0" max="59" placeholder="0–59"/></div>
-          <div class="birth-field">
-            <label data-nl="Geboortestad + land" data-en="Birth city + country">Geboortestad + land</label>
-            <div class="city-wrap">
-              <input type="text" id="bf-city" placeholder="Begin te typen..." autocomplete="off" oninput="citySearch(this.value)"/>
-              <div class="city-suggestions" id="city-suggestions"></div>
-            </div>
-          </div>
-        </div>
-        <input type="hidden" id="bf-lat" value=""/>
-        <input type="hidden" id="bf-lon" value=""/>
-        <input type="hidden" id="bf-tz" value="1"/>
-        <div class="birth-note" data-nl="✓ De tijdzone wordt automatisch bepaald op basis van je geboorteplaats. Een exacte geboortetijd is nodig voor Human Design en het ascendant." data-en="✓ The timezone is automatically determined based on your birth location. An exact birth time is required for Human Design and the ascendant.">✓ De tijdzone wordt automatisch bepaald op basis van je geboorteplaats. Een exacte geboortetijd is nodig voor Human Design en het ascendant.</div>
-      </div>
-
       <!-- CALCULATOR TABS -->
       <div class="calc-tabs reveal">
         <button class="calc-tab active" data-tab="bazi">BaZi</button>
@@ -531,7 +501,8 @@
       <div class="calc-panel active reveal" id="panel-bazi">
         <div class="calc-form">
           <h3 data-nl="BaZi — Vier Pilaren van Lot" data-en="BaZi — Four Pillars of Destiny">BaZi — Vier Pilaren van Lot</h3>
-          <p data-nl="Berekening op basis van je geboortegegevens hierboven. Het uurpilaar vereist een exacte geboortetijd." data-en="Calculation based on your birth data above. The hour pillar requires an exact birth time.">Berekening op basis van je geboortegegevens hierboven.</p>
+          <p data-nl="Berekening op basis van je geboortegegevens hierboven. Het uurpilaar vereist een exacte geboortetijd." data-en="Calculation based on your birth data above. The hour pillar requires an exact birth time.">Vul je geboortegegevens in. Het uurpilaar vereist een exacte geboortetijd.</p>
+          <div id="bazi-form-slot"></div>
           <div class="calc-note" data-nl="⚠ Indicatieve berekening. Voor een volledige professionele BaZi analyse inclusief lopende gelukspilaren, neem contact op." data-en="⚠ Indicative calculation. For a full professional BaZi analysis including luck pillars, please get in touch.">⚠ Indicatieve berekening. Voor een volledige professionele analyse, neem contact op.</div>
           <button class="btn btn-primary" onclick="calcBazi()" data-nl="Bereken BaZi Chart" data-en="Calculate BaZi Chart">Bereken BaZi Chart</button>
           <div class="calc-result" id="bazi-result">
@@ -547,10 +518,8 @@
       <div class="calc-panel reveal" id="panel-saju">
         <div class="calc-form">
           <h3 data-nl="Saju — Koreaanse Vier Pilaren" data-en="Saju — Korean Four Pillars">Saju — Koreaanse Vier Pilaren</h3>
-          <p data-nl="De Koreaanse variant van de Vier Pilaren met nadruk op karakter en relaties." data-en="The Korean variant of the Four Pillars with emphasis on character and relationships.">De Koreaanse variant van de Vier Pilaren met nadruk op karakter en relaties.</p>
-          <div class="form-row">
-            <div class="form-group"><label data-nl="Geslacht" data-en="Gender">Geslacht</label><select id="saju-gender"><option value="m" data-nl="Man" data-en="Male">Man</option><option value="f" data-nl="Vrouw" data-en="Female">Vrouw</option></select></div>
-          </div>
+          <p data-nl="De Koreaanse variant van de Vier Pilaren met nadruk op karakter en relaties." data-en="The Korean variant of the Four Pillars with emphasis on character and relationships.">Vul je geboortegegevens in. Saju houdt rekening met geslacht voor de energierichting.</p>
+          <div id="saju-form-slot"></div>
           <div class="calc-note" data-nl="⚠ Indicatieve berekening. Professionele Saju analyse op aanvraag." data-en="⚠ Indicative calculation. Professional Saju analysis on request.">⚠ Indicatieve berekening. Professionele Saju analyse op aanvraag.</div>
           <button class="btn btn-primary" onclick="calcSaju()" data-nl="Bereken Saju Chart" data-en="Calculate Saju Chart">Bereken Saju Chart</button>
           <div class="calc-result" id="saju-result">
@@ -566,7 +535,7 @@
         <div style="background:var(--surface);border:1px solid var(--stone-light);padding:36px;max-width:720px;">
           <h3 style="font-family:'Libre Baskerville',serif;font-size:1.2rem;font-weight:400;margin-bottom:8px;" data-nl="Westerse Geboortehoroscoop" data-en="Western Birth Chart">Westerse Geboortehoroscoop</h3>
           <p style="font-size:0.88rem;color:var(--ink2);margin-bottom:16px;line-height:1.7;" data-nl="Accurate geboortehoroscoop via professionele ephemeridedata van astro-app.net." data-en="Accurate birth chart via professional ephemeris data from astro-app.net.">Accurate geboortehoroscoop via professionele ephemeridedata van astro-app.net.</p>
-          <div style="background:var(--bg2);border-left:3px solid var(--sage);padding:12px 16px;font-size:0.78rem;color:var(--ink3);margin-bottom:24px;line-height:1.6;">✓ <span data-nl="Deze calculator gebruikt echte astronomische data. Voer je geboorteplaats in het gedeelde formulier hierboven in voor een accuraat ascendant." data-en="This calculator uses real astronomical data. Enter your birth location in the shared form above for an accurate ascendant.">Voer je geboorteplaats in het formulier hierboven in voor een accuraat ascendant.</span></div>
+          <div id="west-form-slot"></div>
           <script>
             var widgetApp = "astrologer";
             var widgetLanguage = "en";
@@ -591,7 +560,8 @@
         <div style="max-width:720px;">
           <div style="background:var(--surface);border:1px solid var(--stone-light);padding:36px;margin-bottom:2px;">
             <h3 style="font-family:'Libre Baskerville',serif;font-size:1.2rem;font-weight:400;margin-bottom:8px;">Human Design Chart</h3>
-            <p style="font-size:0.88rem;color:var(--ink2);margin-bottom:20px;line-height:1.7;" data-nl="Berekening op basis van je geboortegegevens hierboven. Persoonlijkheid (zwart/oranje) = geboortemoment · Design (rood) = ~88° voor geboorte." data-en="Calculated from your birth data above. Personality (black/orange) = birth moment · Design (red) = ~88° before birth.">Berekening op basis van je geboortegegevens hierboven. Persoonlijkheid = geboortemoment · Design = ~88° voor geboorte.</p>
+            <p style="font-size:0.88rem;color:var(--ink2);margin-bottom:20px;line-height:1.7;" data-nl="Berekening op basis van je geboortegegevens hierboven. Persoonlijkheid (zwart/oranje) = geboortemoment · Design (rood) = ~88° voor geboorte." data-en="Calculated from your birth data above. Personality (black/orange) = birth moment · Design (red) = ~88° before birth.">Vul je exacte geboortegegevens in. Persoonlijkheid = geboortemoment · Design = ~88° voor geboorte.</p>
+            <div id="hd-form-slot"></div>
             <div class="calc-note" data-nl="⚠ Een exacte geboortetijd is essentieel — zelfs 1 uur verschil kan je type of autoriteit wijzigen." data-en="⚠ An exact birth time is essential — even 1 hour difference can change your type or authority.">⚠ Een exacte geboortetijd is essentieel — zelfs 1 uur verschil kan je type of autoriteit wijzigen.</div>
             <button class="btn btn-primary" onclick="hdCalculate()">Bereken Human Design Chart</button>
           </div>
@@ -660,7 +630,8 @@
       <div class="calc-panel reveal" id="panel-numerology">
         <div class="calc-form">
           <h3 data-nl="Numerologisch Profiel" data-en="Numerological Profile">Numerologisch Profiel</h3>
-          <p data-nl="Berekening op basis van je naam en geboortedatum hierboven." data-en="Calculation based on your name and birth date above.">Berekening op basis van je naam en geboortedatum hierboven.</p>
+          <p data-nl="Berekening op basis van je naam en geboortedatum hierboven." data-en="Calculation based on your name and birth date above.">Vul je volledige naam (zoals op geboorteakte) en geboortedatum in.</p>
+          <div id="num-form-slot"></div>
           <button class="btn btn-primary" onclick="calcNumerology()" data-nl="Bereken Numerologie" data-en="Calculate Numerology">Bereken Numerologie</button>
           <div class="calc-result" id="num-result">
             <div class="result-title" data-nl="Jouw Numerologisch Profiel" data-en="Your Numerological Profile">Jouw Numerologisch Profiel</div>
@@ -855,8 +826,8 @@
   }
 
   async function calcBazi() {
-    if(!validateBirth()) return;
-    const b=getBirthData();
+    if(!validateBirthFor('bazi')) return;
+    const b=getBirthDataFor('bazi');
     const d=b.day, m=b.month, y=b.year, h=b.hour;
     // Try backend first
     const apiResult = await callAPI('/api/bazi', b);
@@ -884,8 +855,8 @@
   }
 
   async function calcSaju() {
-    if(!validateBirth()) return;
-    const b=getBirthData();
+    if(!validateBirthFor('saju')) return;
+    const b=getBirthDataFor('saju');
     const d=b.day, m=b.month, y=b.year, h=b.hour;
     // Try backend first
     const apiResult = await callAPI('/api/bazi', b);
@@ -926,7 +897,7 @@
   function getAsc(h,mn){return ZS[Math.floor((h+(mn||0)/60)/2)%12];}
 
   function calcWestern(){
-    const d=parseInt(document.getElementById('west-day').value),m=parseInt(document.getElementById('west-month').value),y=parseInt(document.getElementById('west-year').value),h=parseInt(document.getElementById('west-hour').value),mn=parseInt(document.getElementById('west-min').value)||0;
+    const d=parseInt(document.getElementById('west-day').value)||0,m=parseInt(document.getElementById('west-month').value)||0,y=parseInt(document.getElementById('west-year').value)||0,h=parseInt(document.getElementById('west-hour').value)||0,mn=parseInt(document.getElementById('west-minute').value)||0;
     if(!d||!m||!y){alert(lang==='nl'?'Vul een geldige datum in.':'Please enter a valid date.');return;}
     const sun=getSun(m,d),moon=getMoon(y,m,d),asc=isNaN(h)?null:getAsc(h,mn);
     const planets=[{icon:'☀',label:lang==='nl'?'Zon':'Sun',sign:sun},{icon:'☽',label:lang==='nl'?'Maan':'Moon',sign:moon}];
@@ -980,8 +951,8 @@
   const vowels='aeiouáéíóúàèìòùäëïöü';
 
   async function calcNumerology(){
-    if(!validateBirth()) return;
-    const b=getBirthData();
+    if(!validateBirthFor('num')) return;
+    const b=getBirthDataFor('num');
     const d=b.day, m=b.month, y=b.year, name=b.name;
     // Try backend first
     const apiResult = await callAPI('/api/numerology', b);
@@ -1228,8 +1199,8 @@ const AUTHORITY_DATA={
 // MAIN CALCULATION
 // ═══════════════════════════════════════════════
 async function hdCalculate(){
-  if(!validateBirth()) return;
-  const b = getBirthData();
+  if(!validateBirthFor('hd')) return;
+  const b = getBirthDataFor('hd');
   const day=b.day, month=b.month, year=b.year, hour=b.hour, minute=b.minute, tz=b.tz;
 
   // Try backend first
@@ -1695,74 +1666,139 @@ function drawBodygraph(centerDef,activeChannels,halfChannels){
   });
 }
 // ─── SHARED BIRTH FORM HELPERS ───
-function getBirthData() {
-  return {
-    day:    parseInt(document.getElementById('bf-day').value) || 0,
-    month:  parseInt(document.getElementById('bf-month').value) || 0,
-    year:   parseInt(document.getElementById('bf-year').value) || 0,
-    hour:   parseInt(document.getElementById('bf-hour').value) || 0,
-    minute: parseInt(document.getElementById('bf-minute').value) || 0,
-    tz:     parseFloat(document.getElementById('bf-tz').value) || 1,
-    lat:    parseFloat(document.getElementById('bf-lat').value) || 51.05,
-    lon:    parseFloat(document.getElementById('bf-lon').value) || 3.72,
-    firstname: document.getElementById('bf-firstname').value.trim(),
-    lastname:  document.getElementById('bf-lastname').value.trim(),
-    name: (document.getElementById('bf-firstname').value + ' ' + document.getElementById('bf-lastname').value).trim()
-  };
-}
-
-function validateBirth() {
-  const b = getBirthData();
-  if (!b.day || !b.month || !b.year || b.year < 1900 || b.year > 2030) {
-    alert(lang === 'nl' ? 'Vul een geldige geboortedatum in via het formulier hierboven.' : 'Please enter a valid birth date in the form above.');
-    return false;
+// ── Per-calculator birth form generator ────────────────────────────────────
+  function _bf(p, cfg) {
+    var D = Array.from({length:31},function(_,i){return '<option value="'+(i+1)+'">'+(i+1<10?'0':'')+(i+1)+'</option>';}).join('');
+    var M = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'].map(function(m,i){return '<option value="'+(i+1)+'">'+m+'</option>';}).join('');
+    var Y = Array.from({length:127},function(_,i){return '<option value="'+(2026-i)+'">'+(2026-i)+'</option>';}).join('');
+    var H = Array.from({length:24},function(_,i){return '<option value="'+i+'">'+(i<10?'0':'')+i+':00</option>';}).join('');
+    var Min = [0,5,10,15,20,25,30,35,40,45,50,55].map(function(v){return '<option value="'+v+'">'+(v<10?'0':'')+v+'</option>';}).join('');
+    var h = '<div class="birth-form">';
+    if(cfg.name) h += '<div class="birth-form-grid two">'
+      +'<div class="birth-field"><label>Voornaam</label><input type="text" id="'+p+'-firstname" placeholder="Voornaam"/></div>'
+      +'<div class="birth-field"><label>Achternaam</label><input type="text" id="'+p+'-lastname" placeholder="Achternaam"/></div>'
+      +'</div>';
+    h += '<div class="birth-form-grid four">'
+      +'<div class="birth-field"><label>Dag</label><select id="'+p+'-day"><option value="">Dag</option>'+D+'</select></div>'
+      +'<div class="birth-field"><label>Maand</label><select id="'+p+'-month"><option value="">Maand</option>'+M+'</select></div>'
+      +'<div class="birth-field"><label>Jaar</label><select id="'+p+'-year"><option value="">Jaar</option>'+Y+'</select></div>'
+      +'<div class="birth-field"><label>Uur (lokaal)</label><select id="'+p+'-hour"><option value="">Uur</option>'+H+'</select></div>'
+      +'</div>';
+    if(cfg.gender && cfg.city) {
+      h += '<div class="birth-form-grid two">'
+        +'<div class="birth-field"><label>Minuten</label><select id="'+p+'-minute"><option value="">Min</option>'+Min+'</select></div>'
+        +'<div class="birth-field"><label>Geslacht</label><select id="'+p+'-gender"><option value="m">Man</option><option value="f">Vrouw</option></select></div>'
+        +'</div>'
+        +'<div class="birth-form-grid two">'
+        +'<div class="birth-field"><label>Geboortestad + land</label><div class="city-wrap"><input type="text" id="'+p+'-city" placeholder="Begin te typen..." autocomplete="off" oninput="citySearch(''+p+'',this.value)"/><div class="city-suggestions" id="'+p+'-suggestions"></div></div></div>'
+        +'</div>';
+    } else if(cfg.gender) {
+      h += '<div class="birth-form-grid two">'
+        +'<div class="birth-field"><label>Minuten</label><select id="'+p+'-minute"><option value="">Min</option>'+Min+'</select></div>'
+        +'<div class="birth-field"><label>Geslacht</label><select id="'+p+'-gender"><option value="m">Man</option><option value="f">Vrouw</option></select></div>'
+        +'</div>';
+    } else if(cfg.city) {
+      h += '<div class="birth-form-grid two">'
+        +'<div class="birth-field"><label>Minuten</label><select id="'+p+'-minute"><option value="">Min</option>'+Min+'</select></div>'
+        +'<div class="birth-field"><label>Geboortestad + land</label><div class="city-wrap"><input type="text" id="'+p+'-city" placeholder="Begin te typen..." autocomplete="off" oninput="citySearch(''+p+'',this.value)"/><div class="city-suggestions" id="'+p+'-suggestions"></div></div></div>'
+        +'</div>';
+    } else {
+      h += '<div class="birth-form-grid two">'
+        +'<div class="birth-field"><label>Minuten</label><select id="'+p+'-minute"><option value="">Min</option>'+Min+'</select></div>'
+        +'</div>';
+    }
+    if(cfg.city) h += '<input type="hidden" id="'+p+'-lat" value=""/>  <input type="hidden" id="'+p+'-lon" value=""/>  <input type="hidden" id="'+p+'-tz" value="1"/>  '
+      +'<div class="birth-note">✓ Tijdzone wordt automatisch bepaald via geboorteplaats. Exacte geboortetijd vereist voor Human Design / ascendant.</div>';
+    h += '</div>';
+    return h;
   }
-  return true;
-}
 
-// City autocomplete via Open-Meteo (free, no API key)
-let cityTimeout = null;
-async function citySearch(query) {
-  clearTimeout(cityTimeout);
-  const box = document.getElementById('city-suggestions');
-  if (query.length < 2) { box.style.display = 'none'; return; }
-  cityTimeout = setTimeout(async () => {
-    try {
-      const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=8&language=nl&format=json`);
-      const data = await res.json();
-      if (!data.results || !data.results.length) { box.style.display = 'none'; return; }
-      box.innerHTML = data.results.map(r => `
-        <div class="city-suggestion" onclick="selectCity('${r.name}','${r.country||''}',${r.latitude},${r.longitude},'${r.timezone||'Europe/Brussels'}')">
-          ${r.name}<span class="city-country">${r.admin1 ? r.admin1 + ', ' : ''}${r.country || ''}</span>
-        </div>`).join('');
-      box.style.display = 'block';
-    } catch(e) { box.style.display = 'none'; }
-  }, 300);
-}
-
-function selectCity(name, country, lat, lon, timezone) {
-  document.getElementById('bf-city').value = `${name}, ${country}`;
-  document.getElementById('bf-lat').value = lat;
-  document.getElementById('bf-lon').value = lon;
-  document.getElementById('city-suggestions').style.display = 'none';
-  // Determine UTC offset from IANA timezone string
-  try {
-    const now = new Date();
-    const tzDate = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
-    const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
-    const offset = (tzDate - utcDate) / 3600000;
-    document.getElementById('bf-tz').value = offset;
-  } catch(e) {
-    document.getElementById('bf-tz').value = 1;
+  function getBirthDataFor(p) {
+    var gv=function(id){var el=document.getElementById(p+'-'+id);return el?el.value.trim():'';};
+    var nv=function(id){return parseInt(gv(id))||0;};
+    var fv=function(id){return parseFloat(gv(id))||0;};
+    var fn=gv('firstname'),ln=gv('lastname');
+    return {
+      day:nv('day'),month:nv('month'),year:nv('year'),
+      hour:nv('hour'),minute:nv('minute'),
+      tz:fv('tz')||1,lat:fv('lat')||51.05,lon:fv('lon')||3.72,
+      firstname:fn,lastname:ln,name:(fn+' '+ln).trim(),
+      gender:gv('gender')||'m'
+    };
   }
-}
 
-// Close suggestions when clicking outside
-document.addEventListener('click', e => {
-  if (!e.target.closest('.city-wrap')) {
-    document.getElementById('city-suggestions').style.display = 'none';
+  function validateBirthFor(p) {
+    var b=getBirthDataFor(p);
+    if(!b.day||!b.month||!b.year||b.year<1900||b.year>2030){
+      alert(lang==='nl'
+        ?'Vul een geldige geboortedatum in (dag, maand en jaar zijn verplicht).'
+        :'Please enter a valid birth date (day, month and year are required).');
+      return false;
+    }
+    return true;
   }
-});
+
+  // ── City autocomplete (per calculator) ────────────────────────────────────
+  var cityTimeout = null;
+  function citySearch(prefix, query) {
+    clearTimeout(cityTimeout);
+    var box=document.getElementById(prefix+'-suggestions');
+    if(!box) return;
+    if(query.length < 2){box.style.display='none';return;}
+    cityTimeout = setTimeout(function(){
+      fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(query)+'&count=8&language=nl&format=json')
+        .then(function(r){return r.json();})
+        .then(function(data){
+          if(!data.results||!data.results.length){box.style.display='none';return;}
+          box.innerHTML=data.results.map(function(r){
+            return '<div class="city-suggestion" onclick="selectCity(''+prefix+'',''+r.name.replace(/'/g,"\\'")+'',' +
+              '''+encodeURIComponent(r.country||'')+'',' +
+              r.latitude+','+r.longitude+',' +
+              '''+encodeURIComponent(r.timezone||'Europe/Brussels')+'')">'+
+              r.name+'<span class="city-country">'+(r.admin1?r.admin1+', ':'')+(r.country||'')+'</span></div>';
+          }).join('');
+          box.style.display='block';
+        })
+        .catch(function(){box.style.display='none';});
+    },300);
+  }
+
+  function selectCity(prefix, name, countryEnc, lat, lon, tzEnc) {
+    var country=decodeURIComponent(countryEnc), tz=decodeURIComponent(tzEnc);
+    document.getElementById(prefix+'-city').value=name+(country?', '+country:'');
+    document.getElementById(prefix+'-lat').value=lat;
+    document.getElementById(prefix+'-lon').value=lon;
+    try{
+      var now=new Date();
+      var tzDate=new Date(now.toLocaleString('en-US',{timeZone:tz}));
+      var utcDate=new Date(now.toLocaleString('en-US',{timeZone:'UTC'}));
+      document.getElementById(prefix+'-tz').value=(tzDate-utcDate)/3600000;
+    }catch(e){document.getElementById(prefix+'-tz').value=1;}
+    var box=document.getElementById(prefix+'-suggestions');
+    if(box) box.style.display='none';
+  }
+
+  document.addEventListener('click', function(e) {
+    if(!e.target.closest('.city-wrap'))
+      document.querySelectorAll('.city-suggestions').forEach(function(b){b.style.display='none';});
+  });
+
+  // ── Inject forms into panel slots ─────────────────────────────────────────
+  (function(){
+    var slots={
+      'bazi-form-slot': {prefix:'bazi', cfg:{name:true,  city:true,  gender:false}},
+      'saju-form-slot': {prefix:'saju', cfg:{name:true,  city:true,  gender:true}},
+      'west-form-slot': {prefix:'west', cfg:{name:false, city:false, gender:false}},
+      'hd-form-slot':   {prefix:'hd',   cfg:{name:false, city:true,  gender:false}},
+      'num-form-slot':  {prefix:'num',  cfg:{name:true,  city:false, gender:false}},
+    };
+    for(var id in slots){
+      var el=document.getElementById(id);
+      if(el){var s=slots[id]; el.innerHTML=_bf(s.prefix,s.cfg);}
+    }
+  })();
+
+
 
 
 
