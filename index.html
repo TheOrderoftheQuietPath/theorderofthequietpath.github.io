@@ -851,7 +851,7 @@
       {label:lang==='nl'?'Jaar Pilaar':'Year Pillar',stem:getStem(y),branch:getBranch(y)},
       {label:lang==='nl'?'Maand Pilaar':'Month Pillar',stem:getMonthStem(y,m),branch:getMonthBranch(m)},
       {label:lang==='nl'?'Dag Pilaar':'Day Pillar',stem:day_.stem,branch:day_.branch},
-      {label:lang==='nl'?'Uur Pilaar':'Hour Pillar',stem:getHourStem(HS.indexOf(day_.stem),tsh),branch:getHourBranch(tsh)},
+      {label:lang==='nl'?'Uur Pilaar':'Hour Pillar',stem:getHourStem(HS.findIndex(function(s){return s.sym===day_.stem.sym;}),tsh),branch:getHourBranch(tsh)},
     ];
     const ec={Wood:0,Fire:0,Earth:0,Metal:0,Water:0};
     pillars.forEach(p=>{const se=p.stem.el.replace(/[+-]/,''),be=p.branch.el;if(ec[se]!==undefined)ec[se]++;if(ec[be]!==undefined)ec[be]++;});
@@ -879,7 +879,7 @@
       {label:'연주 (Jaar)',stem:getStem(y),branch:getBranch(y)},
       {label:'월주 (Maand)',stem:getMonthStem(y,m),branch:getMonthBranch(m)},
       {label:'일주 (Dag)',stem:day_.stem,branch:day_.branch},
-      {label:'시주 (Uur)',stem:getHourStem(HS.indexOf(day_.stem),tsh_s),branch:getHourBranch(tsh_s)},
+      {label:'시주 (Uur)',stem:getHourStem(HS.findIndex(function(s){return s.sym===day_.stem.sym;}),tsh_s),branch:getHourBranch(tsh_s)},
     ];
     document.getElementById('saju-pillars').innerHTML=pillars.map(p=>`<div class="saju-pillar"><div class="saju-label">${p.label}</div><div class="saju-korean" style="color:${elColors[p.stem.el.replace(/[+-]/,'')] ||'#7a8c78'}">${p.stem.sym}</div><div class="saju-roman">${p.stem.nl}</div><div class="saju-korean">${p.branch.sym}</div><div class="saju-roman">${p.branch.nl}</div><div class="saju-element-badge">${p.branch.el}</div></div>`).join('');
     const r=document.getElementById('saju-result');r.classList.add('show');r.scrollIntoView({behavior:'smooth',block:'nearest'});
