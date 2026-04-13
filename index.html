@@ -678,8 +678,8 @@
               <span class="blog-card-tag">BaZi</span>
               <span class="blog-card-date">25 maart 2026</span>
             </div>
-            <h3 class="blog-card-title">Het jaar van de Yin Vuur Slang: wat de Chinese kalender zegt over 2026</h3>
-            <p class="blog-card-excerpt">2026 is het jaar van de Yin Vuur Slang &#8212; een jaar van subtiliteit, intuïtie en diepe transformatie onder de oppervlakte. Wie de energie begrijpt, kan er meesterlijk mee navigeren. BaZi legt uit hoe.</p>
+            <h3 class="blog-card-title">Het jaar van het Yang Vuur Paard: wat de Chinese kalender zegt over 2026</h3>
+            <p class="blog-card-excerpt">2026 is het jaar van het Yang Vuur Paard (丙午) &#8212; een jaar van energie, passie en daadkracht. De kracht van het Paard gecombineerd met het element Vuur brengt dynamiek en lef. BaZi legt uit hoe je deze energie kunt benutten.</p>
             <a href="#contact" class="blog-card-read" data-nl="Vraag een jaaranalyse &#8594;" data-en="Request a year analysis &#8594;">Vraag een jaaranalyse &#8594;</a>
           </div>
         </div>
@@ -813,16 +813,21 @@
   const elIcons = {Wood:'🌿',Fire:'🔥',Earth:'⛰',Metal:'⚙',Water:'💧'};
   const elNl = {Wood:'Hout',Fire:'Vuur',Earth:'Aarde',Metal:'Metaal',Water:'Water'};
 
-  function getStem(y) { return HS[(y-4)%10]; }
-  function getBranch(y) { return EB[(y-4)%12]; }
-  // Correct month stem: based on year stem group
+  // Safe modulo (handles negative values for years before 2004)
+  function getStem(y) { return HS[((y-4)%10+10)%10]; }
+  function getBranch(y) { return EB[((y-4)%12+12)%12]; }
+  // Chinese year for BaZi/Saju: if born before Lichun (~Feb 4), Chinese year = gregorian year - 1
+  function baziYear(y,m,d) { return (m<2||(m===2&&d<4))?y-1:y; }
+  // Month stem: based on year stem group (F_MONTH_START = start stem index for Tiger month per year stem)
   const F_MONTH_START=[2,4,6,8,0,2,4,6,8,0];
   function getMonthStem(y,m) {
     const ys=((y-4)%10+10)%10;
     return HS[(F_MONTH_START[ys]+(m+10)%12)%10];
   }
   function getMonthBranch(m) { return EB[m%12]; }
-  function getDaySB(y,m,d) { const b=new Date(1900,0,1),c=new Date(y,m-1,d),diff=Math.floor((c-b)/86400000); return {stem:HS[(diff+6)%10],branch:EB[(diff+6)%12]}; }
+  function getDaySB(y,m,d) { const b=new Date(1900,0,1),c=new Date(y,m-1,d),diff=Math.floor((c-b)/86400000); return {stem:HS[((diff+6)%10+10)%10],branch:EB[((diff+6)%12+12)%12]}; }
+  // Hour stem: uses day stem index (0-9). Each 2h double-hour maps to 1 Earthly Branch.
+  // 23:00-01:00=Zǐ(0), 01:00-03:00=Chǒu(1), ..., 21:00-23:00=Hài(11)
   function getHourStem(dsIdx,h) { return HS[(dsIdx%5*2+Math.floor(((h+1)%24)/2))%10]; }
   function getHourBranch(h) { return EB[Math.floor(((h+1)%24)/2)]; }
   // True Solar Time helper for frontend
@@ -847,9 +852,10 @@
     const lon_=b.lon||4.45, tz_=b.tz||1;
     const stdMer=tz_*15;
     const tsh=((h*60+(b.minute||0)+(lon_-stdMer)*4)/60%24+24)%24;
+    const cy=baziYear(y,m,d); // Chinese year (Lichun correction)
     const pillars=[
-      {label:lang==='nl'?'Jaar Pilaar':'Year Pillar',stem:getStem(y),branch:getBranch(y)},
-      {label:lang==='nl'?'Maand Pilaar':'Month Pillar',stem:getMonthStem(y,m),branch:getMonthBranch(m)},
+      {label:lang==='nl'?'Jaar Pilaar':'Year Pillar',stem:getStem(cy),branch:getBranch(cy)},
+      {label:lang==='nl'?'Maand Pilaar':'Month Pillar',stem:getMonthStem(cy,m),branch:getMonthBranch(m)},
       {label:lang==='nl'?'Dag Pilaar':'Day Pillar',stem:day_.stem,branch:day_.branch},
       {label:lang==='nl'?'Uur Pilaar':'Hour Pillar',stem:getHourStem(HS.findIndex(function(s){return s.sym===day_.stem.sym;}),tsh),branch:getHourBranch(tsh)},
     ];
@@ -875,9 +881,10 @@
     const lon_s=b.lon||4.45, tz_s=b.tz||1;
     const tsh_s=((h*60+(b.minute||0)+(lon_s-(tz_s*15))*4)/60%24+24)%24;
     const elColors={Wood:'#5a8a5a',Fire:'#c05a3a',Earth:'#a08040',Metal:'#8090a0',Water:'#4a6a9a'};
+    const cy_s=baziYear(y,m,d); // Chinese year (Lichun correction)
     const pillars=[
-      {label:'연주 (Jaar)',stem:getStem(y),branch:getBranch(y)},
-      {label:'월주 (Maand)',stem:getMonthStem(y,m),branch:getMonthBranch(m)},
+      {label:'연주 (Jaar)',stem:getStem(cy_s),branch:getBranch(cy_s)},
+      {label:'월주 (Maand)',stem:getMonthStem(cy_s,m),branch:getMonthBranch(m)},
       {label:'일주 (Dag)',stem:day_.stem,branch:day_.branch},
       {label:'시주 (Uur)',stem:getHourStem(HS.findIndex(function(s){return s.sym===day_.stem.sym;}),tsh_s),branch:getHourBranch(tsh_s)},
     ];
