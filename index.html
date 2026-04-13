@@ -641,7 +641,9 @@
         </div>
       </div>
 
-    <!-- BLOG -->
+  </section>
+
+  <!-- BLOG -->
   <section id="blog">
     <div class="section-wrap">
       <div class="reveal">
@@ -1668,11 +1670,20 @@ function drawBodygraph(centerDef,activeChannels,halfChannels){
 // ─── SHARED BIRTH FORM HELPERS ───
 // ── Per-calculator birth form generator ────────────────────────────────────
   function _bf(p, cfg) {
+    var Q = '\x27'; // single quote, safe in any string context
     var D = Array.from({length:31},function(_,i){return '<option value="'+(i+1)+'">'+(i+1<10?'0':'')+(i+1)+'</option>';}).join('');
     var M = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'].map(function(m,i){return '<option value="'+(i+1)+'">'+m+'</option>';}).join('');
     var Y = Array.from({length:127},function(_,i){return '<option value="'+(2026-i)+'">'+(2026-i)+'</option>';}).join('');
     var H = Array.from({length:24},function(_,i){return '<option value="'+i+'">'+(i<10?'0':'')+i+':00</option>';}).join('');
     var Min = [0,5,10,15,20,25,30,35,40,45,50,55].map(function(v){return '<option value="'+v+'">'+(v<10?'0':'')+v+'</option>';}).join('');
+    var cityField = '<div class="birth-field"><label>Geboortestad + land</label>'
+      +'<div class="city-wrap">'
+      +'<input type="text" id="'+p+'-city" placeholder="Begin te typen..." autocomplete="off" '
+      +'oninput="citySearch('+Q+p+Q+',this.value)"/>'
+      +'<div class="city-suggestions" id="'+p+'-suggestions"></div>'
+      +'</div></div>';
+    var genderField = '<div class="birth-field"><label>Geslacht</label>'
+      +'<select id="'+p+'-gender"><option value="m">Man</option><option value="f">Vrouw</option></select></div>';
     var h = '<div class="birth-form">';
     if(cfg.name) h += '<div class="birth-form-grid two">'
       +'<div class="birth-field"><label>Voornaam</label><input type="text" id="'+p+'-firstname" placeholder="Voornaam"/></div>'
@@ -1687,33 +1698,33 @@ function drawBodygraph(centerDef,activeChannels,halfChannels){
     if(cfg.gender && cfg.city) {
       h += '<div class="birth-form-grid two">'
         +'<div class="birth-field"><label>Minuten</label><select id="'+p+'-minute"><option value="">Min</option>'+Min+'</select></div>'
-        +'<div class="birth-field"><label>Geslacht</label><select id="'+p+'-gender"><option value="m">Man</option><option value="f">Vrouw</option></select></div>'
+        +genderField
         +'</div>'
-        +'<div class="birth-form-grid two">'
-        +'<div class="birth-field"><label>Geboortestad + land</label><div class="city-wrap"><input type="text" id="'+p+'-city" placeholder="Begin te typen..." autocomplete="off" oninput="citySearch(''+p+'',this.value)"/><div class="city-suggestions" id="'+p+'-suggestions"></div></div></div>'
-        +'</div>';
+        +'<div class="birth-form-grid two">'+cityField+'</div>';
     } else if(cfg.gender) {
       h += '<div class="birth-form-grid two">'
         +'<div class="birth-field"><label>Minuten</label><select id="'+p+'-minute"><option value="">Min</option>'+Min+'</select></div>'
-        +'<div class="birth-field"><label>Geslacht</label><select id="'+p+'-gender"><option value="m">Man</option><option value="f">Vrouw</option></select></div>'
+        +genderField
         +'</div>';
     } else if(cfg.city) {
       h += '<div class="birth-form-grid two">'
         +'<div class="birth-field"><label>Minuten</label><select id="'+p+'-minute"><option value="">Min</option>'+Min+'</select></div>'
-        +'<div class="birth-field"><label>Geboortestad + land</label><div class="city-wrap"><input type="text" id="'+p+'-city" placeholder="Begin te typen..." autocomplete="off" oninput="citySearch(''+p+'',this.value)"/><div class="city-suggestions" id="'+p+'-suggestions"></div></div></div>'
+        +cityField
         +'</div>';
     } else {
       h += '<div class="birth-form-grid two">'
         +'<div class="birth-field"><label>Minuten</label><select id="'+p+'-minute"><option value="">Min</option>'+Min+'</select></div>'
         +'</div>';
     }
-    if(cfg.city) h += '<input type="hidden" id="'+p+'-lat" value=""/>  <input type="hidden" id="'+p+'-lon" value=""/>  <input type="hidden" id="'+p+'-tz" value="1"/>  '
+    if(cfg.city) h += '<input type="hidden" id="'+p+'-lat" value=""/>'
+      +'<input type="hidden" id="'+p+'-lon" value=""/>'
+      +'<input type="hidden" id="'+p+'-tz" value="1"/>'
       +'<div class="birth-note">✓ Tijdzone wordt automatisch bepaald via geboorteplaats. Exacte geboortetijd vereist voor Human Design / ascendant.</div>';
     h += '</div>';
     return h;
   }
 
-  function getBirthDataFor(p) {
+    function getBirthDataFor(p) {
     var gv=function(id){var el=document.getElementById(p+'-'+id);return el?el.value.trim():'';};
     var nv=function(id){return parseInt(gv(id))||0;};
     var fv=function(id){return parseFloat(gv(id))||0;};
@@ -1742,25 +1753,30 @@ function drawBodygraph(centerDef,activeChannels,halfChannels){
   var cityTimeout = null;
   function citySearch(prefix, query) {
     clearTimeout(cityTimeout);
-    var box=document.getElementById(prefix+'-suggestions');
+    var box = document.getElementById(prefix+'-suggestions');
     if(!box) return;
-    if(query.length < 2){box.style.display='none';return;}
+    if(query.length < 2){ box.style.display='none'; return; }
+    var Q = '\x27';
     cityTimeout = setTimeout(function(){
       fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(query)+'&count=8&language=nl&format=json')
-        .then(function(r){return r.json();})
+        .then(function(r){ return r.json(); })
         .then(function(data){
-          if(!data.results||!data.results.length){box.style.display='none';return;}
-          box.innerHTML=data.results.map(function(r){
-            return '<div class="city-suggestion" onclick="selectCity(''+prefix+'',''+r.name.replace(/'/g,"\\'")+'',' +
-              '''+encodeURIComponent(r.country||'')+'',' +
-              r.latitude+','+r.longitude+',' +
-              '''+encodeURIComponent(r.timezone||'Europe/Brussels')+'')">'+
-              r.name+'<span class="city-country">'+(r.admin1?r.admin1+', ':'')+(r.country||'')+'</span></div>';
+          if(!data.results||!data.results.length){ box.style.display='none'; return; }
+          box.innerHTML = data.results.map(function(r){
+            var safeName = r.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+            return '<div class="city-suggestion" onclick="selectCity('
+              +Q+prefix+Q+','
+              +Q+safeName+Q+','
+              +Q+encodeURIComponent(r.country||'')+Q+','
+              +r.latitude+','
+              +r.longitude+','
+              +Q+encodeURIComponent(r.timezone||'Europe/Brussels')+Q+')">'
+              +r.name+'<span class="city-country">'+(r.admin1?r.admin1+', ':'')+(r.country||'')+'</span></div>';
           }).join('');
-          box.style.display='block';
+          box.style.display = 'block';
         })
-        .catch(function(){box.style.display='none';});
-    },300);
+        .catch(function(){ box.style.display='none'; });
+    }, 300);
   }
 
   function selectCity(prefix, name, countryEnc, lat, lon, tzEnc) {
