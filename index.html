@@ -130,8 +130,17 @@
     .bazi-stem-name { font-size: 0.72rem; color: var(--ink2); margin-bottom: 12px; }
     .bazi-branch { font-family: 'Libre Baskerville', serif; font-size: 1.5rem; color: var(--ink); margin-bottom: 4px; font-style: italic; }
     .bazi-branch-name { font-size: 0.72rem; color: var(--ink2); }
-    .bazi-element-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 28px; }
+    .bazi-element-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 24px; }
     .element-item { text-align: center; padding: 10px 6px; background: var(--bg2); border: 1px solid var(--stone-light); }
+    .element-desc { font-size: 0.64rem; color: var(--ink3); margin-top: 4px; line-height: 1.5; }
+    .bazi-pillar-role { font-size: 0.67rem; color: var(--ink3); font-style: italic; margin-bottom: 10px; }
+    .bazi-pillar.bazi-pillar-dm { border-top-color: var(--gold); background: rgba(164,138,88,0.04); }
+    .bazi-dm-box { margin: 0 0 24px; padding: 18px 20px; background: var(--surface); border-left: 3px solid var(--sage); border-top: 1px solid var(--stone-light); border-bottom: 1px solid var(--stone-light); }
+    .bazi-dm-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--sage); margin-bottom: 10px; }
+    .bazi-dm-inner { display: flex; align-items: flex-start; gap: 16px; }
+    .bazi-dm-sym { font-family: 'Libre Baskerville', serif; font-size: 2.2rem; font-style: italic; line-height: 1; flex-shrink: 0; }
+    .bazi-dm-text { font-size: 0.87rem; line-height: 1.75; color: var(--ink); }
+    .saju-element-badge { font-size: 0.68rem; color: var(--ink3); margin-top: 4px; }
     .element-symbol { font-size: 1.2rem; margin-bottom: 4px; }
     .element-name { font-size: 0.65rem; color: var(--ink2); }
     .element-count { font-family: 'Libre Baskerville', serif; font-size: 1.1rem; color: var(--sage-dark); font-style: italic; }
@@ -512,6 +521,7 @@
           <div class="calc-result" id="bazi-result">
             <div class="result-title" data-nl="Jouw BaZi Chart" data-en="Your BaZi Chart">Jouw BaZi Chart</div>
             <div class="bazi-chart" id="bazi-pillars"></div>
+            <div id="bazi-explain"></div>
             <div class="bazi-element-bar" id="bazi-elements"></div>
             <div class="analysis-cta"><div class="analysis-cta-text"><h4 data-nl="Wil je een volledige analyse?" data-en="Want a full analysis?">Wil je een volledige analyse?</h4><p data-nl="Een persoonlijke BaZi reading duikt dieper in je dag-meester, elementen en levensloopperioden." data-en="A personal BaZi reading dives deeper into your day master, elements and life cycle periods.">Een persoonlijke BaZi reading duikt dieper in je dag-meester en levensloopperioden.</p></div><a href="#contact" class="btn btn-sage btn-sm" data-nl="Vraag een reading aan" data-en="Request a reading">Vraag een reading aan</a></div>
           </div>
@@ -529,6 +539,7 @@
           <div class="calc-result" id="saju-result">
             <div class="result-title" data-nl="Jouw Saju Chart" data-en="Your Saju Chart">Jouw Saju Chart</div>
             <div class="saju-chart" id="saju-pillars"></div>
+            <div id="saju-explain"></div>
             <div class="analysis-cta"><div class="analysis-cta-text"><h4 data-nl="Diepgaande Saju analyse?" data-en="In-depth Saju analysis?">Diepgaande Saju analyse?</h4><p data-nl="Ontdek wat je Saju zegt over je karakter, relaties en levensdoel." data-en="Discover what your Saju says about your character, relationships and life purpose.">Ontdek wat je Saju zegt over je karakter, relaties en levensdoel.</p></div><a href="#contact" class="btn btn-sage btn-sm" data-nl="Vraag een reading aan" data-en="Request a reading">Vraag een reading aan</a></div>
           </div>
         </div>
@@ -812,6 +823,40 @@
   ];
   const elIcons = {Wood:'🌿',Fire:'🔥',Earth:'⛰',Metal:'⚙',Water:'💧'};
   const elNl = {Wood:'Hout',Fire:'Vuur',Earth:'Aarde',Metal:'Metaal',Water:'Water'};
+  // Dutch element + polarity display ("Wood+" → "Yang Hout")
+  const elPolarNl = {'Wood+':'Yang Hout','Wood-':'Yin Hout','Fire+':'Yang Vuur','Fire-':'Yin Vuur','Earth+':'Yang Aarde','Earth-':'Yin Aarde','Metal+':'Yang Metaal','Metal-':'Yin Metaal','Water+':'Yang Water','Water-':'Yin Water'};
+  const elPolarEn = {'Wood+':'Yang Wood','Wood-':'Yin Wood','Fire+':'Yang Fire','Fire-':'Yin Fire','Earth+':'Yang Earth','Earth-':'Yin Earth','Metal+':'Yang Metal','Metal-':'Yin Metal','Water+':'Yang Water','Water-':'Yin Water'};
+  // Short element descriptions
+  const elDesc = {
+    Wood: {nl:'Groei · creativiteit · vooruitgang', en:'Growth · creativity · progress'},
+    Fire: {nl:'Passie · charisma · expressie', en:'Passion · charisma · expression'},
+    Earth: {nl:'Stabiliteit · voeding · betrouwbaarheid', en:'Stability · nurturing · reliability'},
+    Metal: {nl:'Precisie · structuur · vastberadenheid', en:'Precision · structure · determination'},
+    Water: {nl:'Intuïtie · wijsheid · aanpassingsvermogen', en:'Intuition · wisdom · adaptability'},
+  };
+  // Day Master (Dagmeester) descriptions per stem symbol
+  const dmDesc = {
+    '甲':{nl:'Yang Hout — Jij groeit rechtop als een boom: doelgericht, leidend en vol levenskracht. Je gaat recht op je doel af.',en:'Yang Wood — You grow upright like a tree: goal-oriented, leading and full of vitality.'},
+    '乙':{nl:'Yin Hout — Jij buigt mee als een wijnrank: aanpasbaar, diplomatiek en creatief. Je vindt altijd je weg.',en:'Yin Wood — You bend like a vine: adaptable, diplomatic and creative. You always find your way.'},
+    '丙':{nl:'Yang Vuur — Jij straalt als de zon: uitbundig, charismatisch en verwarmend. Je brengt licht en energie mee.',en:'Yang Fire — You radiate like the sun: exuberant, charismatic and warming. You bring light and energy.'},
+    '丁':{nl:'Yin Vuur — Jij gloeit als een kaars: verfijnd, diepzinnig en verlichtend. Je raakt mensen op een subtiele, krachtige manier.',en:'Yin Fire — You glow like a candle: refined, profound and illuminating. You touch people in a subtle yet powerful way.'},
+    '戊':{nl:'Yang Aarde — Jij staat als een berg: stabiel, beschermend en betrouwbaar. Anderen vinden houvast bij jou.',en:'Yang Earth — You stand like a mountain: stable, protective and trustworthy. Others find support in you.'},
+    '己':{nl:'Yin Aarde — Jij voedt als vruchtbare grond: zorgzaam, geduldig en praktisch. Je koestert wat groeit.',en:'Yin Earth — You nourish like fertile soil: caring, patient and practical. You cultivate what grows.'},
+    '庚':{nl:'Yang Metaal — Jij snijdt als een zwaard: vastberaden, rechtvaardig en direct. Je gaat door tot de kern.',en:'Yang Metal — You cut like a sword: resolute, just and direct. You get to the heart of the matter.'},
+    '辛':{nl:'Yin Metaal — Jij glimt als edelmetaal: verfijnd, analytisch en elegant. Je zoekt naar volmaaktheid in alles.',en:'Yin Metal — You gleam like precious metal: refined, analytical and elegant. You seek perfection in all things.'},
+    '壬':{nl:'Yang Water — Jij stroomt als een rivier: diepzinnig, strategisch en overvloedig. Je omarmt alles op je pad.',en:'Yang Water — You flow like a river: profound, strategic and abundant. You embrace everything in your path.'},
+    '癸':{nl:'Yin Water — Jij sijpelt als bronwater: sensitief, intuïtief en mysterieus. Je voelt wat anderen niet zien.',en:'Yin Water — You seep like spring water: sensitive, intuitive and mysterious. You sense what others cannot see.'},
+  };
+  // Pillar role descriptions
+  const pillarRoleNl = ['Afkomst · buitenwereld','Loopbaan · omgeving','Jezelf — de Dagmeester ✦','Innerlijk · nageslacht'];
+  const pillarRoleEn = ['Ancestry · outer world','Career · environment','Yourself — the Day Master ✦','Inner life · descendants'];
+  // Helper: build explanation HTML (used by both BaZi and Saju)
+  function buildDmBox(dmStem, l) {
+    var desc = dmDesc[dmStem.sym] ? dmDesc[dmStem.sym][l] : '';
+    if (!desc) return '';
+    var title = l==='nl' ? '✦ Jouw Dagmeester (日主)' : '✦ Your Day Master (日主)';
+    return '<div class="bazi-dm-box"><div class="bazi-dm-label">'+title+'</div><div class="bazi-dm-inner"><span class="bazi-dm-sym" style="color:'+dmStem.color+'">'+dmStem.sym+'</span><div class="bazi-dm-text">'+desc+'</div></div></div>';
+  }
 
   // Safe modulo (handles negative values for years before 2004)
   function getStem(y) { return HS[((y-4)%10+10)%10]; }
@@ -861,8 +906,11 @@
     ];
     const ec={Wood:0,Fire:0,Earth:0,Metal:0,Water:0};
     pillars.forEach(p=>{const se=p.stem.el.replace(/[+-]/,''),be=p.branch.el;if(ec[se]!==undefined)ec[se]++;if(ec[be]!==undefined)ec[be]++;});
-    document.getElementById('bazi-pillars').innerHTML=pillars.map(p=>`<div class="bazi-pillar"><div class="bazi-pillar-label">${p.label}</div><div class="bazi-stem" style="color:${p.stem.color}">${p.stem.sym}</div><div class="bazi-stem-name">${p.stem.nl} · ${p.stem.el}</div><div class="bazi-branch">${p.branch.sym}</div><div class="bazi-branch-name">${p.branch.nl}</div></div>`).join('');
-    document.getElementById('bazi-elements').innerHTML=Object.entries(ec).map(([el,c])=>`<div class="element-item"><div class="element-symbol">${elIcons[el]}</div><div class="element-name">${lang==='nl'?elNl[el]:el}</div><div class="element-count">${c}</div></div>`).join('');
+    const proles = lang==='nl' ? pillarRoleNl : pillarRoleEn;
+    const elpolar = lang==='nl' ? elPolarNl : elPolarEn;
+    document.getElementById('bazi-pillars').innerHTML=pillars.map((p,i)=>'<div class="bazi-pillar'+(i===2?' bazi-pillar-dm':'')+'"><div class="bazi-pillar-label">'+p.label+'</div><div class="bazi-pillar-role">'+proles[i]+'</div><div class="bazi-stem" style="color:'+p.stem.color+'">'+p.stem.sym+'</div><div class="bazi-stem-name">'+p.stem.nl+' · '+(elpolar[p.stem.el]||p.stem.el)+'</div><div class="bazi-branch">'+p.branch.sym+'</div><div class="bazi-branch-name">'+p.branch.nl+' · '+(elNl[p.branch.el.replace(/[+-]/,'')]||p.branch.el)+'</div></div>').join('');
+    document.getElementById('bazi-explain').innerHTML=buildDmBox(pillars[2].stem, lang);
+    document.getElementById('bazi-elements').innerHTML=Object.entries(ec).map(([el,c])=>'<div class="element-item"><div class="element-symbol">'+elIcons[el]+'</div><div class="element-name">'+(lang==='nl'?elNl[el]:el)+'</div><div class="element-count">'+c+'</div><div class="element-desc">'+(elDesc[el]?.[lang==='nl'?'nl':'en']||'')+'</div></div>').join('');
     const r=document.getElementById('bazi-result');r.classList.add('show');r.scrollIntoView({behavior:'smooth',block:'nearest'});
   }
 
@@ -888,7 +936,10 @@
       {label:'일주 (Dag)',stem:day_.stem,branch:day_.branch},
       {label:'시주 (Uur)',stem:getHourStem(HS.findIndex(function(s){return s.sym===day_.stem.sym;}),tsh_s),branch:getHourBranch(tsh_s)},
     ];
-    document.getElementById('saju-pillars').innerHTML=pillars.map(p=>`<div class="saju-pillar"><div class="saju-label">${p.label}</div><div class="saju-korean" style="color:${elColors[p.stem.el.replace(/[+-]/,'')] ||'#7a8c78'}">${p.stem.sym}</div><div class="saju-roman">${p.stem.nl}</div><div class="saju-korean">${p.branch.sym}</div><div class="saju-roman">${p.branch.nl}</div><div class="saju-element-badge">${p.branch.el}</div></div>`).join('');
+    const sproles = lang==='nl' ? pillarRoleNl : pillarRoleEn;
+    const selpolar = lang==='nl' ? elPolarNl : elPolarEn;
+    document.getElementById('saju-pillars').innerHTML=pillars.map((p,i)=>'<div class="saju-pillar'+(i===2?' bazi-pillar-dm':'')+'"><div class="saju-label">'+p.label+'</div><div class="bazi-pillar-role">'+sproles[i]+'</div><div class="saju-korean" style="color:'+(elColors[p.stem.el.replace(/[+-]/,'')]||'#7a8c78')+'">'+p.stem.sym+'</div><div class="saju-roman">'+p.stem.nl+' · '+(selpolar[p.stem.el]||p.stem.el)+'</div><div class="saju-korean">'+p.branch.sym+'</div><div class="saju-roman">'+p.branch.nl+'</div><div class="saju-element-badge">'+(elNl[p.branch.el]||p.branch.el)+'</div></div>').join('');
+    document.getElementById('saju-explain').innerHTML=buildDmBox(pillars[2].stem, lang);
     const r=document.getElementById('saju-result');r.classList.add('show');r.scrollIntoView({behavior:'smooth',block:'nearest'});
   }
 
@@ -1834,43 +1885,63 @@ function drawBodygraph(centerDef,activeChannels,halfChannels){
 // ─── BACKEND RENDER FUNCTIONS ───
 
 function renderBaziFromAPI(data) {
-  const labels = ['Jaar Pilaar','Maand Pilaar','Dag Pilaar','Uur Pilaar'];
+  const labelsNl = ['Jaar Pilaar','Maand Pilaar','Dag Pilaar','Uur Pilaar'];
+  const labelsEn = ['Year Pillar','Month Pillar','Day Pillar','Hour Pillar'];
+  const labels = lang==='nl' ? labelsNl : labelsEn;
+  const proles = lang==='nl' ? pillarRoleNl : pillarRoleEn;
   const pillarsData = [data.yearPillar, data.monthPillar, data.dayPillar, data.hourPillar];
-  document.getElementById('bazi-pillars').innerHTML = pillarsData.map((p,i) => `
-    <div class="bazi-pillar">
-      <div class="bazi-pillar-label">${labels[i]}</div>
-      <div class="bazi-stem" style="color:${p.stem.color}">${p.stem.symbol}</div>
-      <div class="bazi-stem-name">${p.stem.name} · ${p.stem.element}${p.stem.polarity}</div>
-      <div class="bazi-branch">${p.branch.symbol}</div>
-      <div class="bazi-branch-name">${p.branch.name} (${p.branch.animal})</div>
-    </div>`).join('');
-  const elIcons={Wood:'🌿',Fire:'🔥',Earth:'⛰',Metal:'⚙',Water:'💧'};
-  const elNl={Wood:'Hout',Fire:'Vuur',Earth:'Aarde',Metal:'Metaal',Water:'Water'};
-  document.getElementById('bazi-elements').innerHTML = Object.entries(data.elementCounts).map(([el,c]) => `
-    <div class="element-item">
-      <div class="element-symbol">${elIcons[el]}</div>
-      <div class="element-name">${lang==='nl'?elNl[el]:el}</div>
-      <div class="element-count">${c}</div>
-    </div>`).join('');
+  // Build polarity display for API data (element + polarity separate fields)
+  function apiElDisplay(el, pol) {
+    const key = el + (pol||'');
+    return (lang==='nl' ? elPolarNl : elPolarEn)[key] || (pol==='+'?'Yang ':pol==='-'?'Yin ':'') + (elNl[el]||el);
+  }
+  document.getElementById('bazi-pillars').innerHTML = pillarsData.map((p,i) =>
+    '<div class="bazi-pillar'+(i===2?' bazi-pillar-dm':'')+'">'+
+    '<div class="bazi-pillar-label">'+labels[i]+'</div>'+
+    '<div class="bazi-pillar-role">'+proles[i]+'</div>'+
+    '<div class="bazi-stem" style="color:'+p.stem.color+'">'+p.stem.symbol+'</div>'+
+    '<div class="bazi-stem-name">'+p.stem.name+' · '+apiElDisplay(p.stem.element,p.stem.polarity)+'</div>'+
+    '<div class="bazi-branch">'+p.branch.symbol+'</div>'+
+    '<div class="bazi-branch-name">'+p.branch.name+(p.branch.animal?' ('+p.branch.animal+')':'')+' · '+(elNl[p.branch.element]||p.branch.element)+'</div>'+
+    '</div>').join('');
+  // Day Master box
+  const dmStemAPI = pillarsData[2].stem;
+  const dmStemObj = HS.find(function(s){return s.sym===dmStemAPI.symbol;}) || {sym:dmStemAPI.symbol,color:dmStemAPI.color};
+  document.getElementById('bazi-explain').innerHTML = buildDmBox(dmStemObj, lang);
+  document.getElementById('bazi-elements').innerHTML = Object.entries(data.elementCounts).map(([el,c]) =>
+    '<div class="element-item">'+
+    '<div class="element-symbol">'+elIcons[el]+'</div>'+
+    '<div class="element-name">'+(lang==='nl'?elNl[el]:el)+'</div>'+
+    '<div class="element-count">'+c+'</div>'+
+    '<div class="element-desc">'+(elDesc[el]?.[lang==='nl'?'nl':'en']||'')+'</div>'+
+    '</div>').join('');
   const r = document.getElementById('bazi-result');
   r.classList.add('show');
   r.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
 function renderSajuFromAPI(data) {
-  // Saju uses same data as BaZi — render with Korean labels
   const elColors={Wood:'#4a8a4a',Fire:'#c05a3a',Earth:'#a08040',Metal:'#7090a0',Water:'#3a6a9a'};
   const labels = ['연주 (Jaar)','월주 (Maand)','일주 (Dag)','시주 (Uur)'];
+  const proles = lang==='nl' ? pillarRoleNl : pillarRoleEn;
   const pillarsData = [data.yearPillar, data.monthPillar, data.dayPillar, data.hourPillar];
-  document.getElementById('saju-pillars').innerHTML = pillarsData.map((p,i) => `
-    <div class="saju-pillar">
-      <div class="saju-label">${labels[i]}</div>
-      <div class="saju-korean" style="color:${elColors[p.stem.element]||'#4a7c6f'}">${p.stem.symbol}</div>
-      <div class="saju-roman">${p.stem.name}</div>
-      <div class="saju-korean">${p.branch.symbol}</div>
-      <div class="saju-roman">${p.branch.name}</div>
-      <div class="saju-element-badge">${p.branch.element}</div>
-    </div>`).join('');
+  function apiElDisplayS(el, pol) {
+    const key = el + (pol||'');
+    return (lang==='nl' ? elPolarNl : elPolarEn)[key] || (elNl[el]||el);
+  }
+  document.getElementById('saju-pillars').innerHTML = pillarsData.map((p,i) =>
+    '<div class="saju-pillar'+(i===2?' bazi-pillar-dm':'')+'">'+
+    '<div class="saju-label">'+labels[i]+'</div>'+
+    '<div class="bazi-pillar-role">'+proles[i]+'</div>'+
+    '<div class="saju-korean" style="color:'+(elColors[p.stem.element]||'#4a7c6f')+'">'+p.stem.symbol+'</div>'+
+    '<div class="saju-roman">'+p.stem.name+' · '+apiElDisplayS(p.stem.element,p.stem.polarity)+'</div>'+
+    '<div class="saju-korean">'+p.branch.symbol+'</div>'+
+    '<div class="saju-roman">'+p.branch.name+'</div>'+
+    '<div class="saju-element-badge">'+(elNl[p.branch.element]||p.branch.element)+'</div>'+
+    '</div>').join('');
+  const dmStemAPI = pillarsData[2].stem;
+  const dmStemObj = HS.find(function(s){return s.sym===dmStemAPI.symbol;}) || {sym:dmStemAPI.symbol,color:elColors[dmStemAPI.element]||'#7a8c78'};
+  document.getElementById('saju-explain').innerHTML = buildDmBox(dmStemObj, lang);
   const r = document.getElementById('saju-result');
   r.classList.add('show');
   r.scrollIntoView({behavior:'smooth',block:'nearest'});
