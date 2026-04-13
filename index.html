@@ -821,6 +821,11 @@
     {nl:'Shēn (Aap)',sym:'申',el:'Metal'},{nl:'Yǒu (Haan)',sym:'酉',el:'Metal'},
     {nl:'Xū (Hond)',sym:'戌',el:'Earth'},{nl:'Hài (Varken)',sym:'亥',el:'Water'},
   ];
+  // Fast lookup by Chinese symbol → local Dutch EB entry
+  const ebBySym = {};
+  EB.forEach(function(b){ebBySym[b.sym]=b;});
+  const hsBySym = {};
+  HS.forEach(function(s){hsBySym[s.sym]=s;});
   const elIcons = {Wood:'🌿',Fire:'🔥',Earth:'⛰',Metal:'⚙',Water:'💧'};
   const elNl = {Wood:'Hout',Fire:'Vuur',Earth:'Aarde',Metal:'Metaal',Water:'Water'};
   // Dutch element + polarity display ("Wood+" → "Yang Hout")
@@ -1902,11 +1907,11 @@ function renderBaziFromAPI(data) {
     '<div class="bazi-stem" style="color:'+p.stem.color+'">'+p.stem.symbol+'</div>'+
     '<div class="bazi-stem-name">'+p.stem.name+' · '+apiElDisplay(p.stem.element,p.stem.polarity)+'</div>'+
     '<div class="bazi-branch">'+p.branch.symbol+'</div>'+
-    '<div class="bazi-branch-name">'+p.branch.name+(p.branch.animal?' ('+p.branch.animal+')':'')+' · '+(elNl[p.branch.element]||p.branch.element)+'</div>'+
+    '<div class="bazi-branch-name">'+((ebBySym[p.branch.symbol]||{nl:p.branch.name}).nl)+' · '+(elNl[p.branch.element]||p.branch.element)+'</div>'+
     '</div>').join('');
-  // Day Master box
+  // Day Master box — use local HS lookup for Dutch name + color
   const dmStemAPI = pillarsData[2].stem;
-  const dmStemObj = HS.find(function(s){return s.sym===dmStemAPI.symbol;}) || {sym:dmStemAPI.symbol,color:dmStemAPI.color};
+  const dmStemObj = hsBySym[dmStemAPI.symbol] || {sym:dmStemAPI.symbol,color:dmStemAPI.color};
   document.getElementById('bazi-explain').innerHTML = buildDmBox(dmStemObj, lang);
   document.getElementById('bazi-elements').innerHTML = Object.entries(data.elementCounts).map(([el,c]) =>
     '<div class="element-item">'+
@@ -1936,11 +1941,11 @@ function renderSajuFromAPI(data) {
     '<div class="saju-korean" style="color:'+(elColors[p.stem.element]||'#4a7c6f')+'">'+p.stem.symbol+'</div>'+
     '<div class="saju-roman">'+p.stem.name+' · '+apiElDisplayS(p.stem.element,p.stem.polarity)+'</div>'+
     '<div class="saju-korean">'+p.branch.symbol+'</div>'+
-    '<div class="saju-roman">'+p.branch.name+'</div>'+
+    '<div class="saju-roman">'+((ebBySym[p.branch.symbol]||{nl:p.branch.name}).nl)+'</div>'+
     '<div class="saju-element-badge">'+(elNl[p.branch.element]||p.branch.element)+'</div>'+
     '</div>').join('');
   const dmStemAPI = pillarsData[2].stem;
-  const dmStemObj = HS.find(function(s){return s.sym===dmStemAPI.symbol;}) || {sym:dmStemAPI.symbol,color:elColors[dmStemAPI.element]||'#7a8c78'};
+  const dmStemObj = hsBySym[dmStemAPI.symbol] || {sym:dmStemAPI.symbol,color:elColors[dmStemAPI.element]||'#7a8c78'};
   document.getElementById('saju-explain').innerHTML = buildDmBox(dmStemObj, lang);
   const r = document.getElementById('saju-result');
   r.classList.add('show');
