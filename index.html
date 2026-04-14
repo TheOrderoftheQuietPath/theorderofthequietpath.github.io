@@ -1639,27 +1639,26 @@ const HD_GATE_POS={
   // ROOT right (connect to Solar)
   41:[238,386],39:[238,398],19:[238,410],
 };
+// Center shapes: coordinates MUST match the geometry described in HD_GATE_POS comments above.
+// HEAD  △ apex(200,16) base (172,62)–(228,62)
+// AJNA  ▽ base(172,70)–(228,70) apex(200,114)
+// THROAT rect (162,122)–(238,170)  → x:162 y:122 w:76 h:48
+// G     ◇ top(200,198) right(252,240) bottom(200,282) left(148,240)
+// WILL  ▷ (256,208)–(292,229)–(256,250)
+// SPLEEN ◁ (90,308)–(144,340)–(90,372)
+// SOLAR  ◁ (310,308)–(256,340)–(310,372)
+// SACRAL rect (162,288)–(238,336) → x:162 y:288 w:76 h:48
+// ROOT   rect (162,374)–(238,422) → x:162 y:374 w:76 h:48
 const HD_SHAPES = {
-  // Hoofd & Ajna (Driehoeken wijzen naar beneden)
-  Head:   { shape: "tri",  pts: [[200, 20], [160, 60], [240, 60]] },
-  Ajna:   { shape: "tri",  pts: [[200, 140], [160, 60], [240, 60]] },
-  
-  // Throat (Square)
-  Throat: { shape: "rect", x: 160, y: 140, w: 60, h: 60 },
-  
-  // G-Centrum (Diamant)
-  G:      { shape: "dia",  cx: 200, cy: 200, hw: 30, hh: 50 },
-  
-  // Ego (Rechts), Milt (Links), Zonnevlecht (Rechtsonder)
-  Ego:    { shape: "tri",  pts: [[240, 240], [300, 280], [240, 320]] },
-  Spleen: { shape: "tri",  pts: [[160, 280], [100, 320], [160, 360]] },
-  Solar:  { shape: "tri",  pts: [[240, 320], [300, 360], [240, 400]] },
-  
-  // Sacraal (Square)
-  Sacral: { shape: "rect", x: 160, y: 320, w: 60, h: 60 },
-  
-  // Wortel (Square)
-  Root:   { shape: "rect", x: 160, y: 440, w: 60, h: 60 },
+  Head:   { shape: "tri",  pts: [[200,16],[172,62],[228,62]] },
+  Ajna:   { shape: "tri",  pts: [[200,114],[172,70],[228,70]] },
+  Throat: { shape: "rect", x:162, y:122, w:76, h:48 },
+  G:      { shape: "dia",  cx:200, cy:240, hw:52, hh:42 },
+  Will:   { shape: "tri",  pts: [[256,208],[292,229],[256,250]] },
+  Spleen: { shape: "tri",  pts: [[90,308],[144,340],[90,372]] },
+  Solar:  { shape: "tri",  pts: [[310,308],[256,340],[310,372]] },
+  Sacral: { shape: "rect", x:162, y:288, w:76, h:48 },
+  Root:   { shape: "rect", x:162, y:374, w:76, h:48 },
 };
 
 const HD_LABELS={
