@@ -1576,89 +1576,84 @@ const HD_CHANNELS=[
 ];
 
 // All 64 gates: exact pixel positions on their center's edge
-// HEAD triangle: apex(200,16) base-left(172,62) base-right(228,62)
-// AJNA triangle: top-left(172,70) top-right(228,70) apex(200,114)
-// THROAT rect: (162,122)-(238,198)
-// G diamond: top(200,198) right(252,240) bottom(200,282) left(148,240)
-// WILL triangle: (256,208)-(256,250)-(292,229)
-// SOLAR triangle: right-top(310,308) right-bot(310,372) apex-left(256,340)
-// SACRAL rect: (162,288)-(238,364)
-// SPLEEN triangle: left-top(90,308) left-bot(90,372) apex-right(144,340)
-// ROOT rect: (162,374)-(238,450)
+// HEAD  △  apex(200,20) base L(176,60)–R(224,60)
+// AJNA  ▽  base L(176,68)–R(224,68)  apex(200,108)
+// THROAT   rect x=178 y=116  w=44 h=32  → bottom y=148
+// G     ◇  cx=200 cy=192 hw=38 hh=30   → top(200,162) right(238,192) bottom(200,222) left(162,192)
+// WILL  ▷  (238,163)–(268,192)–(238,221)
+// SPLEEN ◁ base-LEFT x=110 y=232–288   apex-RIGHT(162,260)   [points inward/right]
+// SOLAR  ▶ base-RIGHT x=290 y=232–288  apex-LEFT(238,260)    [points inward/left]
+// SACRAL   rect x=178 y=230  w=44 h=42 → bottom y=272
+// ROOT     rect x=178 y=280  w=44 h=30 → bottom y=310
 const HD_GATE_POS={
-  // HEAD (base of triangle, y=62)
-  64:[184,62], 61:[200,62], 63:[216,62],
-  // AJNA top (y=70, connect to Head)
-  47:[184,70], 24:[200,70],  4:[216,70],
-  // AJNA bottom (near apex y=114, connect to Throat)
-  17:[185,108],43:[200,114],11:[215,108],
-  // THROAT top (y=122, connect to Ajna)
-  62:[178,122],23:[200,122],56:[222,122],
-  // THROAT left (connect to Spleen/G)
-  16:[162,138],20:[162,152],
-  // THROAT right (connect to Will/Solar)
-  45:[238,134],35:[238,146],12:[238,158],
-  // THROAT bottom (y=170, connect to G)
-   8:[178,170],33:[200,170],31:[222,170],
-  // G top (connect to Throat)
-   1:[191,205],13:[200,198], 7:[209,205],
-  // G right (connect to Will)
-  25:[252,240],
-  // G left (connect to Throat 20 and Spleen 57)
-  10:[148,240],
-  // G bottom (connect to Sacral)
-   2:[191,275],15:[200,282],46:[209,275],
-  // WILL left (connect to Throat 45, G 25... wait 51 connects to G 25)
-  21:[256,213],51:[256,245],
-  // WILL right apex (connect to Solar 37)
-  40:[292,229],
-  // WILL lower (connect to Spleen 44)
-  26:[268,246],
-  // SOLAR right edge (connect to Throat 35/12)
-  36:[310,316],22:[310,332],
-  // SOLAR apex left (connect to Sacral 59, Will 37)
-   6:[258,340],37:[264,332],
-  // SOLAR right-bottom (connect to Root)
-  49:[310,350],55:[310,362],30:[298,372],
-  // SACRAL top (connect to G)
-  14:[178,288], 5:[200,288],29:[222,288],
-  // SACRAL left (connect to Spleen and Throat)
-  34:[162,300],27:[162,314],
-  // SACRAL right (connect to Solar)
-  59:[238,304],
-  // SACRAL bottom (connect to Root)
-  42:[178,336], 3:[200,336], 9:[222,336],
-  // SPLEEN left edge
-  48:[ 90,316],57:[ 90,332],50:[ 90,348],28:[ 98,368],
-  // SPLEEN apex/right (connect to Will 26, Root 32/18)
-  44:[142,344],32:[126,368],18:[108,372],
-  // ROOT top (connect to Sacral)
-  60:[178,374],52:[200,374],53:[222,374],
-  // ROOT left (connect to Spleen)
-  58:[162,386],38:[162,398],54:[162,410],
-  // ROOT right (connect to Solar)
-  41:[238,386],39:[238,398],19:[238,410],
+  // HEAD base (y=60, connects down to Ajna)
+  64:[182,60], 61:[200,60], 63:[218,60],
+  // AJNA top (y=68, connects up to Head)
+  47:[182,68], 24:[200,68],  4:[218,68],
+  // AJNA bottom (near apex y=108, connects down to Throat)
+  17:[184,104],43:[200,108],11:[216,104],
+  // THROAT top (y=116, connects up to Ajna)
+  62:[182,116],23:[200,116],56:[218,116],
+  // THROAT left (x=178, connects left to Spleen/G)
+  16:[178,126],20:[178,138],
+  // THROAT right (x=222, connects right to Will/Solar)
+  45:[222,124],35:[222,134],12:[222,144],
+  // THROAT bottom (y=148, connects down to G)
+   8:[186,148],33:[200,148],31:[214,148],
+  // G top (y=162, connects up to Throat)
+   1:[192,162],13:[200,162], 7:[208,162],
+  // G right (x=238, connects right to Will)
+  25:[238,192],
+  // G left (x=162, connects left toward Spleen/Throat 20)
+  10:[162,192],
+  // G bottom (y=222, connects down to Sacral)
+   2:[192,222],15:[200,222],46:[208,222],
+  // WILL base-left (x=238) and apex-right
+  21:[238,173],51:[238,211],
+  40:[268,192],
+  26:[254,207],
+  // SACRAL top (y=230, connects up to G)
+  14:[184,230], 5:[200,230],29:[216,230],
+  // SACRAL left (x=178, connects left to Spleen)
+  34:[178,244],27:[178,258],
+  // SACRAL right (x=222, connects right to Solar)
+  59:[222,242],
+  // SACRAL bottom (y=272, connects down to Root)
+  42:[184,272], 3:[200,272], 9:[216,272],
+  // SPLEEN — base-left (x=110) top→bottom, then apex-right area
+  48:[110,242],57:[110,254],50:[110,266],
+  44:[156,258],28:[140,274],32:[124,278],18:[110,280],
+  // SOLAR — base-right (x=290) top→bottom, then apex-left area
+  36:[290,242],22:[290,258],
+   6:[242,260],37:[254,244],
+  49:[290,268],55:[290,276],30:[280,284],
+  // ROOT top (y=280, connects up to Sacral)
+  60:[184,280],52:[200,280],53:[216,280],
+  // ROOT left (x=178, connects left to Spleen)
+  58:[178,288],38:[178,298],54:[178,308],
+  // ROOT right (x=222, connects right to Solar)
+  41:[222,288],39:[222,298],19:[222,308],
 };
-// Center shapes: coordinates MUST match the geometry described in HD_GATE_POS comments above.
-// HEAD  △ apex(200,16) base (172,62)–(228,62)
-// AJNA  ▽ base(172,70)–(228,70) apex(200,114)
-// THROAT rect (162,122)–(238,198)  → x:162 y:122 w:76 h:76
-// G     ◇ top(200,198) right(252,240) bottom(200,282) left(148,240)
-// WILL  ▷ (256,208)–(292,229)–(256,250)
-// SPLEEN ◁ apex-left(90,340) base-right(144,308)–(144,372)
-// SOLAR  ▷ apex-right(310,340) base-left(256,308)–(256,372)
-// SACRAL rect (162,288)–(238,364) → x:162 y:288 w:76 h:76
-// ROOT   rect (162,374)–(238,450) → x:162 y:374 w:76 h:76
+// Center shapes — MUST match HD_GATE_POS boundary coordinates above.
+// HEAD  △  apex(200,20)  base L(176,60)–R(224,60)
+// AJNA  ▽  base L(176,68)–R(224,68)  apex(200,108)
+// THROAT   rect x=178 y=116 w=44 h=32
+// G     ◇  cx=200 cy=192 hw=38 hh=30
+// WILL  ▷  pts (238,163)→(268,192)→(238,221)          right-pointing
+// SPLEEN ◁ pts (110,232)→(162,260)→(110,288)           inward (apex→right)
+// SOLAR  ▶ pts (290,232)→(238,260)→(290,288)           inward (apex→left)
+// SACRAL   rect x=178 y=230 w=44 h=42
+// ROOT     rect x=178 y=280 w=44 h=30
 const HD_SHAPES = {
-  Head:   { shape: "tri",  pts: [[200,16],[172,62],[228,62]] },
-  Ajna:   { shape: "tri",  pts: [[200,114],[172,70],[228,70]] },
-  Throat: { shape: "rect", x:162, y:122, w:76, h:76 },
-  G:      { shape: "dia",  cx:200, cy:240, hw:52, hh:42 },
-  Will:   { shape: "tri",  pts: [[256,208],[292,229],[256,250]] },
-  Spleen: { shape: "tri",  pts: [[144,308],[90,340],[144,372]] },
-  Solar:  { shape: "tri",  pts: [[256,308],[310,340],[256,372]] },
-  Sacral: { shape: "rect", x:162, y:288, w:76, h:76 },
-  Root:   { shape: "rect", x:162, y:374, w:76, h:76 },
+  Head:   { shape: "tri",  pts: [[200,20],[176,60],[224,60]] },
+  Ajna:   { shape: "tri",  pts: [[200,108],[176,68],[224,68]] },
+  Throat: { shape: "rect", x:178, y:116, w:44, h:32 },
+  G:      { shape: "dia",  cx:200, cy:192, hw:38, hh:30 },
+  Will:   { shape: "tri",  pts: [[238,163],[268,192],[238,221]] },
+  Spleen: { shape: "tri",  pts: [[110,232],[162,260],[110,288]] },
+  Solar:  { shape: "tri",  pts: [[290,232],[238,260],[290,288]] },
+  Sacral: { shape: "rect", x:178, y:230, w:44, h:42 },
+  Root:   { shape: "rect", x:178, y:280, w:44, h:30 },
 };
 
 const HD_LABELS={
