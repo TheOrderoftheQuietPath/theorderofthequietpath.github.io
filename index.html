@@ -1592,7 +1592,7 @@ const HD_CHANNELS=[
 // AJNA   ▽  base L(175,88)–R(225,88)  apex(200,138)       50×50  gap 18
 // THROAT    rect x=175 y=156 w=50 h=50                    50×50  gap 21
 // G      ◇  cx=200 cy=262 hw=25 hh=25                     50×50  gap 28 to Sacral
-// WILL   ▷  (225,237)→(264,262)→(225,287)  base on G-right
+// WILL   △  (232,284)→(252,264)→(268,274)  P1P2 ∥ G bottom-right (slope -1), between G and Zon.Pl.
 // SACRAL    rect x=175 y=315 w=50 h=50                    50×50  gap 28 below G
 // SPLEEN ◁  (98,315)→(148,340)→(98,365)   27px gap from Sacral left (175-148=27)
 // SOLAR  ▷  (302,315)→(252,340)→(302,365) 27px gap from Sacral right (252-225=27)
@@ -1621,10 +1621,11 @@ const HD_GATE_POS={
   10:[175,262],
   // G bottom (y=287)
    2:[192,287],15:[200,287],46:[208,287],
-  // WILL — left base (x=225, y=237–287), apex (264,262)
-  21:[225,244],51:[225,280],
-  40:[264,262],
-  26:[246,272],
+  // WILL — P1(232,284) P2(252,264) P3-apex(268,274); P1P2 ∥ G bottom-right
+  51:[242,274],  // G-Will channel (gate25-51), on P1P2 midpoint facing G
+  21:[250,267],  // Will-Throat channel (gate21-45), near P2 upper area
+  40:[265,274],  // Solar-Will channel (gate37-40), near apex P3
+  26:[237,280],  // Will-Spleen channel (gate26-44), near P1 lower area
   // SACRAL top (y=315)
   14:[186,315], 5:[200,315],29:[214,315],
   // SACRAL left (x=175)
@@ -1633,13 +1634,22 @@ const HD_GATE_POS={
   59:[225,327],
   // SACRAL bottom (y=365)
   42:[186,365], 3:[200,365], 9:[214,365],
-  // SPLEEN — left base (x=98), apex (148,340)
-  48:[98,324],57:[98,340],50:[98,356],
-  44:[138,332],28:[126,352],32:[112,358],18:[98,364],
-  // SOLAR — right base (x=302), apex (252,340)
-  36:[302,324],22:[302,340],
-   6:[252,340],37:[262,322],
-  49:[302,356],55:[302,362],30:[278,358],
+  // SPLEEN — left base x=98, top edge (98,315)→(148,340), bottom edge (148,340)→(98,365)
+  // left base (x=98): 48,57,50
+  48:[98,324], 57:[98,340], 50:[98,356],
+  // top edge: gate 44 near apex (t≈0.86 → x=141,y=337)
+  44:[141,337],
+  // bottom edge: 28(t≈0.48→123,352), 32(t≈0.72→112,358), 18(t≈0.9→103,363)
+  28:[123,352], 32:[112,358], 18:[103,363],
+  // SOLAR — right base x=302, top edge (302,315)→(252,340), bottom edge (252,340)→(302,365)
+  // right base (x=302): 36,22,49,55
+  36:[302,322], 22:[302,336], 49:[302,350], 55:[302,360],
+  // apex (252,340): gate 6
+   6:[252,340],
+  // top edge: gate 37 near right (t≈0.3 → x=287,y=323)
+  37:[287,323],
+  // bottom edge: gate 30 (t≈0.7 → x=287,y=358)
+  30:[287,358],
   // ROOT top (y=393)
   60:[185,393],52:[200,393],53:[215,393],
   // ROOT left (x=175)
@@ -1653,7 +1663,7 @@ const HD_SHAPES = {
   Ajna:   { shape: "tri",  pts: [[200,138],[175,88],[225,88]] },
   Throat: { shape: "rect", x:175, y:156, w:50, h:50 },
   G:      { shape: "dia",  cx:200, cy:262, hw:25, hh:25 },
-  Will:   { shape: "tri",  pts: [[225,237],[264,262],[225,287]] },
+  Will:   { shape: "tri",  pts: [[232,284],[252,264],[268,274]] },
   Spleen: { shape: "tri",  pts: [[98,315],[148,340],[98,365]] },
   Solar:  { shape: "tri",  pts: [[302,315],[252,340],[302,365]] },
   Sacral: { shape: "rect", x:175, y:315, w:50, h:50 },
