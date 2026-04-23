@@ -1603,8 +1603,8 @@ const HD_GATE_POS={
   64:[185,70], 61:[200,70], 63:[215,70],
   // AJNA top (y=88)
   47:[185,88], 24:[200,88],  4:[215,88],
-  // AJNA bottom / apex (y=138)
-  17:[186,134],43:[200,138],11:[214,134],
+  // AJNA bottom / apex — 17 on left edge t=0.7, 43 at apex, 11 on right edge t=0.7
+  17:[193,123],43:[200,138],11:[208,123],
   // THROAT top (y=156)
   62:[181,156],23:[200,156],56:[219,156],
   // THROAT left (x=175)
@@ -1613,19 +1613,19 @@ const HD_GATE_POS={
   45:[225,163],35:[225,175],12:[225,187],
   // THROAT bottom (y=206)
    8:[185,206],33:[200,206],31:[215,206],
-  // G top (y=237)
-   1:[192,237],13:[200,237], 7:[208,237],
+  // G top — 1 on top-left edge t=0.28, 13 at top vertex, 7 on top-right edge t=0.28
+   1:[193,244],13:[200,237], 7:[208,244],
   // G right (x=225)
   25:[225,262],
   // G left (x=175)
   10:[175,262],
-  // G bottom (y=287)
-   2:[192,287],15:[200,287],46:[208,287],
-  // WILL — P1(232,284) P2(252,264) P3-apex(268,274); P1P2 ∥ G bottom-right
-  51:[242,274],  // G-Will channel (gate25-51), on P1P2 midpoint facing G
-  21:[250,267],  // Will-Throat channel (gate21-45), near P2 upper area
-  40:[265,274],  // Solar-Will channel (gate37-40), near apex P3
-  26:[237,280],  // Will-Spleen channel (gate26-44), near P1 lower area
+  // G bottom — 2 on bottom-left edge t=0.7, 15 at bottom vertex, 46 on bottom-right edge t=0.7
+   2:[193,280],15:[200,287],46:[208,280],
+  // WILL — P1(225,310) P2(249,286) P3-apex(265,298); P1P2 ∥ G bottom-right
+  51:[237,298],  // G-Will channel (gate25-51), on P1P2 midpoint facing G
+  21:[246,289],  // Will-Throat channel (gate21-45), near P2 upper area
+  40:[263,298],  // Solar-Will channel (gate37-40), near apex P3
+  26:[228,307],  // Will-Spleen channel (gate26-44), near P1 lower area
   // SACRAL top (y=315)
   14:[186,315], 5:[200,315],29:[214,315],
   // SACRAL left (x=175)
@@ -1663,7 +1663,7 @@ const HD_SHAPES = {
   Ajna:   { shape: "tri",  pts: [[200,138],[175,88],[225,88]] },
   Throat: { shape: "rect", x:175, y:156, w:50, h:50 },
   G:      { shape: "dia",  cx:200, cy:262, hw:25, hh:25 },
-  Will:   { shape: "tri",  pts: [[232,284],[252,264],[268,274]] },
+  Will:   { shape: "tri",  pts: [[225,310],[249,286],[265,298]] },
   Spleen: { shape: "tri",  pts: [[98,315],[148,340],[98,365]] },
   Solar:  { shape: "tri",  pts: [[302,315],[252,340],[302,365]] },
   Sacral: { shape: "rect", x:175, y:315, w:50, h:50 },
