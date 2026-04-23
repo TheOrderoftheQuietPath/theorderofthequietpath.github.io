@@ -1583,10 +1583,10 @@ const HD_CHANNELS=[
 //                                                  gap 18 px
 // THROAT    rect x=175 y=156 w=50 h=50             y=156–206   (50×50 square)
 //                                                  gap 21 px
-// G      ◇  cx=200 cy=262 hw=25 hh=35             top(200,227) right(225,262)
-//            horizontal axis = Head base = 50 px    bottom(200,297) left(175,262)
-// WILL   ▷  (225,227)→(264,262)→(225,297)  base on G-right, same height as G,
-//            left side ∥ Solar base                 39 wide × 70 tall
+// G      ◇  cx=200 cy=262 hw=25 hh=25             top(200,237) right(225,262)
+//            horizontal axis = Head base = 50 px    bottom(200,287) left(175,262)
+// WILL   ▷  (225,237)→(264,262)→(225,287)  base on G-right, same height as G,
+//            left side ∥ Solar base                 39 wide × 50 tall
 //                                                  gap 18 px
 // SACRAL    rect x=175 y=315 w=50 h=50             y=315–365   (50×50 square)
 // SPLEEN ◁  (124,315)→(174,340)→(124,365)  inward  50 wide × 50 tall
@@ -1609,18 +1609,18 @@ const HD_GATE_POS={
   45:[225,163],35:[225,175],12:[225,187],
   // THROAT bottom (y=206)
    8:[185,206],33:[200,206],31:[215,206],
-  // G top (y=227)
-   1:[192,227],13:[200,227], 7:[208,227],
+  // G top (y=237)
+   1:[192,237],13:[200,237], 7:[208,237],
   // G right (x=225, y=262)
   25:[225,262],
   // G left (x=175, y=262)
   10:[175,262],
-  // G bottom (y=297)
-   2:[192,297],15:[200,297],46:[208,297],
-  // WILL — base-left (x=225, full G height), apex-right
-  21:[225,237],51:[225,287],
+  // G bottom (y=287)
+   2:[192,287],15:[200,287],46:[208,287],
+  // WILL — base-left (x=225, same height as G), apex-right
+  21:[225,244],51:[225,280],
   40:[264,262],
-  26:[246,280],
+  26:[246,272],
   // SACRAL top (y=315)
   14:[186,315], 5:[200,315],29:[214,315],
   // SACRAL left (x=175)
@@ -1648,8 +1648,8 @@ const HD_SHAPES = {
   Head:   { shape: "tri",  pts: [[200,20],[175,70],[225,70]] },
   Ajna:   { shape: "tri",  pts: [[200,138],[175,88],[225,88]] },
   Throat: { shape: "rect", x:175, y:156, w:50, h:50 },
-  G:      { shape: "dia",  cx:200, cy:262, hw:25, hh:35 },
-  Will:   { shape: "tri",  pts: [[225,227],[264,262],[225,297]] },
+  G:      { shape: "dia",  cx:200, cy:262, hw:25, hh:25 },
+  Will:   { shape: "tri",  pts: [[225,237],[264,262],[225,287]] },
   Spleen: { shape: "tri",  pts: [[124,315],[174,340],[124,365]] },
   Solar:  { shape: "tri",  pts: [[276,315],[226,340],[276,365]] },
   Sacral: { shape: "rect", x:175, y:315, w:50, h:50 },
