@@ -610,6 +610,7 @@
                 <div class="hd-info-row"><span class="hd-info-label" data-nl="Autoriteit" data-en="Authority">Autoriteit</span><span class="hd-info-value" id="hdi-authority"></span></div>
                 <div class="hd-info-row"><span class="hd-info-label" data-nl="Profiel" data-en="Profile">Profiel</span><span class="hd-info-value" id="hdi-profile"></span></div>
                 <div class="hd-info-row"><span class="hd-info-label" data-nl="Definitie" data-en="Definition">Definitie</span><span class="hd-info-value" id="hdi-definition"></span></div>
+                <div class="hd-info-row"><span class="hd-info-label" data-nl="Kanalen" data-en="Channels">Kanalen</span><span class="hd-info-value" id="hdi-channels" style="font-size:0.8rem;"></span></div>
                 <div class="hd-info-row"><span class="hd-info-label" data-nl="Incarnatiekruis" data-en="Incarnation Cross">Incarnatiekruis</span><span class="hd-info-value" id="hdi-cross" style="font-size:0.8rem;"></span></div>
               </div>
               <div style="background:var(--surface);border:1px solid var(--stone-light);padding:24px;">
@@ -620,6 +621,13 @@
                 <div class="hd-info-row"><span class="hd-info-label">Persoonlijkheid ⊕</span><span class="hd-info-value" id="hdi-pearth" style="font-size:0.78rem;"></span></div>
                 <div class="hd-info-row"><span class="hd-info-label">Design ☀</span><span class="hd-info-value" id="hdi-dsun" style="font-size:0.78rem;"></span></div>
                 <div class="hd-info-row"><span class="hd-info-label">Design ⊕</span><span class="hd-info-value" id="hdi-dearth" style="font-size:0.78rem;"></span></div>
+              </div>
+              <div id="hdi-variables-block" style="background:var(--surface);border:1px solid var(--stone-light);padding:24px;display:none;">
+                <h4 style="font-family:'Libre Baskerville',serif;font-size:0.9rem;font-weight:400;color:var(--sage-dark);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--stone-light);" data-nl="Variabelen" data-en="Variables">Variabelen</h4>
+                <div class="hd-info-row"><span class="hd-info-label" data-nl="Determinatie" data-en="Determination">Determinatie</span><span class="hd-info-value" id="hdi-var-det"></span></div>
+                <div class="hd-info-row"><span class="hd-info-label" data-nl="Omgeving" data-en="Environment">Omgeving</span><span class="hd-info-value" id="hdi-var-env"></span></div>
+                <div class="hd-info-row"><span class="hd-info-label" data-nl="Motivatie" data-en="Motivation">Motivatie</span><span class="hd-info-value" id="hdi-var-mot"></span></div>
+                <div class="hd-info-row"><span class="hd-info-label" data-nl="Perspectief" data-en="View">Perspectief</span><span class="hd-info-value" id="hdi-var-view"></span></div>
               </div>
             </div>
             <div style="background:var(--surface);border:1px solid var(--stone-light);padding:24px;margin-bottom:2px;">
@@ -1500,6 +1508,10 @@ async function hdCalculate(){
   document.getElementById('hdi-pearth').textContent=`Poort ${pGates['earth']}.${pLines['earth']} — ${GATE_NAMES[pGates['earth']]||''}`;
   document.getElementById('hdi-dsun').textContent=`Poort ${dGates['sun']}.${dLines['sun']} — ${GATE_NAMES[dGates['sun']]||''}`;
   document.getElementById('hdi-dearth').textContent=`Poort ${dGates['earth']}.${dLines['earth']} — ${GATE_NAMES[dGates['earth']]||''}`;
+  // Kanalen
+  document.getElementById('hdi-channels').textContent=activeChannels.length>0?activeChannels.map(ch=>`${ch.g1}–${ch.g2}`).join(' · '):'—';
+  // Variables block hidden in local fallback (no variables data)
+  document.getElementById('hdi-variables-block').style.display='none';
 
   // Bodygraph
   const _acs=(activeChannels||[]).map(ch=>({gates:[ch.g1,ch.g2],type:ch.both?"both":ch.byP?"personality":"design"}));
@@ -1576,30 +1588,22 @@ const HD_CHANNELS=[
 ];
 
 // ── Bodygraph coordinate system ── unit = 50 px ──────────────────────────────
-// All 9 shapes share a common 50 px unit so the chart looks balanced.
-//
-// HEAD   △  apex(200,20)  base L(175,70)–R(225,70)   50 wide × 50 tall
-// AJNA   ▽  base L(175,88)–R(225,88)  apex(200,138)  50 wide × 50 tall
-//                                                  gap 18 px
-// THROAT    rect x=175 y=156 w=50 h=50             y=156–206   (50×50 square)
-//                                                  gap 21 px
-// G      ◇  cx=200 cy=262 hw=25 hh=25             top(200,237) right(225,262)
-//            horizontal axis = Head base = 50 px    bottom(200,287) left(175,262)
-// WILL   ▷  (225,237)→(264,262)→(225,287)  base on G-right, same height as G,
-//            left side ∥ Solar base                 39 wide × 50 tall
-//                                                  gap 18 px
-// SACRAL    rect x=175 y=315 w=50 h=50             y=315–365   (50×50 square)
-// SPLEEN ◁  (124,315)→(174,340)→(124,365)  inward  50 wide × 50 tall
-// SOLAR  ▷  (276,315)→(226,340)→(276,365)  inward  50 wide × 50 tall
-//                                                  gap 18 px
-// ROOT      rect x=175 y=383 w=50 h=50             y=383–433   (50×50 square)
+// HEAD   △  apex(200,20)  base L(175,70)–R(225,70)        50×50
+// AJNA   ▽  base L(175,88)–R(225,88)  apex(200,138)       50×50  gap 18
+// THROAT    rect x=175 y=156 w=50 h=50                    50×50  gap 21
+// G      ◇  cx=200 cy=262 hw=25 hh=25                     50×50  gap 28 to Sacral
+// WILL   ▷  (225,237)→(264,262)→(225,287)  base on G-right
+// SACRAL    rect x=175 y=315 w=50 h=50                    50×50  gap 28 below G
+// SPLEEN ◁  (98,315)→(148,340)→(98,365)   27px gap from Sacral left (175-148=27)
+// SOLAR  ▷  (302,315)→(252,340)→(302,365) 27px gap from Sacral right (252-225=27)
+// ROOT      rect x=175 y=393 w=50 h=50                    50×50  gap 28 below Sacral
 // ─────────────────────────────────────────────────────────────────────────────
 const HD_GATE_POS={
   // HEAD base (y=70)
   64:[185,70], 61:[200,70], 63:[215,70],
-  // AJNA top (y=88, connects up to Head)
+  // AJNA top (y=88)
   47:[185,88], 24:[200,88],  4:[215,88],
-  // AJNA bottom (near apex y=138)
+  // AJNA bottom / apex (y=138)
   17:[186,134],43:[200,138],11:[214,134],
   // THROAT top (y=156)
   62:[181,156],23:[200,156],56:[219,156],
@@ -1611,13 +1615,13 @@ const HD_GATE_POS={
    8:[185,206],33:[200,206],31:[215,206],
   // G top (y=237)
    1:[192,237],13:[200,237], 7:[208,237],
-  // G right (x=225, y=262)
+  // G right (x=225)
   25:[225,262],
-  // G left (x=175, y=262)
+  // G left (x=175)
   10:[175,262],
   // G bottom (y=287)
    2:[192,287],15:[200,287],46:[208,287],
-  // WILL — base-left (x=225, same height as G), apex-right
+  // WILL — left base (x=225, y=237–287), apex (264,262)
   21:[225,244],51:[225,280],
   40:[264,262],
   26:[246,272],
@@ -1629,19 +1633,19 @@ const HD_GATE_POS={
   59:[225,327],
   // SACRAL bottom (y=365)
   42:[186,365], 3:[200,365], 9:[214,365],
-  // SPLEEN — base-left (x=124) then apex-right area
-  48:[124,325],57:[124,339],50:[124,353],
-  44:[168,338],28:[150,358],32:[136,362],18:[124,362],
-  // SOLAR — base-right (x=276) then apex-left area
-  36:[276,326],22:[276,340],
-   6:[230,340],37:[244,324],
-  49:[276,352],55:[276,360],30:[268,364],
-  // ROOT top (y=383)
-  60:[185,383],52:[200,383],53:[215,383],
+  // SPLEEN — left base (x=98), apex (148,340)
+  48:[98,324],57:[98,340],50:[98,356],
+  44:[138,332],28:[126,352],32:[112,358],18:[98,364],
+  // SOLAR — right base (x=302), apex (252,340)
+  36:[302,324],22:[302,340],
+   6:[252,340],37:[262,322],
+  49:[302,356],55:[302,362],30:[278,358],
+  // ROOT top (y=393)
+  60:[185,393],52:[200,393],53:[215,393],
   // ROOT left (x=175)
-  58:[175,396],38:[175,408],54:[175,420],
+  58:[175,406],38:[175,419],54:[175,432],
   // ROOT right (x=225)
-  41:[225,396],39:[225,408],19:[225,420],
+  41:[225,406],39:[225,419],19:[225,432],
 };
 // Center shapes — boundaries MUST match the gate positions above.
 const HD_SHAPES = {
@@ -1650,10 +1654,10 @@ const HD_SHAPES = {
   Throat: { shape: "rect", x:175, y:156, w:50, h:50 },
   G:      { shape: "dia",  cx:200, cy:262, hw:25, hh:25 },
   Will:   { shape: "tri",  pts: [[225,237],[264,262],[225,287]] },
-  Spleen: { shape: "tri",  pts: [[124,315],[174,340],[124,365]] },
-  Solar:  { shape: "tri",  pts: [[276,315],[226,340],[276,365]] },
+  Spleen: { shape: "tri",  pts: [[98,315],[148,340],[98,365]] },
+  Solar:  { shape: "tri",  pts: [[302,315],[252,340],[302,365]] },
   Sacral: { shape: "rect", x:175, y:315, w:50, h:50 },
-  Root:   { shape: "rect", x:175, y:383, w:50, h:50 },
+  Root:   { shape: "rect", x:175, y:393, w:50, h:50 },
 };
 
 const HD_LABELS={
@@ -2040,6 +2044,20 @@ function renderHDFromAPI(data) {
   document.getElementById('hdi-cross').textContent = data.incarnationCross;
   document.getElementById('hdi-notself').textContent = data.notself;
   document.getElementById('hdi-signature').textContent = data.signature;
+  // Kanalen
+  const chList = (data.activeChannels||[]).map(ch=>`${ch.gates[0]}–${ch.gates[1]}`).join(' · ');
+  document.getElementById('hdi-channels').textContent = chList||'—';
+  // Variables
+  if(data.variables) {
+    const v = data.variables;
+    document.getElementById('hdi-var-det').textContent  = v.pijl1?.nl || v.pijl1?.en || '—';
+    document.getElementById('hdi-var-env').textContent  = v.pijl2?.nl || v.pijl2?.en || '—';
+    document.getElementById('hdi-var-mot').textContent  = v.pijl3?.nl || v.pijl3?.en || '—';
+    document.getElementById('hdi-var-view').textContent = v.pijl4?.nl || v.pijl4?.en || '—';
+    document.getElementById('hdi-variables-block').style.display = 'block';
+  } else {
+    document.getElementById('hdi-variables-block').style.display = 'none';
+  }
   // Activations
   if(data.activations) {
     const sun = data.activations.find(a=>a.key==='sun');
