@@ -271,6 +271,83 @@
 
     @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%,100% { opacity:0.4; transform:translateY(0); } 50% { opacity:1; transform:translateY(6px); } }
+
+    /* SCROLL INDICATOR */
+    .hero-scroll { position:absolute; bottom:36px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; animation:fadeUp 1s 1.2s both; }
+    .hero-scroll span { font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--ink3); }
+    .hero-scroll svg { animation:pulse 2s infinite; color:var(--gold); }
+
+    /* STATS BAND */
+    .stats-band { background:var(--ink); border-bottom:1px solid rgba(184,146,42,0.2); }
+    .stats-inner { max-width:1100px; margin:0 auto; padding:0 60px; display:grid; grid-template-columns:repeat(4,1fr); }
+    .stat-item { padding:28px 20px; text-align:center; border-right:1px solid rgba(245,242,237,0.08); position:relative; }
+    .stat-item:last-child { border-right:none; }
+    .stat-number { font-family:'Libre Baskerville',serif; font-size:2rem; font-style:italic; color:var(--gold-light); margin-bottom:4px; line-height:1; }
+    .stat-label { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,242,237,0.5); }
+    @media(max-width:900px){ .stats-inner { grid-template-columns:repeat(2,1fr); padding:0 24px; } .stat-item:nth-child(2){ border-right:none; } .stat-item { border-bottom:1px solid rgba(245,242,237,0.08); } .stat-item:nth-child(3),.stat-item:nth-child(4){ border-bottom:none; } }
+
+    /* TESTIMONIALS */
+    #testimonials { background:linear-gradient(160deg,var(--bg2) 0%,var(--bg) 100%); }
+    .testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:52px; }
+    .testimonial-card { background:var(--surface); border:1px solid var(--stone-light); border-top:3px solid var(--gold); padding:36px 32px; display:flex; flex-direction:column; gap:20px; transition:box-shadow 0.3s,transform 0.3s; }
+    .testimonial-card:hover { box-shadow:0 12px 40px rgba(0,0,0,0.08); transform:translateY(-4px); }
+    .testimonial-stars { color:var(--gold); font-size:0.85rem; letter-spacing:3px; }
+    .testimonial-text { font-family:'Libre Baskerville',serif; font-size:0.95rem; font-style:italic; color:var(--ink2); line-height:1.85; flex:1; }
+    .testimonial-text::before { content:'\201C'; font-size:2.5rem; color:var(--gold-light); line-height:0.5; display:block; margin-bottom:12px; }
+    .testimonial-author { display:flex; flex-direction:column; gap:3px; border-top:1px solid var(--stone-light); padding-top:16px; }
+    .testimonial-name { font-size:0.8rem; font-weight:500; color:var(--ink); letter-spacing:0.05em; }
+    .testimonial-context { font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--sage); }
+    @media(max-width:900px){ .testimonials-grid { grid-template-columns:1fr; } }
+
+    /* IMPACT / TRANSFORMATION */
+    #impact { background:var(--ink); }
+    .impact-header { text-align:center; max-width:640px; margin:0 auto 60px; }
+    .impact-header .section-tag { color:var(--gold-light); }
+    .impact-header .section-title { color:rgba(245,242,237,0.95); }
+    .impact-header .section-title em { color:var(--gold-light); -webkit-text-fill-color:var(--gold-light); background:none; }
+    .impact-header .section-sub { color:rgba(245,242,237,0.55); }
+    .impact-header .divider { margin:28px auto; }
+    .impact-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(245,242,237,0.06); }
+    .impact-item { background:var(--ink); padding:44px 36px; position:relative; overflow:hidden; transition:background 0.3s; }
+    .impact-item:hover { background:rgba(245,242,237,0.03); }
+    .impact-item::before { content:''; position:absolute; top:0; left:0; width:100%; height:2px; background:linear-gradient(to right,var(--gold),transparent); }
+    .impact-num { font-family:'Libre Baskerville',serif; font-size:3rem; font-style:italic; color:rgba(184,146,42,0.2); line-height:1; margin-bottom:16px; }
+    .impact-title { font-family:'Libre Baskerville',serif; font-size:1.05rem; font-weight:400; color:rgba(245,242,237,0.9); margin-bottom:10px; }
+    .impact-desc { font-size:0.85rem; color:rgba(245,242,237,0.45); line-height:1.75; }
+    @media(max-width:900px){ .impact-grid { grid-template-columns:1fr; gap:0; } }
+
+    /* FAQ */
+    #faq { background:var(--bg); }
+    .faq-list { margin-top:52px; max-width:780px; }
+    .faq-item { border-bottom:1px solid var(--stone-light); }
+    .faq-item:first-child { border-top:1px solid var(--stone-light); }
+    .faq-q { width:100%; background:transparent; border:none; text-align:left; padding:22px 0; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-family:'Libre Baskerville',serif; font-size:1rem; font-weight:400; color:var(--ink); line-height:1.4; gap:20px; }
+    .faq-q:hover { color:var(--gold); }
+    .faq-icon { font-size:1.2rem; color:var(--gold); flex-shrink:0; transition:transform 0.3s; }
+    .faq-item.open .faq-icon { transform:rotate(45deg); }
+    .faq-a { max-height:0; overflow:hidden; transition:max-height 0.4s ease, padding 0.3s; }
+    .faq-item.open .faq-a { max-height:400px; }
+    .faq-a-inner { padding:0 0 24px; font-size:0.9rem; color:var(--ink2); line-height:1.85; }
+    .faq-a-inner strong { color:var(--ink); font-weight:500; }
+    .faq-a-inner a { color:var(--sage-dark); text-decoration:underline; }
+
+    /* IMPROVED FOOTER */
+    footer { background:var(--ink); border-top:1px solid rgba(184,146,42,0.15); }
+    .footer-top { max-width:1100px; margin:0 auto; padding:64px 60px 40px; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; }
+    .footer-brand { display:flex; flex-direction:column; gap:16px; }
+    .footer-logo { font-family:'Cinzel',serif; font-size:0.8rem; letter-spacing:0.25em; color:var(--gold-light); text-transform:uppercase; }
+    .footer-tagline { font-size:0.82rem; color:rgba(245,242,237,0.4); line-height:1.7; max-width:260px; }
+    .footer-socials { display:flex; gap:14px; margin-top:8px; }
+    .footer-social-link { width:34px; height:34px; border:1px solid rgba(184,146,42,0.3); display:flex; align-items:center; justify-content:center; color:rgba(245,242,237,0.5); font-size:0.7rem; text-decoration:none; transition:all 0.3s; letter-spacing:0; }
+    .footer-social-link:hover { border-color:var(--gold-light); color:var(--gold-light); }
+    .footer-col h5 { font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; }
+    .footer-col a { display:block; font-size:0.8rem; color:rgba(245,242,237,0.45); text-decoration:none; margin-bottom:10px; transition:color 0.3s; }
+    .footer-col a:hover { color:var(--gold-light); }
+    .footer-bottom { border-top:1px solid rgba(245,242,237,0.06); max-width:1100px; margin:0 auto; padding:20px 60px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .footer-bottom p { font-size:0.68rem; color:rgba(245,242,237,0.25); letter-spacing:0.05em; }
+    @media(max-width:900px){ .footer-top { grid-template-columns:1fr 1fr; padding:48px 24px 32px; gap:32px; } .footer-brand { grid-column:1/-1; } .footer-bottom { padding:16px 24px; flex-direction:column; align-items:flex-start; } }
+    @media(max-width:560px){ .footer-top { grid-template-columns:1fr; } }
 
     @media (max-width: 900px) {
       nav { padding: 18px 24px; }
@@ -378,7 +455,34 @@
         <div class="hero-card"><div class="hero-card-icon">∞</div><div class="hero-card-text"><h4 data-nl="Numerologie" data-en="Numerology">Numerologie</h4><p data-nl="Levenspad · Zielsgetal · Persoonlijkheid · Bestemming" data-en="Life path · Soul urge · Personality · Destiny">Levenspad · Zielsgetal · Persoonlijkheid · Bestemming</p></div></div>
       </div>
     </div>
+    <a href="#stats" class="hero-scroll" aria-label="Scroll naar beneden">
+      <span data-nl="Ontdek meer" data-en="Discover more">Ontdek meer</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </a>
   </section>
+
+  <!-- STATS BAND -->
+  <section id="stats" class="stats-band">
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <div class="stat-number">500+</div>
+        <div class="stat-label" data-nl="Readings &amp; Sessies" data-en="Readings &amp; Sessions">Readings &amp; Sessies</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number">5</div>
+        <div class="stat-label" data-nl="Kosmische disciplines" data-en="Cosmic disciplines">Kosmische disciplines</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number">10+</div>
+        <div class="stat-label" data-nl="Jaar onderzoek &amp; praktijk" data-en="Years research &amp; practice">Jaar onderzoek &amp; praktijk</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number">TEDx</div>
+        <div class="stat-label" data-nl="Erkend spreker" data-en="Recognised speaker">Erkend spreker</div>
+      </div>
+    </div>
+  </section>
+
   <!-- OVER -->
   <section id="over">
     <div class="section-wrap">
@@ -390,12 +494,11 @@
           <p class="section-tag" data-nl="Over mij" data-en="About me">Over mij</p>
           <h2 class="section-title" data-nl="Shi Ming Dao —<br/><em>hij die het heldere pad herkent</em>" data-en="Shi Ming Dao —<br/><em>one who recognizes the clear path</em>">Shi Ming Dao —<br/><em>hij die het heldere pad herkent</em></h2>
           <div class="divider"></div>
-          <p>Mijn naam is Timothy en bij deze wil ik je laten kennismaken met: The Order of the Quiet Path.</p>
-          <p>Mijn pad is ontstaan uit ervaring. Uit zoeken, uit vallen en opstaan, en uit een diep gevoel dat er meer is dan wat ons geleerd wordt te zien. Een beweging recht door de realiteit heen.</p>
-          <p>Wat ik doe, is mensen begeleiden naar zichzelf. Helpen herinneren wat ze diep vanbinnen al weten. Mijn werk beweegt zich rond bewustzijn, energie en innerlijke kracht &#8212; altijd met &#233;&#233;n focus: helderheid brengen in wat verwarrend voelt.</p>
-          <p>Elk mens is anders, en dus is elk pad dat ook. Wat ik bied, is ruimte. Stilte. Richting wanneer dat nodig is, en confrontatie wanneer dat gevraagd wordt.</p>
+          <p>Ik ben Timothy Raeymaekers — coach, onderzoeker, ontwikkelaar en spreker. Meer dan tien jaar heb ik besteed aan het bestuderen van systemen die de menselijke blauwdruk onthullen: Human Design, BaZi, Saju, Numerologie en Astrologie. Niet als hobby. Als levenswerk.</p>
+          <p>In 2025 stond ik voor een TedX-publiek en zei ik iets wat de meeste mensen niet durven zeggen hardop: <em>jij bent niet jouw gedachten, jouw trauma's of jouw verleden. Jij bent een patroon — en patronen kun je leren lezen.</em></p>
+          <p>Ik bouw de tools die ik zelf zocht maar nergens vond. Precies, eerlijk en zonder omwegen. Wat ik bied is geen spirituele vlucht — het is een spiegel die je laat zien hoe jij werkelijk bent ontworpen om te functioneren.</p>
+          <p>500+ readings later is mijn overtuiging alleen maar sterker geworden: <strong>zelfkennis is de meest onderschatte superkracht die er bestaat.</strong></p>
           <p><em>The Order of the Quiet Path is geen bestemming.<br/>Het is een manier van kijken. Van zijn.</em></p>
-          <p>Voor wie voelt dat het tijd is&#8230; om echt te zien.</p>
           <div class="about-tags">
             <span class="about-tag">BaZi</span><span class="about-tag">Saju</span><span class="about-tag">Human Design</span>
             <span class="about-tag">Numerologie</span><span class="about-tag">Astrologie</span><span class="about-tag">Zen</span>
@@ -549,6 +652,43 @@
       </div>
     </div>
   </section>
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="section-wrap">
+      <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto;">
+        <p class="section-tag" data-nl="Wat anderen zeggen" data-en="What others say">Wat anderen zeggen</p>
+        <h2 class="section-title" data-nl="Echte mensen.<br/><em>Echte verschuivingen.</em>" data-en="Real people.<br/><em>Real shifts.</em>">Echte mensen.<br/><em>Echte verschuivingen.</em></h2>
+        <div class="divider" style="margin:28px auto;"></div>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">De Human Design reading van Timothy was een keerpunt. Ik begreep eindelijk waarom ik mijn hele leven energie lekte in situaties die niet bij mij pasten. Twee zinnen van hem zaten dieper dan drie jaar therapie.</p>
+          <div class="testimonial-author">
+            <span class="testimonial-name">Sophie V.</span>
+            <span class="testimonial-context" data-nl="Human Design Reading · Projector 3/5" data-en="Human Design Reading · Projector 3/5">Human Design Reading · Projector 3/5</span>
+          </div>
+        </div>
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">Ik was sceptisch. Een vriend overtuigde me. Na de BaZi-sessie zat ik een uur stil — niet omdat het vaag was, maar omdat het zo precies was. Het beschreef een patroon in mijn loopbaan dat ik nooit in woorden had kunnen vatten.</p>
+          <div class="testimonial-author">
+            <span class="testimonial-name">Matteo D.</span>
+            <span class="testimonial-context" data-nl="BaZi Reading · Ondernemer" data-en="BaZi Reading · Entrepreneur">BaZi Reading · Ondernemer</span>
+          </div>
+        </div>
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">Ik gebruik de gratis calculator al maanden voor cliënten in mijn coachingpraktijk. Als gespreksstarter en als spiegel — het werkt elke keer opnieuw. En de persoonlijke sessies van Timothy voegen een laag toe die geen tool kan vervangen.</p>
+          <div class="testimonial-author">
+            <span class="testimonial-name">Laura M.</span>
+            <span class="testimonial-context" data-nl="1-op-1 Coaching · Zelfstandige coach" data-en="1-on-1 Coaching · Independent coach">1-op-1 Coaching · Zelfstandige coach</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CALCULATORS -->
   <section id="calculators">
     <div class="section-wrap">
@@ -556,7 +696,7 @@
         <p class="section-tag" data-nl="Gratis tools" data-en="Free tools">Gratis tools</p>
         <h2 class="section-title" data-nl="Jouw kosmisch <em>profiel</em> in seconden" data-en="Your cosmic <em>profile</em> in seconds">Jouw kosmisch <em>profiel</em> in seconden</h2>
         <div class="divider"></div>
-        <p class="section-sub" data-nl="Elke calculator heeft zijn eigen invoerformulier — zo heeft een probleem bij één calculator geen invloed op de anderen." data-en="Each calculator has its own input form — a problem in one does not affect the others.">Elke calculator heeft zijn eigen invoerformulier &#8212; zo heeft een probleem bij één calculator geen invloed op de anderen.</p>
+        <p class="section-sub" data-nl="Vijf gratis tools. Jouw geboortegegevens, ingevoerd één keer. Resultaten die je voor altijd bijblijven." data-en="Five free tools. Your birth data, entered once. Results that stay with you forever.">Vijf gratis tools. Jouw geboortegegevens, ingevoerd één keer. Resultaten die je voor altijd bijblijven.</p>
       </div>
       <!-- CALCULATOR TABS -->
       <div class="calc-tabs reveal">
@@ -777,6 +917,106 @@
       </div>
     </div>
   </section>
+  <!-- IMPACT / TRANSFORMATION -->
+  <section id="impact">
+    <div class="section-wrap">
+      <div class="impact-header reveal">
+        <p class="section-tag" data-nl="Wat er verandert" data-en="What changes">Wat er verandert</p>
+        <h2 class="section-title" data-nl="Na een reading<br/>kijk je <em>anders</em>." data-en="After a reading<br/>you see <em>differently</em>.">Na een reading<br/>kijk je <em>anders</em>.</h2>
+        <div class="divider"></div>
+        <p class="section-sub" data-nl="Niet omdat de wereld verandert. Omdat jij begrijpt hoe jij erin staat." data-en="Not because the world changes. Because you understand how you stand in it.">Niet omdat de wereld verandert. Omdat jij begrijpt hoe jij erin staat.</p>
+      </div>
+      <div class="impact-grid reveal">
+        <div class="impact-item">
+          <div class="impact-num">01</div>
+          <div class="impact-title" data-nl="Je stopt met zwemmen tegen de stroom" data-en="You stop swimming against the current">Je stopt met zwemmen tegen de stroom</div>
+          <p class="impact-desc" data-nl="Je begrijpt welke energie van jou is en welke je aanneemt van anderen. Je keuzes worden lichter." data-en="You understand which energy is yours and which you absorb from others. Your choices become lighter.">Je begrijpt welke energie van jou is en welke je aanneemt van anderen. Je keuzes worden lichter.</p>
+        </div>
+        <div class="impact-item">
+          <div class="impact-num">02</div>
+          <div class="impact-title" data-nl="Je herkent je cyclische patronen" data-en="You recognise your cyclical patterns">Je herkent je cyclische patronen</div>
+          <p class="impact-desc" data-nl="Waarom bepaalde periodes moeizaam gaan en andere vanzelf vloeien — BaZi en Saju geven je de kalender van jouw leven." data-en="Why certain periods feel heavy and others flow — BaZi and Saju give you the calendar of your life.">Waarom bepaalde periodes moeizaam gaan en andere vanzelf vloeien — BaZi en Saju geven je de kalender van jouw leven.</p>
+        </div>
+        <div class="impact-item">
+          <div class="impact-num">03</div>
+          <div class="impact-title" data-nl="Je beslist vanuit jezelf" data-en="You decide from within yourself">Je beslist vanuit jezelf</div>
+          <p class="impact-desc" data-nl="Je autoriteit (HD), je dag-meester (BaZi), je levenspadgetal — elk systeem wijst naar dezelfde waarheid: jij weet het al." data-en="Your authority (HD), your day master (BaZi), your life path number — each system points to the same truth: you already know.">Je autoriteit (HD), je dag-meester (BaZi), je levenspadgetal — elk systeem wijst naar dezelfde waarheid: jij weet het al.</p>
+        </div>
+        <div class="impact-item">
+          <div class="impact-num">04</div>
+          <div class="impact-title" data-nl="Je relaties worden begrijpelijker" data-en="Your relationships become clearer">Je relaties worden begrijpelijker</div>
+          <p class="impact-desc" data-nl="Conflicten zijn vaak ontwerpen die botsen, niet mensen die het mis hebben. Dat besef verandert alles." data-en="Conflicts are often designs colliding, not people being wrong. That realisation changes everything.">Conflicten zijn vaak ontwerpen die botsen, niet mensen die het mis hebben. Dat besef verandert alles.</p>
+        </div>
+        <div class="impact-item">
+          <div class="impact-num">05</div>
+          <div class="impact-title" data-nl="Je stopt met jezelf te vergelijken" data-en="You stop comparing yourself">Je stopt met jezelf te vergelijken</div>
+          <p class="impact-desc" data-nl="Als je ziet hoe uniek jouw blauwdruk is, verdwijnt de neiging om te meten aan anderen. Jouw pad heeft zijn eigen logica." data-en="When you see how unique your blueprint is, the urge to compare dissolves. Your path has its own logic.">Als je ziet hoe uniek jouw blauwdruk is, verdwijnt de neiging om te meten aan anderen. Jouw pad heeft zijn eigen logica.</p>
+        </div>
+        <div class="impact-item">
+          <div class="impact-num">06</div>
+          <div class="impact-title" data-nl="Je leeft minder in je hoofd" data-en="You live less in your head">Je leeft minder in je hoofd</div>
+          <p class="impact-desc" data-nl="Zelfkennis stopt de constante zelfanalyse. Je hebt een fundament. Je kunt stoppen met zoeken — en beginnen met zijn." data-en="Self-knowledge stops the constant self-analysis. You have a foundation. You can stop searching — and start being.">Zelfkennis stopt de constante zelfanalyse. Je hebt een fundament. Je kunt stoppen met zoeken — en beginnen met zijn.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-wrap">
+      <div class="reveal">
+        <p class="section-tag" data-nl="Veelgestelde vragen" data-en="Frequently asked questions">Veelgestelde vragen</p>
+        <h2 class="section-title" data-nl="Goede vragen<br/>verdienen <em>eerlijke antwoorden</em>." data-en="Good questions<br/>deserve <em>honest answers</em>.">Goede vragen<br/>verdienen <em>eerlijke antwoorden</em>.</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="faq-list reveal">
+
+        <div class="faq-item">
+          <button class="faq-q" data-nl="Is dit wetenschappelijk bewezen?" data-en="Is this scientifically proven?">Is dit wetenschappelijk bewezen?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner" data-nl="Eerlijk antwoord: nee, niet op de manier waarop een bloedtest dat is. Human Design, BaZi, Numerologie en Astrologie zijn symbolische systemen — talen voor zelfkennis, geen medische diagnoses. Wat ik wel kan zeggen: voor duizenden mensen — en in mijn eigen leven — levert het een precisie op die moeilijk te negeren is. Gebruik het als een spiegel, niet als een kooi." data-en="Honest answer: no, not the way a blood test is. Human Design, BaZi, Numerology and Astrology are symbolic systems — languages for self-knowledge, not medical diagnoses. What I can say: for thousands of people — and in my own life — the precision is hard to ignore. Use it as a mirror, not a cage.">Eerlijk antwoord: nee, niet op de manier waarop een bloedtest dat is. Human Design, BaZi, Numerologie en Astrologie zijn symbolische systemen — talen voor zelfkennis, geen medische diagnoses. Wat ik wel kan zeggen: voor duizenden mensen — en in mijn eigen leven — levert het een precisie op die moeilijk te negeren is. Gebruik het als een spiegel, niet als een kooi.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" data-nl="Wat heb ik nodig voor een reading?" data-en="What do I need for a reading?">Wat heb ik nodig voor een reading?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner" data-nl="Voor BaZi, Saju en Human Design heb je je <strong>exacte geboortedatum, -tijd en -plaats</strong> nodig. Voor Numerologie volstaat je volledige naam (zoals op je geboorteakte) en geboortedatum. Voor Westerse Astrologie is een exacte geboortetijd nodig voor het Ascendant. Heb je je geboortetijd niet? Vraag het op bij de burgerlijke stand of check je geboorteakte — het maakt een groot verschil." data-en="For BaZi, Saju and Human Design you need your <strong>exact birth date, time and place</strong>. For Numerology your full name (as on your birth certificate) and birth date suffice. For Western Astrology an exact birth time is needed for the Ascendant. Don't have your birth time? Check your birth certificate or ask the civil registry — it makes a big difference.">Voor BaZi, Saju en Human Design heb je je <strong>exacte geboortedatum, -tijd en -plaats</strong> nodig. Voor Numerologie volstaat je volledige naam (zoals op je geboorteakte) en geboortedatum. Voor Westerse Astrologie is een exacte geboortetijd nodig voor het Ascendant. Heb je je geboortetijd niet? Vraag het op bij de burgerlijke stand of check je geboorteakte — het maakt een groot verschil.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" data-nl="Hoe lang duurt een persoonlijke sessie?" data-en="How long does a personal session take?">Hoe lang duurt een persoonlijke sessie?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner" data-nl="Een standaard reading duurt <strong>60 tot 90 minuten</strong>. Een volledige combinatiereading (meerdere systemen) duurt 2 à 3 uur en wordt vaak in twee sessies opgesplitst. Sessies vinden online of — indien mogelijk — in persoon plaats." data-en="A standard reading takes <strong>60 to 90 minutes</strong>. A full combined reading (multiple systems) takes 2 to 3 hours and is often split across two sessions. Sessions take place online or — where possible — in person.">Een standaard reading duurt <strong>60 tot 90 minuten</strong>. Een volledige combinatiereading (meerdere systemen) duurt 2 à 3 uur en wordt vaak in twee sessies opgesplitst. Sessies vinden online of — indien mogelijk — in persoon plaats.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" data-nl="Wat is het verschil tussen de gratis calculator en een persoonlijke reading?" data-en="What's the difference between the free calculator and a personal reading?">Wat is het verschil tussen de gratis calculator en een persoonlijke reading?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner" data-nl="De calculator geeft je de <strong>ruwe data</strong>: je type, je pilaren, je getallen. Een persoonlijke reading geeft context, nuance en interpretatie — afgestemd op jouw specifieke levenssituatie. Het verschil is dat tussen een woordenboek en een gesprek met iemand die de taal vloeiend spreekt." data-en="The calculator gives you the <strong>raw data</strong>: your type, your pillars, your numbers. A personal reading adds context, nuance and interpretation — tailored to your specific life situation. The difference is between a dictionary and a conversation with a fluent speaker.">De calculator geeft je de <strong>ruwe data</strong>: je type, je pilaren, je getallen. Een persoonlijke reading geeft context, nuance en interpretatie — afgestemd op jouw specifieke levenssituatie. Het verschil is dat tussen een woordenboek en een gesprek met iemand die de taal vloeiend spreekt.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" data-nl="Kan ik meerdere systemen tegelijk laten analyseren?" data-en="Can I have multiple systems analysed at once?">Kan ik meerdere systemen tegelijk laten analyseren?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner" data-nl="Ja — en dat is vaak het krachtigst. Wanneer Human Design, BaZi en Numerologie naar hetzelfde patroon wijzen, is dat geen toeval. Een combinatiereading toont de consistente draden door alle systemen heen — dat is waar echt inzicht ontstaat. Geef in je bericht aan dat je een gecombineerde reading wil." data-en="Yes — and that's often the most powerful approach. When Human Design, BaZi and Numerology all point to the same pattern, that's not coincidence. A combined reading shows the consistent threads across all systems — that's where real insight emerges. Mention in your message that you'd like a combined reading.">Ja — en dat is vaak het krachtigst. Wanneer Human Design, BaZi en Numerologie naar hetzelfde patroon wijzen, is dat geen toeval. Een combinatiereading toont de consistente draden door alle systemen heen — dat is waar echt inzicht ontstaat. Geef in je bericht aan dat je een gecombineerde reading wil.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" data-nl="Is dit voor iedereen, of alleen voor mensen die al 'in de spiritualiteit zitten'?" data-en="Is this for everyone, or only for people already into spirituality?">Is dit voor iedereen, of alleen voor mensen die al 'in de spiritualiteit zitten'?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner" data-nl="Voor iedereen. Mijn meest onverwachte cliënten zijn ingenieurs, CEO's en mensen die zichzelf omschrijven als 'sceptici'. Spiritualiteit is niet vereist — nieuwsgierigheid naar jezelf is genoeg. De systemen zijn structuren. Je hoeft er niets in te geloven; je hoeft alleen te observeren of ze resoneren." data-en="For everyone. My most unexpected clients are engineers, CEOs and people who describe themselves as 'sceptics'. Spirituality is not required — curiosity about yourself is enough. The systems are structures. You don't need to believe in them; you only need to observe whether they resonate.">Voor iedereen. Mijn meest onverwachte cliënten zijn ingenieurs, CEO's en mensen die zichzelf omschrijven als 'sceptici'. Spiritualiteit is niet vereist — nieuwsgierigheid naar jezelf is genoeg. De systemen zijn structuren. Je hoeft er niets in te geloven; je hoeft alleen te observeren of ze resoneren.</div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section id="contact">
     <div class="section-wrap">
@@ -793,7 +1033,7 @@
           </div>
         </div>
         <div class="reveal">
-          <form action="https://formspree.io/f/xnjodpqn" method="POST" class="contact-form" onsubmit="return validateContactForm(this)">
+          <form action="https://formspree.io/f/xnjodpqn" method="POST" class="contact-form">
             <div class="form-group"><label data-nl="Naam" data-en="Name">Naam</label><input type="text" name="name" placeholder="Jouw naam" required /></div>
             <div class="form-group"><label data-nl="E-mail" data-en="Email">E-mail</label><input type="email" name="email" placeholder="jouw@email.com" required /></div>
             <div class="form-group">
@@ -822,8 +1062,44 @@
   </section>
 
   <footer>
-    <span class="footer-logo">The Order of the Quiet Path</span>
-    <p data-nl="© 2026 · Shi Ming Dao · Alle rechten voorbehouden" data-en="© 2026 · Shi Ming Dao · All rights reserved">© 2026 · Shi Ming Dao · Alle rechten voorbehouden</p>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">The Order of the Quiet Path</span>
+        <p class="footer-tagline" data-nl="Kosmische zelfkennis voor wie klaar is om te zien wie hij of zij werkelijk is." data-en="Cosmic self-knowledge for those ready to see who they truly are.">Kosmische zelfkennis voor wie klaar is om te zien wie hij of zij werkelijk is.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/theorderofthequietpath" target="_blank" class="footer-social-link" aria-label="Instagram">IG</a>
+          <a href="https://tiktok.com/@theorderofthequietpath" target="_blank" class="footer-social-link" aria-label="TikTok">TK</a>
+          <a href="https://linktr.ee/theorderofthequietpath" target="_blank" class="footer-social-link" aria-label="Linktree">LT</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5 data-nl="Navigatie" data-en="Navigation">Navigatie</h5>
+        <a href="#over" data-nl="Over mij" data-en="About me">Over mij</a>
+        <a href="#disciplines" data-nl="De systemen" data-en="The systems">De systemen</a>
+        <a href="#diensten" data-nl="Diensten" data-en="Services">Diensten</a>
+        <a href="#calculators" data-nl="Calculators" data-en="Calculators">Calculators</a>
+        <a href="#blog" data-nl="Blog" data-en="Blog">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h5 data-nl="Calculators" data-en="Calculators">Calculators</h5>
+        <a href="#calculators">Human Design</a>
+        <a href="#calculators">BaZi</a>
+        <a href="#calculators">Saju</a>
+        <a href="#calculators" data-nl="Numerologie" data-en="Numerology">Numerologie</a>
+        <a href="#calculators" data-nl="Astrologie" data-en="Astrology">Astrologie</a>
+      </div>
+      <div class="footer-col">
+        <h5 data-nl="Contact" data-en="Contact">Contact</h5>
+        <a href="#contact" data-nl="Boek een reading" data-en="Book a reading">Boek een reading</a>
+        <a href="#contact" data-nl="1-op-1 Coaching" data-en="1-on-1 Coaching">1-op-1 Coaching</a>
+        <a href="#faq" data-nl="Veelgestelde vragen" data-en="FAQ">Veelgestelde vragen</a>
+        <a href="#testimonials" data-nl="Ervaringen" data-en="Testimonials">Ervaringen</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-nl="© 2026 · Shi Ming Dao — Timothy Raeymaekers · Alle rechten voorbehouden" data-en="© 2026 · Shi Ming Dao — Timothy Raeymaekers · All rights reserved">© 2026 · Shi Ming Dao — Timothy Raeymaekers · Alle rechten voorbehouden</p>
+      <p data-nl="TEDx spreker · Human Design · BaZi · Saju · Numerologie · Astrologie" data-en="TEDx speaker · Human Design · BaZi · Saju · Numerology · Astrology">TEDx spreker · Human Design · BaZi · Saju · Numerologie · Astrologie</p>
+    </div>
   </footer>
 
   <script>
@@ -886,6 +1162,60 @@
   const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('visible'); obs.unobserve(x.target); } }), { threshold: 0.05 });
   reveals.forEach(el => obs.observe(el));
   window.addEventListener('load', () => { reveals.forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible'); }); });
+
+  // NAV SCROLL SPY
+  const navSections = ['hero','over','disciplines','diensten','testimonials','calculators','blog','faq','contact'];
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const spyObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        navLinks.forEach(a => {
+          const href = a.getAttribute('href');
+          a.style.color = (href === '#' + id || (id === 'hero' && href === '#hero')) ? 'var(--gold-light)' : '';
+        });
+      }
+    });
+  }, { threshold: 0.35 });
+  navSections.forEach(id => { const el = document.getElementById(id); if (el) spyObs.observe(el); });
+
+  // FAQ ACCORDION
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // CONTACT FORM — success toast
+  (function() {
+    const form = document.querySelector('.contact-form');
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+      const svc = form.querySelector('#contact-service');
+      if (svc && !svc.value) {
+        e.preventDefault();
+        alert(typeof lang !== 'undefined' && lang === 'en' ? 'Please select a service before sending.' : 'Kies een dienst voor je het formulier verstuurt.');
+        svc.focus();
+        return;
+      }
+      // Show toast after Formspree redirect (detect ?success in URL after reload)
+    });
+    if (window.location.search.includes('success')) {
+      showToast(typeof lang !== 'undefined' && lang === 'en' ? '✓ Message sent — I\'ll respond within 48 hours.' : '✓ Bericht verzonden — ik reageer binnen 48 uur.');
+    }
+  })();
+
+  function showToast(msg) {
+    const t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--sage-dark);color:#fff;padding:14px 28px;font-size:0.82rem;letter-spacing:0.05em;z-index:999;opacity:0;transition:all 0.4s;border-radius:2px;white-space:nowrap;';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(() => { t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 4000);
+  }
 
   // TABS — with fade transition + localStorage persistence
   const initialTab = localStorage.getItem('toqp-tab') || 'bazi';
