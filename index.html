@@ -3,7 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Order of the Quiet Path</title>
+  <title>The Order of the Quiet Path — Human Design, BaZi & Numerologie</title>
+  <meta name="description" content="Ontdek je Human Design, BaZi en Numerologie profiel. Gratis online calculator voor je energietype, bodygraph, kanalen en variabelen. Professionele analyses door The Order of the Quiet Path." />
+  <meta name="keywords" content="human design calculator, bodygraph, bazi, numerologie, energietype, projector, generator, manifester, reflector" />
+  <link rel="canonical" href="https://theorderofthequietpath.github.io/" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://theorderofthequietpath.github.io/" />
+  <meta property="og:title" content="The Order of the Quiet Path — Human Design, BaZi & Numerologie" />
+  <meta property="og:description" content="Gratis Human Design bodygraph calculator. Ontdek je energietype, kanalen, variabelen en meer. Professionele analyses beschikbaar." />
+  <meta property="og:image" content="https://theorderofthequietpath.github.io/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Order of the Quiet Path — Human Design & BaZi" />
+  <meta name="twitter:description" content="Gratis Human Design bodygraph calculator. Ontdek je energietype, kanalen en variabelen." />
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&family=Cinzel:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -241,6 +253,7 @@
     .footer-logo { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--gold-light); }
 
     @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     @media (max-width: 900px) {
       nav { padding: 18px 24px; }
@@ -260,8 +273,10 @@
   
     .hd-info-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid rgba(26,24,20,0.05);}
     .hd-info-row:last-child{border:none;}
-    .hd-info-label{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);}
+    .hd-info-label{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);}
     .hd-info-value{font-family:'Libre Baskerville',serif;font-size:0.88rem;color:var(--slate);font-style:italic;text-align:right;max-width:60%;}
+    .hd-center-desc-text{font-size:0.74rem;color:var(--ink3);line-height:1.65;}
+    .calc-note{font-size:0.78rem;}
   
     /* SHARED BIRTH FORM */
     .birth-form { background: var(--surface); border: 1px solid var(--stone-light); padding: 36px; margin-bottom: 2px; }
@@ -529,7 +544,7 @@
           <p data-nl="Berekening op basis van je geboortegegevens hierboven. Het uurpilaar vereist een exacte geboortetijd." data-en="Calculation based on your birth data above. The hour pillar requires an exact birth time.">Vul je geboortegegevens in. Het uurpilaar vereist een exacte geboortetijd.</p>
           <div id="bazi-form-slot"></div>
           <div class="calc-note" data-nl="⚠ Indicatieve berekening. Voor een volledige professionele BaZi analyse inclusief lopende gelukspilaren, neem contact op." data-en="⚠ Indicative calculation. For a full professional BaZi analysis including luck pillars, please get in touch.">⚠ Indicatieve berekening. Voor een volledige professionele analyse, neem contact op.</div>
-          <button class="btn btn-primary" onclick="calcBazi()" data-nl="Bereken BaZi Chart" data-en="Calculate BaZi Chart">Bereken BaZi Chart</button>
+          <button class="btn btn-primary" onclick="withLoading(this,()=>calcBazi())" data-nl="Bereken BaZi Chart" data-en="Calculate BaZi Chart">Bereken BaZi Chart</button>
           <div class="calc-result" id="bazi-result">
             <div class="result-title" data-nl="Jouw BaZi Chart" data-en="Your BaZi Chart">Jouw BaZi Chart</div>
             <div class="bazi-chart" id="bazi-pillars"></div>
@@ -547,7 +562,7 @@
           <p data-nl="De Koreaanse variant van de Vier Pilaren met nadruk op karakter en relaties." data-en="The Korean variant of the Four Pillars with emphasis on character and relationships.">Vul je geboortegegevens in. Saju houdt rekening met geslacht voor de energierichting.</p>
           <div id="saju-form-slot"></div>
           <div class="calc-note" data-nl="⚠ Indicatieve berekening. Professionele Saju analyse op aanvraag." data-en="⚠ Indicative calculation. Professional Saju analysis on request.">⚠ Indicatieve berekening. Professionele Saju analyse op aanvraag.</div>
-          <button class="btn btn-primary" onclick="calcSaju()" data-nl="Bereken Saju Chart" data-en="Calculate Saju Chart">Bereken Saju Chart</button>
+          <button class="btn btn-primary" onclick="withLoading(this,()=>calcSaju())" data-nl="Bereken Saju Chart" data-en="Calculate Saju Chart">Bereken Saju Chart</button>
           <div class="calc-result" id="saju-result">
             <div class="result-title" data-nl="Jouw Saju Chart" data-en="Your Saju Chart">Jouw Saju Chart</div>
             <div class="saju-chart" id="saju-pillars"></div>
@@ -590,8 +605,9 @@
             <p style="font-size:0.88rem;color:var(--ink2);margin-bottom:20px;line-height:1.7;" data-nl="Berekening op basis van je geboortegegevens hierboven. Persoonlijkheid (zwart/oranje) = geboortemoment · Design (rood) = ~88° voor geboorte." data-en="Calculated from your birth data above. Personality (black/orange) = birth moment · Design (red) = ~88° before birth.">Vul je exacte geboortegegevens in. Persoonlijkheid = geboortemoment · Design = ~88° voor geboorte.</p>
             <div id="hd-form-slot"></div>
             <div class="calc-note" data-nl="⚠ Een exacte geboortetijd is essentieel — zelfs 1 uur verschil kan je type of autoriteit wijzigen." data-en="⚠ An exact birth time is essential — even 1 hour difference can change your type or authority.">⚠ Een exacte geboortetijd is essentieel — zelfs 1 uur verschil kan je type of autoriteit wijzigen.</div>
-            <button class="btn btn-primary" onclick="hdCalculate()">Bereken Human Design Chart</button>
+            <button class="btn btn-primary" onclick="withLoading(this,()=>hdCalculate())" data-nl="Bereken Human Design Chart" data-en="Calculate Human Design Chart">Bereken Human Design Chart</button>
           </div>
+          <div id="hd-error" style="display:none;"></div>
           <div id="hd-result" style="display:none;">
             <div id="hd-type-banner" style="background:var(--surface);border:1px solid var(--stone-light);border-top:none;padding:20px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
               <div id="hd-res-type" style="font-family:'Libre Baskerville',serif;font-size:1.8rem;font-style:italic;color:var(--sage-dark);"></div>
@@ -667,7 +683,7 @@
           <h3 data-nl="Numerologisch Profiel" data-en="Numerological Profile">Numerologisch Profiel</h3>
           <p data-nl="Berekening op basis van je naam en geboortedatum hierboven." data-en="Calculation based on your name and birth date above.">Vul je volledige naam (zoals op geboorteakte) en geboortedatum in.</p>
           <div id="num-form-slot"></div>
-          <button class="btn btn-primary" onclick="calcNumerology()" data-nl="Bereken Numerologie" data-en="Calculate Numerology">Bereken Numerologie</button>
+          <button class="btn btn-primary" onclick="withLoading(this,()=>calcNumerology())" data-nl="Bereken Numerologie" data-en="Calculate Numerology">Bereken Numerologie</button>
           <div class="calc-result" id="num-result">
             <div class="result-title" data-nl="Jouw Numerologisch Profiel" data-en="Your Numerological Profile">Jouw Numerologisch Profiel</div>
             <div class="num-grid" id="num-cards"></div>
@@ -746,18 +762,18 @@
           <p data-nl="Voor het boeken van een reading, coaching sessie of cursus — of gewoon om een vraag te stellen. Ik reageer binnen 48 uur." data-en="For booking a reading, coaching session or course — or simply to ask a question. I respond within 48 hours.">Voor het boeken van een reading, coaching sessie of cursus. Ik reageer binnen 48 uur.</p>
           <div class="contact-social">
             <a href="https://www.instagram.com/theorderofthequietpath" target="_blank">Instagram</a>
-            <a href="https://tiktok.com" target="_blank">TikTok</a>
+            <a href="https://tiktok.com/@theorderofthequietpath" target="_blank">TikTok</a>
             <a href="https://linktr.ee" target="_blank">Linktree</a>
           </div>
         </div>
         <div class="reveal">
-          <form action="https://formspree.io/f/xnjodpqn" method="POST" class="contact-form">
+          <form action="https://formspree.io/f/xnjodpqn" method="POST" class="contact-form" onsubmit="return validateContactForm(this)">
             <div class="form-group"><label data-nl="Naam" data-en="Name">Naam</label><input type="text" name="name" placeholder="Jouw naam" required /></div>
             <div class="form-group"><label data-nl="E-mail" data-en="Email">E-mail</label><input type="email" name="email" placeholder="jouw@email.com" required /></div>
             <div class="form-group">
               <label data-nl="Dienst" data-en="Service">Dienst</label>
-              <select name="service">
-                <option>— Kies een dienst —</option>
+              <select name="service" id="contact-service" required>
+                <option value="">— Kies een dienst —</option>
                 <option>BaZi Reading</option>
                 <option>Saju Reading</option>
                 <option>Human Design Reading</option>
@@ -769,6 +785,9 @@
               </select>
             </div>
             <div class="form-group"><label data-nl="Bericht" data-en="Message">Bericht</label><textarea name="message" rows="5" placeholder="Jouw vraag of bericht..." required></textarea></div>
+            <div style="font-size:0.72rem;color:var(--ink3);margin-bottom:14px;line-height:1.6;">
+              <span data-nl="🔒 Jouw gegevens worden enkel gebruikt om jouw vraag te beantwoorden en nooit gedeeld met derden. Meer info: " data-en="🔒 Your data is only used to answer your message and never shared with third parties. More info: ">🔒 Jouw gegevens worden enkel gebruikt om jouw vraag te beantwoorden en nooit gedeeld met derden. Meer info: </span><a href="https://formspree.io/legal/privacy-policy" target="_blank" style="color:var(--sage);">Formspree Privacy Policy</a>.
+            </div>
             <button type="submit" class="btn btn-primary" data-nl="Verstuur bericht" data-en="Send message">Verstuur bericht</button>
           </form>
         </div>
@@ -796,9 +815,44 @@
       if (!res.ok) throw new Error('API error ' + res.status);
       return await res.json();
     } catch(err) {
-      console.warn('Backend niet bereikbaar, gebruik lokale berekening:', err.message);
+      console.warn('Backend niet bereikbaar:', err.message);
       return null;
     }
+  }
+
+  // Contact form validation
+  function validateContactForm(form) {
+    const svc = form.querySelector('#contact-service');
+    if (!svc.value) {
+      alert(lang==='nl' ? 'Kies een dienst voor je het formulier verstuurt.' : 'Please select a service before sending.');
+      svc.focus();
+      return false;
+    }
+    return true;
+  }
+
+  // Backend error banner helper
+  function showCalcError(containerId) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = `<div style="background:#fff3f3;border:1px solid #e0a0a0;color:#8a3030;padding:16px 20px;font-size:0.82rem;line-height:1.6;margin-top:16px;">
+      ${lang==='nl'
+        ? '⚠ De server kon niet bereikt worden. Controleer je internetverbinding of probeer het later opnieuw.'
+        : '⚠ The server could not be reached. Check your connection or try again later.'}
+    </div>`;
+    el.style.display = 'block';
+  }
+
+  // Loading helper — disables btn, shows spinner, restores on done
+  function withLoading(btn, fn) {
+    const orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = `<span style="display:inline-flex;align-items:center;gap:8px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+        style="animation:spin 0.9s linear infinite"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/>
+        <path d="M12 2a10 10 0 0 1 10 10"/></svg>
+      ${lang==='nl'?'Berekenen…':'Calculating…'}</span>`;
+    Promise.resolve().then(fn).finally(() => { btn.disabled = false; btn.innerHTML = orig; });
   }
 
   // REVEAL
@@ -817,12 +871,18 @@
     });
   });
 
-  // LANG
-  let lang = 'nl';
+  // LANG — persist in localStorage
+  let lang = localStorage.getItem('toqp-lang') || 'nl';
+  function applyLang(l) {
+    document.querySelectorAll('[data-nl]').forEach(el => { const v = el.getAttribute('data-' + l); if (v) el.innerHTML = v; });
+    document.getElementById('langToggle').textContent = l === 'nl' ? 'EN' : 'NL';
+    document.documentElement.lang = l;
+  }
+  applyLang(lang);
   document.getElementById('langToggle').addEventListener('click', function() {
     lang = lang === 'nl' ? 'en' : 'nl';
-    document.querySelectorAll('[data-nl]').forEach(el => { const v = el.getAttribute('data-' + lang); if (v) el.innerHTML = v; });
-    this.textContent = lang === 'nl' ? 'EN' : 'NL';
+    localStorage.setItem('toqp-lang', lang);
+    applyLang(lang);
   });
 
   // ─── BAZI DATA ───
@@ -1057,7 +1117,9 @@
 
   function calcHD(){
     const d=parseInt(document.getElementById('hd-day').value),m=parseInt(document.getElementById('hd-month').value),y=parseInt(document.getElementById('hd-year').value),h=parseInt(document.getElementById('hd-hour').value)||12;
-    if(!d||!m||!y||y<1900){alert(lang==='nl'?'Vul een geldige datum in.':'Please enter a valid date.');return;}
+    if(!d||!m||!y||y<1900||y>2030){alert(lang==='nl'?'Vul een geldige datum in.':'Please enter a valid date.');return;}
+    const dim2=[0,31,((y%4===0&&y%100!==0)||y%400===0)?29:28,31,30,31,30,31,31,30,31,30,31];
+    if(d<1||d>dim2[m]){alert(lang==='nl'?`Maand ${m} heeft maximaal ${dim2[m]} dagen.`:`Month ${m} has at most ${dim2[m]} days.`);return;}
     const seed=(y*13+m*31+d*7+h*3)%100;
     const typeIdx=seed<30?1:seed<55?2:seed<70?3:seed<85?0:4;
     const type=HD_TYPES[typeIdx];
@@ -1336,12 +1398,15 @@ async function hdCalculate(){
   const b = getBirthDataFor('hd');
   const day=b.day, month=b.month, year=b.year, hour=b.hour, minute=b.minute, tz=b.tz;
 
+  // Hide any previous error
+  document.getElementById('hd-error').style.display = 'none';
   // Try backend first
   const apiResult = await callAPI('/api/human-design', b);
   if(apiResult && apiResult.type) {
     renderHDFromAPI(apiResult);
     return;
   }
+  if(!apiResult) showCalcError('hd-error');
 
   // Fallback: local calculation
   // UTC time
@@ -1984,11 +2049,20 @@ function drawBodygraph(centerDef,activeChannels,halfChannels){
   }
 
   function validateBirthFor(p) {
-    var b=getBirthDataFor(p);
-    if(!b.day||!b.month||!b.year||b.year<1900||b.year>2030){
+    var b = getBirthDataFor(p);
+    var d = b.day, m = b.month, y = b.year;
+    if (!d || !m || !y || y < 1900 || y > 2030) {
       alert(lang==='nl'
-        ?'Vul een geldige geboortedatum in (dag, maand en jaar zijn verplicht).'
-        :'Please enter a valid birth date (day, month and year are required).');
+        ? 'Vul een geldige geboortedatum in (dag, maand en jaar zijn verplicht).'
+        : 'Please enter a valid birth date (day, month and year are required).');
+      return false;
+    }
+    // Check days per month (incl. leap year for February)
+    const daysInMonth = [0,31,((y%4===0&&y%100!==0)||y%400===0)?29:28,31,30,31,30,31,31,30,31,30,31];
+    if (d < 1 || d > daysInMonth[m]) {
+      alert(lang==='nl'
+        ? `De maand ${m} heeft maximaal ${daysInMonth[m]} dagen.`
+        : `Month ${m} has at most ${daysInMonth[m]} days.`);
       return false;
     }
     return true;
