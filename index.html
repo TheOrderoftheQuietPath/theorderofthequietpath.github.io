@@ -56,6 +56,10 @@
     .nav-links a:hover { color: var(--gold-light); }
     .lang-btn { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--gold-light); background: transparent; border: 1px solid rgba(184,146,42,0.4); padding: 5px 12px; cursor: pointer; transition: all 0.3s; }
     .lang-btn:hover { background: rgba(184,146,42,0.15); border-color: var(--gold-light); }
+    .nav-cta { font-family: 'Jost', sans-serif; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); background: var(--gold-light); border: none; padding: 9px 20px; cursor: pointer; text-decoration: none; transition: all 0.3s; white-space: nowrap; }
+    .nav-cta:hover { background: var(--gold); }
+    nav.hide { transform: translateY(-100%); }
+    nav { transition: transform 0.35s ease; }
     .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; background: transparent; border: none; cursor: pointer; padding: 4px; z-index: 210; }
     .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--gold-light); transition: all 0.3s ease; transform-origin: center; }
     .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
@@ -373,6 +377,53 @@
     .hd-center-desc-text{font-size:0.74rem;color:var(--ink3);line-height:1.65;}
     .calc-note{font-size:0.78rem;}
   
+    /* DISCIPLINES ACCORDION */
+    .disc-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:52px; }
+    .disc-card { background:var(--surface); border:1px solid var(--stone-light); border-top:3px solid transparent; padding:28px 20px; text-align:center; cursor:pointer; transition:all 0.3s; user-select:none; }
+    .disc-card:hover, .disc-card.active { border-top-color:var(--gold); box-shadow:0 8px 28px rgba(0,0,0,0.07); }
+    .disc-card.active { background:var(--bg2); }
+    .disc-icon { font-size:1.8rem; margin-bottom:12px; }
+    .disc-name { font-family:'Libre Baskerville',serif; font-size:0.95rem; font-weight:400; color:var(--ink); margin-bottom:4px; }
+    .disc-sub { font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); }
+    .disc-hook { font-size:0.85rem; font-style:italic; color:var(--ink3); margin-top:10px; line-height:1.55; }
+    .disc-panels { margin-top:0; }
+    .disc-panel { display:none; background:var(--surface); border:1px solid var(--stone-light); border-top:2px solid var(--gold); padding:44px 48px; margin-top:12px; animation:fadeUp 0.3s ease both; }
+    .disc-panel.active { display:block; }
+    .disc-panel p { font-size:0.93rem; color:var(--ink2); line-height:1.9; margin-bottom:14px; }
+    .disc-panel p:last-child { margin-bottom:0; }
+    .disc-panel strong { color:var(--ink); font-weight:500; }
+    .disc-panel em { font-style:italic; }
+    .disc-panel-note { margin-top:20px; padding:14px 18px; background:var(--bg2); border-left:3px solid var(--sage); font-size:0.82rem; color:var(--ink2); line-height:1.7; }
+    @media(max-width:900px){ .disc-grid { grid-template-columns:repeat(3,1fr); } }
+    @media(max-width:560px){ .disc-grid { grid-template-columns:repeat(2,1fr); } .disc-panel { padding:28px 20px; } }
+
+    /* DIENSTEN FREE TIER */
+    .free-tier-intro { background:var(--ink); color:rgba(245,242,237,0.9); padding:36px 44px; margin-top:52px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+    .free-tier-intro h3 { font-family:'Libre Baskerville',serif; font-size:1.2rem; font-weight:400; margin-bottom:6px; }
+    .free-tier-intro p { font-size:0.85rem; color:rgba(245,242,237,0.55); line-height:1.7; max-width:500px; }
+    .free-tools-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:16px; }
+    .free-tool { background:var(--surface); border:1px solid var(--stone-light); padding:28px 16px; text-align:center; transition:all 0.3s; cursor:pointer; text-decoration:none; display:block; }
+    .free-tool:hover { border-color:var(--gold); box-shadow:0 6px 20px rgba(0,0,0,0.07); transform:translateY(-3px); }
+    .free-tool-icon { font-size:1.6rem; margin-bottom:10px; }
+    .free-tool-name { font-family:'Libre Baskerville',serif; font-size:0.88rem; font-weight:400; color:var(--ink); margin-bottom:4px; }
+    .free-tool-tag { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--sage-dark); }
+    .paid-divider { margin-top:60px; padding-top:52px; border-top:1px solid var(--stone-light); }
+    .paid-label { display:inline-block; font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--ink3); border:1px solid var(--stone-light); padding:5px 14px; margin-bottom:32px; }
+    @media(max-width:900px){ .free-tier-intro { padding:28px 24px; } .free-tools-grid { grid-template-columns:repeat(3,1fr); } }
+    @media(max-width:560px){ .free-tools-grid { grid-template-columns:repeat(2,1fr); } }
+
+    /* NEWSLETTER */
+    .newsletter-bar { background:rgba(245,242,237,0.04); border:1px solid rgba(184,146,42,0.2); padding:32px 40px; display:flex; align-items:center; gap:32px; flex-wrap:wrap; margin-top:32px; }
+    .newsletter-bar h4 { font-family:'Libre Baskerville',serif; font-size:1rem; font-weight:400; color:rgba(245,242,237,0.85); margin-bottom:4px; }
+    .newsletter-bar p { font-size:0.8rem; color:rgba(245,242,237,0.4); line-height:1.6; }
+    .newsletter-form { display:flex; gap:0; flex:1; min-width:260px; }
+    .newsletter-input { flex:1; background:rgba(245,242,237,0.06); border:1px solid rgba(184,146,42,0.25); border-right:none; color:rgba(245,242,237,0.8); padding:11px 16px; font-family:'Jost',sans-serif; font-size:0.85rem; outline:none; transition:border-color 0.3s; }
+    .newsletter-input::placeholder { color:rgba(245,242,237,0.25); }
+    .newsletter-input:focus { border-color:rgba(184,146,42,0.6); }
+    .newsletter-btn { background:var(--gold); color:var(--ink); border:none; padding:11px 22px; font-family:'Jost',sans-serif; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; cursor:pointer; transition:background 0.3s; white-space:nowrap; }
+    .newsletter-btn:hover { background:var(--gold-light); }
+    @media(max-width:900px){ .newsletter-bar { padding:24px; flex-direction:column; align-items:flex-start; } .newsletter-form { width:100%; } }
+
     /* SHARED BIRTH FORM */
     .birth-form { background: var(--surface); border: 1px solid var(--stone-light); padding: 36px; margin-bottom: 2px; }
     .birth-form h3 { font-family: 'Libre Baskerville', serif; font-size: 1.1rem; font-weight: 400; margin-bottom: 6px; }
@@ -415,11 +466,12 @@
     <a href="#hero" class="nav-logo">The Order of the Quiet Path</a>
     <div class="nav-links">
       <a href="#over" data-nl="Over" data-en="About">Over</a>
-      <a href="#diensten" data-nl="Diensten" data-en="Services">Diensten</a>
+      <a href="#disciplines" data-nl="Systemen" data-en="Systems">Systemen</a>
       <a href="#calculators" data-nl="Calculators" data-en="Calculators">Calculators</a>
       <a href="#blog" data-nl="Blog" data-en="Blog">Blog</a>
       <a href="#contact" data-nl="Contact" data-en="Contact">Contact</a>
       <button class="lang-btn" id="langToggle">EN</button>
+      <a href="#calculators" class="nav-cta" data-nl="Bereken gratis →" data-en="Calculate free →">Bereken gratis →</a>
     </div>
     <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -441,11 +493,11 @@
     <div class="hero-grid">
       <div class="hero-left">
         <p class="hero-tag" data-nl="Human Design · BaZi · Saju · Numerologie · Astrologie" data-en="Human Design · BaZi · Saju · Numerology · Astrology">Human Design · BaZi · Saju · Numerologie · Astrologie</p>
-        <h1 class="hero-title" data-nl="Jij bent geen<br/>toeval.<br/><em>Ontdek het bewijs.</em>" data-en="You are no<br/>coincidence.<br/><em>Discover the proof.</em>">Jij bent geen<br/>toeval.<br/><em>Ontdek het bewijs.</em></h1>
-        <p class="hero-desc" data-nl="Op het moment dat jij geboren werd, stonden de planeten op een unieke positie. De Chinese kalender noteerde een specifieke combinatie van elementen. De getallen in je naam droegen een frequentie. The Order of the Quiet Path helpt je dat patroon lezen — en leven." data-en="The moment you were born, the planets held a unique position. The Chinese calendar recorded a specific combination of elements. The numbers in your name carried a frequency. The Order of the Quiet Path helps you read that pattern — and live it.">Op het moment dat jij geboren werd, stonden de planeten op een unieke positie. De Chinese kalender noteerde een specifieke combinatie van elementen. The Order of the Quiet Path helpt je dat patroon lezen — en leven.</p>
+        <h1 class="hero-title" data-nl="Wat als alles wat je<br/>als 'fout' ervaart<br/><em>gewoon je ontwerp is?</em>" data-en="What if everything you<br/>experience as 'wrong'<br/><em>is just your design?</em>">Wat als alles wat je<br/>als 'fout' ervaart<br/><em>gewoon je ontwerp is?</em></h1>
+        <p class="hero-desc" data-nl="Jij functioneert niet verkeerd. Jij functioneert onbekend. Vijf eeuwenoude systemen — Human Design, BaZi, Saju, Numerologie en Astrologie — lezen de blauwdruk die jij bij geboorte meekreeg. Gratis. Direct. Zonder registratie." data-en="You don't function incorrectly. You function unknown. Five ancient systems — Human Design, BaZi, Saju, Numerology and Astrology — read the blueprint you were born with. Free. Immediately. Without registration.">Jij functioneert niet verkeerd. Jij functioneert onbekend. Vijf eeuwenoude systemen lezen de blauwdruk die jij bij geboorte meekreeg. Gratis. Direct. Zonder registratie.</p>
         <div class="hero-btns">
           <a href="#calculators" class="btn btn-primary" data-nl="Ontdek je blauwdruk — gratis" data-en="Discover your blueprint — free">Ontdek je blauwdruk — gratis</a>
-          <a href="#contact" class="btn btn-outline" data-nl="Boek een verdiepende sessie" data-en="Book an in-depth session">Boek een verdiepende sessie</a>
+          <a href="#testimonials" class="btn btn-outline" data-nl="Wat anderen ervoeren" data-en="What others experienced">Wat anderen ervoeren</a>
         </div>
       </div>
       <div class="hero-right">
@@ -465,20 +517,20 @@
   <section id="stats" class="stats-band">
     <div class="stats-inner">
       <div class="stat-item reveal">
-        <div class="stat-number">500+</div>
-        <div class="stat-label" data-nl="Readings &amp; Sessies" data-en="Readings &amp; Sessions">Readings &amp; Sessies</div>
-      </div>
-      <div class="stat-item reveal">
         <div class="stat-number">5</div>
-        <div class="stat-label" data-nl="Kosmische disciplines" data-en="Cosmic disciplines">Kosmische disciplines</div>
+        <div class="stat-label" data-nl="Gratis disciplines" data-en="Free disciplines">Gratis disciplines</div>
       </div>
       <div class="stat-item reveal">
-        <div class="stat-number">10+</div>
-        <div class="stat-label" data-nl="Jaar onderzoek &amp; praktijk" data-en="Years research &amp; practice">Jaar onderzoek &amp; praktijk</div>
+        <div class="stat-number">64</div>
+        <div class="stat-label" data-nl="Human Design gates" data-en="Human Design gates">Human Design gates</div>
       </div>
       <div class="stat-item reveal">
-        <div class="stat-number">TEDx</div>
-        <div class="stat-label" data-nl="Erkend spreker" data-en="Recognised speaker">Erkend spreker</div>
+        <div class="stat-number">0</div>
+        <div class="stat-label" data-nl="Account vereist" data-en="Account required">Account vereist</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number">∞</div>
+        <div class="stat-label" data-nl="Berekeningen mogelijk" data-en="Calculations possible">Berekeningen mogelijk</div>
       </div>
     </div>
   </section>
@@ -494,11 +546,11 @@
           <p class="section-tag" data-nl="Over mij" data-en="About me">Over mij</p>
           <h2 class="section-title" data-nl="Shi Ming Dao —<br/><em>hij die het heldere pad herkent</em>" data-en="Shi Ming Dao —<br/><em>one who recognizes the clear path</em>">Shi Ming Dao —<br/><em>hij die het heldere pad herkent</em></h2>
           <div class="divider"></div>
-          <p>Ik ben Timothy Raeymaekers — coach, onderzoeker, ontwikkelaar en spreker. Meer dan tien jaar heb ik besteed aan het bestuderen van systemen die de menselijke blauwdruk onthullen: Human Design, BaZi, Saju, Numerologie en Astrologie. Niet als hobby. Als levenswerk.</p>
-          <p>In 2025 stond ik voor een TedX-publiek en zei ik iets wat de meeste mensen niet durven zeggen hardop: <em>jij bent niet jouw gedachten, jouw trauma's of jouw verleden. Jij bent een patroon — en patronen kun je leren lezen.</em></p>
-          <p>Ik bouw de tools die ik zelf zocht maar nergens vond. Precies, eerlijk en zonder omwegen. Wat ik bied is geen spirituele vlucht — het is een spiegel die je laat zien hoe jij werkelijk bent ontworpen om te functioneren.</p>
-          <p>500+ readings later is mijn overtuiging alleen maar sterker geworden: <strong>zelfkennis is de meest onderschatte superkracht die er bestaat.</strong></p>
-          <p><em>The Order of the Quiet Path is geen bestemming.<br/>Het is een manier van kijken. Van zijn.</em></p>
+          <p>Je bent hier omdat iets niet klopt. Niet met jou — maar met hoe jij jezelf bekijkt. Je werkt hard maar het voelt nooit genoeg. Je weet wie je wilt zijn maar je handelt er niet naar. Je trekt steeds dezelfde situaties aan.</p>
+          <p>Ik ben Timothy. Ik heb systemen bestudeerd die dat patroon ontcijferen: Human Design, BaZi, Saju, Numerologie en Astrologie. Niet als hobby — als levenswerk. Ik bouw de tools die ik zelf zocht maar nergens vond.</p>
+          <p>Wat ik bied is geen spirituele vlucht. Het is een spiegel. Eén die je laat zien hoe jij werkelijk bent ontworpen — zodat je stopt met zwemmen tegen een stroom die nooit de jouwe was.</p>
+          <p><strong>Jij bent niet kapot. Jij bent ongelezen.</strong></p>
+          <p><em>The Order of the Quiet Path is waar dat verandert.</em></p>
           <div class="about-tags">
             <span class="about-tag">BaZi</span><span class="about-tag">Saju</span><span class="about-tag">Human Design</span>
             <span class="about-tag">Numerologie</span><span class="about-tag">Astrologie</span><span class="about-tag">Zen</span>
@@ -509,95 +561,76 @@
     </div>
   </section>
 
-  <!-- DISCIPLINES — rich knowledge section -->
+  <!-- DISCIPLINES -->
   <section id="disciplines" style="background:var(--bg);">
     <div class="section-wrap">
       <div class="reveal">
-        <p class="section-tag">De vijf systemen</p>
-        <h2 class="section-title">Oude wijsheid.<br/><em>Moderne helderheid.</em></h2>
+        <p class="section-tag" data-nl="De vijf systemen" data-en="The five systems">De vijf systemen</p>
+        <h2 class="section-title" data-nl="Oude wijsheid.<br/><em>Moderne helderheid.</em>" data-en="Ancient wisdom.<br/><em>Modern clarity.</em>">Oude wijsheid.<br/><em>Moderne helderheid.</em></h2>
         <div class="divider"></div>
-        <p class="section-sub">Elk van deze disciplines is op zichzelf een volledig systeem. Samen geven ze een 360&#176;-beeld van wie je bent, hoe je functioneert en wat je pad is.</p>
+        <p class="section-sub" data-nl="Elk systeem is een andere taal voor dezelfde waarheid: jij hebt een ontwerp. Klik op een discipline om dieper te gaan." data-en="Each system is a different language for the same truth: you have a design. Click a discipline to go deeper.">Elk systeem is een andere taal voor dezelfde waarheid: jij hebt een ontwerp. Klik op een discipline om dieper te gaan.</p>
       </div>
 
-      <!-- BAZI -->
-      <div style="margin-top:60px;display:grid;grid-template-columns:1fr 2fr;gap:48px;align-items:start;" class="reveal">
-        <div style="padding:32px;background:var(--surface);border-top:3px solid var(--gold);border:1px solid var(--stone-light);">
-          <div style="font-size:2rem;margin-bottom:12px;">☯</div>
-          <h3 style="font-family:'Libre Baskerville',serif;font-size:1.3rem;font-weight:400;margin-bottom:8px;">BaZi</h3>
-          <p style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0;">Vier Pilaren van Lot</p>
+      <div class="disc-grid reveal">
+        <div class="disc-card" data-disc="bazi">
+          <div class="disc-icon">☯</div>
+          <div class="disc-name">BaZi</div>
+          <div class="disc-sub" data-nl="Vier Pilaren van Lot" data-en="Four Pillars of Destiny">Vier Pilaren van Lot</div>
+          <div class="disc-hook" data-nl="Je wordt niet zomaar op dat moment geboren." data-en="You are not born at that moment by coincidence.">Je wordt niet zomaar op dat moment geboren.</div>
         </div>
-        <div>
-          <p style="font-size:0.95rem;color:var(--ink2);line-height:1.9;margin-bottom:14px;">BaZi &#8212; letterlijk <em>&#8220;Acht Tekens&#8221;</em> &#8212; is een meer dan 3.000 jaar oud Chinees systeem dat je geboortepatroon codeert in vier pilaren: het jaar, de maand, de dag en het uur van geboorte. Elke pilaar bestaat uit een Hemelse Stam en een Aardse Tak, samen een web van tien elementen (Hout, Vuur, Aarde, Metaal, Water in yin en yang) dat jouw karakter, talenten, relaties en levensritmische perioden beschrijft.</p>
-          <p style="font-size:0.95rem;color:var(--ink2);line-height:1.9;margin-bottom:14px;">De <strong>Dag-Meester</strong> &#8212; het teken in het midden van je dagpilaar &#8212; is de kern van wie je bent. De interactie van de elementen rondom hem bepaalt je sterke punten, blinde vlekken en de optimale tijden om te handelen of te rusten. <strong>Lopende gelukspilaren</strong> beschrijven in blokken van tien jaar welke energie domineert in jouw leven.</p>
-          <p style="font-size:0.95rem;color:var(--ink2);line-height:1.9;">BaZi is geen fatalisme: het is een landkaart. Jij bepaalt nog steeds de route &#8212; maar de kaart laat je zien welke wegen soepeler lopen.</p>
-          <div style="margin-top:18px;padding:14px 18px;background:var(--bg2);border-left:3px solid var(--sage);font-size:0.82rem;color:var(--ink2);line-height:1.7;">
-            <strong>Gratis calculator:</strong> vul naam, geboortedatum, -uur, -stad en land in &#8212; de calculator bepaalt automatisch de tijdzone en berekent je Vier Pilaren, dag-meester en elementenverdeling. Voor een volledige professionele analyse met gelukspilaren en jaarverwachtingen: boek een reading.
-          </div>
+        <div class="disc-card" data-disc="saju">
+          <div class="disc-icon">한</div>
+          <div class="disc-name">Saju</div>
+          <div class="disc-sub" data-nl="Koreaanse Vier Pilaren" data-en="Korean Four Pillars">Koreaanse Vier Pilaren</div>
+          <div class="disc-hook" data-nl="Wie je innerlijk bent — stiller en preciezer dan verwacht." data-en="Who you are inside — quieter and more precise than expected.">Wie je innerlijk bent — stiller en preciezer dan verwacht.</div>
         </div>
-      </div>
-
-      <!-- SAJU -->
-      <div style="margin-top:48px;display:grid;grid-template-columns:1fr 2fr;gap:48px;align-items:start;" class="reveal">
-        <div style="padding:32px;background:var(--surface);border-top:3px solid var(--gold);border:1px solid var(--stone-light);">
-          <div style="font-size:2rem;margin-bottom:12px;">한</div>
-          <h3 style="font-family:'Libre Baskerville',serif;font-size:1.3rem;font-weight:400;margin-bottom:8px;">Saju</h3>
-          <p style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0;">Koreaanse Vier Pilaren</p>
+        <div class="disc-card" data-disc="hd">
+          <div class="disc-icon">◈</div>
+          <div class="disc-name">Human Design</div>
+          <div class="disc-sub" data-nl="Bodygraph · Type · Autoriteit" data-en="Bodygraph · Type · Authority">Bodygraph · Type · Autoriteit</div>
+          <div class="disc-hook" data-nl="Er is een reden waarom jij anders beslist dan anderen." data-en="There is a reason why you decide differently from others.">Er is een reden waarom jij anders beslist dan anderen.</div>
         </div>
-        <div>
-          <p style="font-size:0.95rem;color:var(--ink2);line-height:1.9;margin-bottom:14px;">Saju is de Koreaanse variant van de Vier Pilaren en deelt dezelfde kosmologische basis als BaZi, maar kent eigen interpretatiestijlen, nadrukken en culturele contexten. Waar BaZi sterk richt op lot en timing, benadrukt Saju het karakter, de mentale structuur en de relaties in een leven.</p>
-          <p style="font-size:0.95rem;color:var(--ink2);line-height:1.9;margin-bottom:14px;">Saju wordt in Korea tot op vandaag actief gebruikt &#8212; bij huwelijksbeslissingen, loopbaankeuzes en zelfs architecturale planning. Het systeem houdt rekening met geslacht, omdat de stroomrichting van energie (yin of yang) voor mannen en vrouwen in tegengestelde richting verloopt langs de tijdpilaren.</p>
-          <div style="margin-top:18px;padding:14px 18px;background:var(--bg2);border-left:3px solid var(--sage);font-size:0.82rem;color:var(--ink2);line-height:1.7;">
-            <strong>Gratis calculator:</strong> de Saju calculator verwerkt geslacht, geboorteplaats en tijdzone voor een correcte pilaarberekening. Het resultaat toont je fundamentele karakterstructuur en dominante elementen.
-          </div>
+        <div class="disc-card" data-disc="num">
+          <div class="disc-icon">∞</div>
+          <div class="disc-name" data-nl="Numerologie" data-en="Numerology">Numerologie</div>
+          <div class="disc-sub" data-nl="Pythagoreaanse getallenleer" data-en="Pythagorean numerology">Pythagoreaanse getallenleer</div>
+          <div class="disc-hook" data-nl="Je naam is geen toeval. Je geboortedatum ook niet." data-en="Your name is not coincidence. Neither is your birth date.">Je naam is geen toeval. Je geboortedatum ook niet.</div>
         </div>
-      </div>
-
-      <!-- HUMAN DESIGN -->
-      <div style="margin-top:48px;display:grid;grid-template-columns:1fr 2fr;gap:48px;align-items:start;" class="reveal">
-        <div style="padding:32px;background:var(--surface);border-top:3px solid var(--gold);border:1px solid var(--stone-light);">
-          <div style="font-size:2rem;margin-bottom:12px;">◈</div>
-          <h3 style="font-family:'Libre Baskerville',serif;font-size:1.3rem;font-weight:400;margin-bottom:8px;">Human Design</h3>
-          <p style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0;">Bodygraph · Type · Strategie · Autoriteit</p>
-        </div>
-        <div>
-          <p style="font-size:0.95rem;color:var(--ink2);line-height:1.9;margin-bottom:14px;">Human Design is een synthesesysteem dat in 1987 werd ge&#235;ncodeerd door Ra Uru Hu en elementen combineert van de Kabbalah (Levensboom), de Chinese I Ching (64 hexagrammen als gates), westerse astrologie, het hindoe&#239;stische chakrasysteem en de moderne kwantumfysica. Het resultaat is een <strong>Bodygraph</strong>: een grafische kaart van negen centra, 36 kanalen en 64 gates die samen jouw energetisch ontwerp beschrijven.</p>
-          <p style="font-size:0.95rem;color:var(--ink2);line-height:1.9;margin-bottom:14px;">Twee berekenmomenten zijn essentieel: het geboortemoment (<em>Persoonlijkheid</em>) en een punt ca. 88&#176; zonnegraad voor geboorte &#8212; ruwweg 88 dagen eerder (<em>Design</em>). De activaties op die twee momenten bepalen welke gates en kanalen &#8220;gedefinieerd&#8221; zijn, en daarmee je <strong>Type</strong> (Generator, Manifestor, Projector, Reflector of Manifesting Generator), je <strong>Strategie</strong> (hoe je correct handelt), je <strong>Autoriteit</strong> (hoe je beslissingen neemt) en je <strong>Profiel</strong> (je levensstijl-archetype).</p>
-          <p style="font-size:0.95rem;color:var(--ink2);line-height:1.9;">Human Design is geen geloof &#8212; het is een experiment. Leef 90 dagen volgens je strategie en autoriteit en observeer wat er verandert.</p>
-          <div style="margin-top:18px;padding:14px 18px;background:var(--bg2);border-left:3px solid var(--sage);font-size:0.82rem;color:var(--ink2);line-height:1.7;">
-            <strong>Gratis calculator:</strong> berekent je volledige Bodygraph met type, strategie, autoriteit, profiel, definitie, incarnatiekruis, alle planetaire activaties en een gekleurde bodygraph. <em>Een exacte geboortetijd is essentieel &#8212; zelfs 1 uur verschil kan je type of autoriteit wijzigen.</em>
-          </div>
+        <div class="disc-card" data-disc="astro">
+          <div class="disc-icon">✦</div>
+          <div class="disc-name" data-nl="Astrologie" data-en="Astrology">Astrologie</div>
+          <div class="disc-sub" data-nl="Geboortehoroscoop · Transiten" data-en="Birth chart · Transits">Geboortehoroscoop · Transiten</div>
+          <div class="disc-hook" data-nl="De hemel op het moment van jouw eerste ademhaling." data-en="The sky at the moment of your first breath.">De hemel op het moment van jouw eerste ademhaling.</div>
         </div>
       </div>
 
-      <!-- NUMEROLOGIE -->
-      <div style="margin-top:48px;display:grid;grid-template-columns:1fr 2fr;gap:48px;align-items:start;" class="reveal">
-        <div style="padding:32px;background:var(--surface);border-top:3px solid var(--gold);border:1px solid var(--stone-light);">
-          <div style="font-size:2rem;margin-bottom:12px;">∞</div>
-          <h3 style="font-family:'Libre Baskerville',serif;font-size:1.3rem;font-weight:400;margin-bottom:8px;">Numerologie</h3>
-          <p style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0;">Pythagoreaanse &amp; Chaldese getallenleer</p>
+      <div class="disc-panels reveal">
+        <div class="disc-panel" id="disc-bazi">
+          <p>BaZi &#8212; letterlijk <em>&#8220;Acht Tekens&#8221;</em> &#8212; is een meer dan 3.000 jaar oud Chinees systeem dat je geboortepatroon codeert in vier pilaren: het jaar, de maand, de dag en het uur van geboorte. Elke pilaar bestaat uit een Hemelse Stam en een Aardse Tak — samen een web van tien elementen (Hout, Vuur, Aarde, Metaal, Water in yin en yang) dat jouw karakter, talenten en levensritmische perioden beschrijft.</p>
+          <p>De <strong>Dag-Meester</strong> &#8212; het teken in het midden van je dagpilaar &#8212; is de kern van wie je bent. De elementen rondom hem bepalen je sterke punten, blinde vlekken en de optimale tijden om te handelen of te rusten. <strong>Lopende gelukspilaren</strong> beschrijven in blokken van tien jaar welke energie domineert in jouw leven.</p>
+          <p>BaZi is geen fatalisme: het is een landkaart. Jij bepaalt de route &#8212; maar de kaart laat je zien welke wegen soepeler lopen.</p>
+          <div class="disc-panel-note"><strong data-nl="Gratis calculator:" data-en="Free calculator:">Gratis calculator:</strong> <span data-nl="vul geboortedatum, -uur, -stad en land in — de calculator berekent je Vier Pilaren, dag-meester en elementenverdeling." data-en="enter birth date, time, city and country — the calculator computes your Four Pillars, day master and element distribution.">vul geboortedatum, -uur, -stad en land in — de calculator berekent je Vier Pilaren, dag-meester en elementenverdeling.</span></div>
         </div>
-        <div>
-          <p style="font-size:0.95rem;color:var(--ink2);line-height:1.9;margin-bottom:14px;">Numerologie gaat terug tot de Griekse filosoof Pythagoras (6e eeuw v.C.) en vertrekt vanuit het idee dat alles in het universum een numerieke frequentie heeft. Door je naam en geboortedatum te reduceren tot basisgetallen, openbaart zich een profiel dat je bewuste persoonlijkheid, verborgen motivaties en levensmissie beschrijft.</p>
-          <p style="font-size:0.95rem;color:var(--ink2);line-height:1.9;margin-bottom:14px;">De vier kerngetallen: <strong>Levenspadgetal</strong> (som van je geboortedatum &#8212; je rode draad), <strong>Uitdrukkingsgetal</strong> (volledige naam &#8212; je talenten en aanpak), <strong>Zielsgetal</strong> (klinkers van je naam &#8212; je innerlijke drijfveer) en <strong>Persoonlijkheidsgetal</strong> (medeklinkers &#8212; hoe anderen jou ervaren). Samen schetsen ze een portret dat verrassend precies voelt.</p>
-          <div style="margin-top:18px;padding:14px 18px;background:var(--bg2);border-left:3px solid var(--sage);font-size:0.82rem;color:var(--ink2);line-height:1.7;">
-            <strong>Gratis calculator:</strong> vul je volledige naam (zoals op geboorteakte) en geboortedatum in. De calculator berekent alle kerngetallen inclusief beknopte duiding.
-          </div>
+        <div class="disc-panel" id="disc-saju">
+          <p>Saju is de Koreaanse variant van de Vier Pilaren en deelt dezelfde kosmologische basis als BaZi, maar met eigen interpretatiestijlen en culturele contexten. Waar BaZi sterk richt op lot en timing, benadrukt Saju het <strong>karakter</strong>, de mentale structuur en de relaties in een leven.</p>
+          <p>Saju wordt in Korea tot op vandaag actief gebruikt &#8212; bij huwelijksbeslissingen, loopbaankeuzes en zelfs architecturale planning. Het systeem houdt rekening met geslacht, omdat de stroomrichting van energie voor mannen en vrouwen in tegengestelde richting verloopt langs de tijdpilaren.</p>
+          <div class="disc-panel-note"><strong data-nl="Gratis calculator:" data-en="Free calculator:">Gratis calculator:</strong> <span data-nl="verwerkt geslacht, geboorteplaats en tijdzone voor een correcte pilaarberekening en toont je fundamentele karakterstructuur." data-en="processes gender, birth location and timezone for an accurate pillar calculation and shows your fundamental character structure.">verwerkt geslacht, geboorteplaats en tijdzone voor een correcte pilaarberekening en toont je fundamentele karakterstructuur.</span></div>
         </div>
-      </div>
-
-      <!-- ASTROLOGIE -->
-      <div style="margin-top:48px;display:grid;grid-template-columns:1fr 2fr;gap:48px;align-items:start;" class="reveal">
-        <div style="padding:32px;background:var(--surface);border-top:3px solid var(--gold);border:1px solid var(--stone-light);">
-          <div style="font-size:2rem;margin-bottom:12px;">✦</div>
-          <h3 style="font-family:'Libre Baskerville',serif;font-size:1.3rem;font-weight:400;margin-bottom:8px;">Westerse Astrologie</h3>
-          <p style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0;">Geboortehoroscoop · Transiten · Progressies</p>
+        <div class="disc-panel" id="disc-hd">
+          <p>Human Design is een synthesesysteem dat in 1987 werd geëncodeerd en elementen combineert van de Kabbalah (Levensboom), de Chinese I Ching (64 hexagrammen als gates), westerse astrologie, het hindoeïstische chakrasysteem en de moderne kwantumfysica. Het resultaat is een <strong>Bodygraph</strong>: een grafische kaart van negen centra, 36 kanalen en 64 gates die samen jouw energetisch ontwerp beschrijven.</p>
+          <p>Twee momenten zijn essentieel: het geboortemoment (<em>Persoonlijkheid</em>) en een punt ca. 88° voor geboorte (<em>Design</em>). Die activaties bepalen je <strong>Type</strong>, je <strong>Strategie</strong> (hoe je correct handelt), je <strong>Autoriteit</strong> (hoe je beslist) en je <strong>Profiel</strong>.</p>
+          <p>Human Design is geen geloof — het is een experiment. Leef 90 dagen volgens je strategie en autoriteit en observeer wat er verandert.</p>
+          <div class="disc-panel-note"><strong data-nl="Gratis calculator:" data-en="Free calculator:">Gratis calculator:</strong> <span data-nl="berekent je volledige Bodygraph — type, strategie, autoriteit, profiel, alle planetaire activaties en een gekleurde bodygraph. Een exacte geboortetijd is essentieel." data-en="calculates your full Bodygraph — type, strategy, authority, profile, all planetary activations and a coloured bodygraph. An exact birth time is essential.">berekent je volledige Bodygraph — type, strategie, autoriteit, profiel, alle planetaire activaties en een gekleurde bodygraph. Een exacte geboortetijd is essentieel.</span></div>
         </div>
-        <div>
-          <p style="font-size:0.95rem;color:var(--ink2);line-height:1.9;margin-bottom:14px;">Westerse astrologie werkt met de posities van de zon, maan en planeten op het moment van geboorte, geprojecteerd op een cirkel van 12 tekens en 12 huizen. Je <strong>zonneteken</strong> beschrijft je kern-energie, het <strong>ascendant</strong> (het stijgende teken op het oostelijke horizon bij geboorte) bepaalt hoe jij je manifesteert in de wereld, en de <strong>maan</strong> onthult je emotionele landschap.</p>
-          <p style="font-size:0.95rem;color:var(--ink2);line-height:1.9;margin-bottom:14px;">De posities van planeten als Mercurius (communicatie), Venus (liefde &amp; waarden), Mars (wilskracht), Jupiter (groei), Saturnus (structuur &amp; karma) en de buitenste planeten geven een gelaagd beeld van je aangeboren patronen. <strong>Aspecten</strong> &#8212; hoekrelaties tussen planeten &#8212; beschrijven of krachten harmonieus samenwerken of spanningsvelden creëren.</p>
-          <div style="margin-top:18px;padding:14px 18px;background:var(--bg2);border-left:3px solid var(--sage);font-size:0.82rem;color:var(--ink2);line-height:1.7;">
-            <strong>Gratis calculator:</strong> genereert een nauwkeurige geboortehoroscoop op basis van professionele ephemeride-data, inclusief ascendant (exacte geboortetijd vereist) en planeetposities.
-          </div>
+        <div class="disc-panel" id="disc-num">
+          <p>Numerologie vertrekt vanuit het idee dat alles in het universum een numerieke frequentie heeft. Door je naam en geboortedatum te reduceren tot basisgetallen, openbaart zich een profiel dat je bewuste persoonlijkheid, verborgen motivaties en levensmissie beschrijft.</p>
+          <p>De vier kerngetallen: <strong>Levenspadgetal</strong> (geboortedatum &#8212; je rode draad), <strong>Uitdrukkingsgetal</strong> (volledige naam &#8212; je talenten), <strong>Zielsgetal</strong> (klinkers &#8212; je innerlijke drijfveer) en <strong>Persoonlijkheidsgetal</strong> (medeklinkers &#8212; hoe anderen jou ervaren). Samen schetsen ze een portret dat verrassend precies voelt.</p>
+          <div class="disc-panel-note"><strong data-nl="Gratis calculator:" data-en="Free calculator:">Gratis calculator:</strong> <span data-nl="vul je volledige naam en geboortedatum in — de calculator berekent alle kerngetallen inclusief beknopte duiding." data-en="enter your full name and birth date — the calculator computes all core numbers including brief interpretation.">vul je volledige naam en geboortedatum in — de calculator berekent alle kerngetallen inclusief beknopte duiding.</span></div>
+        </div>
+        <div class="disc-panel" id="disc-astro">
+          <p>Westerse astrologie werkt met de posities van de zon, maan en planeten op het moment van geboorte, geprojecteerd op een cirkel van 12 tekens en 12 huizen. Je <strong>zonneteken</strong> beschrijft je kern-energie, het <strong>ascendant</strong> bepaalt hoe jij je manifesteert in de wereld, en de <strong>maan</strong> onthult je emotionele landschap.</p>
+          <p>De posities van Mercurius, Venus, Mars, Jupiter en Saturnus &#8212; samen met hun <strong>aspecten</strong> (hoekrelaties) &#8212; geven een gelaagd beeld van je aangeboren patronen en spanning svelden.</p>
+          <div class="disc-panel-note"><strong data-nl="Gratis calculator:" data-en="Free calculator:">Gratis calculator:</strong> <span data-nl="genereert een nauwkeurige geboortehoroscoop op basis van professionele ephemeride-data, inclusief ascendant (exacte geboortetijd vereist) en planeetposities." data-en="generates an accurate birth chart based on professional ephemeris data, including ascendant (exact birth time required) and planetary positions.">genereert een nauwkeurige geboortehoroscoop op basis van professionele ephemeride-data, inclusief ascendant (exacte geboortetijd vereist) en planeetposities.</span></div>
         </div>
       </div>
     </div>
@@ -607,47 +640,72 @@
   <section id="diensten" style="background:linear-gradient(160deg,#ede7de 0%,#e8e0d4 100%);">
     <div class="section-wrap">
       <div class="reveal">
-        <p class="section-tag">Diensten &amp; Begeleiding</p>
-        <h2 class="section-title">Van gratis inzicht<br/>naar <em>diepgaande transformatie</em></h2>
+        <p class="section-tag" data-nl="Gratis starten" data-en="Start free">Gratis starten</p>
+        <h2 class="section-title" data-nl="Vijf tools.<br/>Nul drempel.<br/><em>Direct inzicht.</em>" data-en="Five tools.<br/>Zero barrier.<br/><em>Immediate insight.</em>">Vijf tools.<br/>Nul drempel.<br/><em>Direct inzicht.</em></h2>
         <div class="divider"></div>
-        <p class="section-sub">De gratis calculators geven je een eerste, waardevol beeld. Wie dieper wil gaan &#8212; in gesprek, met context, met duiding op maat &#8212; kan een persoonlijke sessie of AI-reading boeken.</p>
+        <p class="section-sub" data-nl="Geen account. Geen betaling. Geen reden om te wachten. Vul je geboortegegevens in en lees wat de systemen over jou zeggen." data-en="No account. No payment. No reason to wait. Enter your birth data and read what the systems say about you.">Geen account. Geen betaling. Geen reden om te wachten. Vul je geboortegegevens in en lees wat de systemen over jou zeggen.</p>
       </div>
-      <div class="services-grid" style="margin-top:48px;">
-        <div class="service-card reveal">
-          <div class="service-icon">☯</div>
-          <div class="service-name">BaZi Reading</div>
-          <p class="service-desc">Jouw geboortemoment codeerde een uniek samenspel van elementen. We lezen de dag-meester, de lopende gelukspilaren en wat het huidige jaar jou brengt — van loopbaan tot liefde.</p>
-          <span class="service-tag">Op aanvraag</span>
+
+      <div class="free-tier-intro reveal">
+        <div>
+          <h3 data-nl="Alles hieronder is gratis." data-en="Everything below is free.">Alles hieronder is gratis.</h3>
+          <p data-nl="Kies een systeem, voer je geboortegegevens in, en ontdek direct je persoonlijk profiel. Geen registratie, geen verborgen stappen." data-en="Choose a system, enter your birth data, and instantly discover your personal profile. No registration, no hidden steps.">Kies een systeem, voer je geboortegegevens in, en ontdek direct je persoonlijk profiel. Geen registratie, geen verborgen stappen.</p>
         </div>
-        <div class="service-card reveal">
-          <div class="service-icon">한</div>
-          <div class="service-name">Saju Reading</div>
-          <p class="service-desc">De Koreaanse versie legt de nadruk op wie je innerlijk bent — je karakter, je relaties, je roeping. Stiller, intiemer, en net zo precies als zijn Chinese tegenhanger.</p>
-          <span class="service-tag">Op aanvraag</span>
+        <a href="#calculators" class="btn btn-primary" data-nl="Naar de calculators →" data-en="Go to calculators →">Naar de calculators →</a>
+      </div>
+
+      <div class="free-tools-grid reveal">
+        <a href="#calculators" class="free-tool" onclick="switchTab('hd');return true;">
+          <div class="free-tool-icon">◈</div>
+          <div class="free-tool-name">Human Design</div>
+          <div class="free-tool-tag" data-nl="Bodygraph · Type · Autoriteit" data-en="Bodygraph · Type · Authority">Bodygraph · Type · Autoriteit</div>
+        </a>
+        <a href="#calculators" class="free-tool" onclick="switchTab('bazi');return true;">
+          <div class="free-tool-icon">☯</div>
+          <div class="free-tool-name">BaZi</div>
+          <div class="free-tool-tag" data-nl="Vier Pilaren · Dag-Meester" data-en="Four Pillars · Day Master">Vier Pilaren · Dag-Meester</div>
+        </a>
+        <a href="#calculators" class="free-tool" onclick="switchTab('saju');return true;">
+          <div class="free-tool-icon">한</div>
+          <div class="free-tool-name">Saju</div>
+          <div class="free-tool-tag" data-nl="Koreaanse Vier Pilaren" data-en="Korean Four Pillars">Koreaanse Vier Pilaren</div>
+        </a>
+        <a href="#calculators" class="free-tool" onclick="switchTab('numerology');return true;">
+          <div class="free-tool-icon">∞</div>
+          <div class="free-tool-name" data-nl="Numerologie" data-en="Numerology">Numerologie</div>
+          <div class="free-tool-tag" data-nl="Levenspad · Zielsgetal" data-en="Life path · Soul urge">Levenspad · Zielsgetal</div>
+        </a>
+        <a href="#calculators" class="free-tool" onclick="switchTab('western');return true;">
+          <div class="free-tool-icon">✦</div>
+          <div class="free-tool-name" data-nl="Astrologie" data-en="Astrology">Astrologie</div>
+          <div class="free-tool-tag" data-nl="Horoscoop · Ascendant" data-en="Horoscope · Ascendant">Horoscoop · Ascendant</div>
+        </a>
+      </div>
+
+      <div class="paid-divider reveal">
+        <div class="paid-label" data-nl="Persoonlijke begeleiding — op aanvraag" data-en="Personal guidance — on request">Persoonlijke begeleiding — op aanvraag</div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">◈</div>
+            <div class="service-name" data-nl="Human Design Reading" data-en="Human Design Reading">Human Design Reading</div>
+            <p class="service-desc" data-nl="Je bodygraph geduid in de context van jouw leven — type, strategie, autoriteit, profiel en kanalen vertaald naar hoe jij werkt." data-en="Your bodygraph interpreted in the context of your life — type, strategy, authority, profile and channels translated to how you function.">Je bodygraph geduid in de context van jouw leven — type, strategie, autoriteit, profiel en kanalen vertaald naar hoe jij werkt.</p>
+            <span class="service-tag" data-nl="Op aanvraag" data-en="On request">Op aanvraag</span>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">☯</div>
+            <div class="service-name" data-nl="BaZi &amp; Saju Reading" data-en="BaZi &amp; Saju Reading">BaZi &amp; Saju Reading</div>
+            <p class="service-desc" data-nl="De dag-meester, de lopende gelukspilaren en wat de huidige periode voor jou betekent — van loopbaan tot relaties tot timing." data-en="The day master, the running luck pillars and what the current period means for you — from career to relationships to timing.">De dag-meester, de lopende gelukspilaren en wat de huidige periode voor jou betekent — van loopbaan tot relaties tot timing.</p>
+            <span class="service-tag" data-nl="Op aanvraag" data-en="On request">Op aanvraag</span>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">◯</div>
+            <div class="service-name" data-nl="De Volledige Blauwdruk" data-en="The Full Blueprint">De Volledige Blauwdruk</div>
+            <p class="service-desc" data-nl="Alle systemen samen. Wanneer Human Design, BaZi en Numerologie naar hetzelfde patroon wijzen — dat is waar echte helderheid ontstaat." data-en="All systems together. When Human Design, BaZi and Numerology point to the same pattern — that is where real clarity emerges.">Alle systemen samen. Wanneer Human Design, BaZi en Numerologie naar hetzelfde patroon wijzen — dat is waar echte helderheid ontstaat.</p>
+            <span class="service-tag" data-nl="Signatuurpakket" data-en="Signature package">Signatuurpakket</span>
+          </div>
         </div>
-        <div class="service-card reveal">
-          <div class="service-icon">◈</div>
-          <div class="service-name">Human Design Reading</div>
-          <p class="service-desc">Je bodygraph is een kaart van hoe jij energie ontvangt, verwerkt en uitdrukt. Type, strategie, autoriteit, profiel — alle lagen geduid zodat je eindelijk begrijpt hoe jij werkt.</p>
-          <span class="service-tag">Op aanvraag</span>
-        </div>
-        <div class="service-card reveal">
-          <div class="service-icon">∞</div>
-          <div class="service-name">Numerologie Analyse</div>
-          <p class="service-desc">Elk getal in je naam en geboortedatum draagt een frequentie. We duiden levenspad, zielsgetal, persoonlijkheid en bestemming — en leggen uit hoe ze samen jouw verhaal vertellen.</p>
-          <span class="service-tag">Op aanvraag</span>
-        </div>
-        <div class="service-card reveal">
-          <div class="service-icon">◯</div>
-          <div class="service-name" data-nl="1-op-1 Coaching" data-en="1-on-1 Coaching">1-op-1 Coaching</div>
-          <p class="service-desc">Soms is lezen niet genoeg. In een persoonlijke sessie weven we alle systemen tot één verhaal over jóuw leven — voor wie durft te kijken naar wat werkelijk speelt.</p>
-          <span class="service-tag">Op afspraak</span>
-        </div>
-        <div class="service-card reveal">
-          <div class="service-icon">☽</div>
-          <div class="service-name">AI-Reading &amp; Cursussen</div>
-          <p class="service-desc">Diepgaande AI-readings die meerdere systemen weven tot één persoonlijk verslag. En cursussen voor wie het patroon zelf wil leren lezen — stap voor stap, in eigen tempo.</p>
-          <span class="service-tag">Online</span>
+        <div style="margin-top:28px;text-align:center;">
+          <a href="#contact" class="btn btn-outline" data-nl="Vraag meer informatie aan" data-en="Request more information">Vraag meer informatie aan</a>
         </div>
       </div>
     </div>
@@ -929,17 +987,17 @@
       <div class="impact-grid reveal">
         <div class="impact-item">
           <div class="impact-num">01</div>
-          <div class="impact-title" data-nl="Je stopt met zwemmen tegen de stroom" data-en="You stop swimming against the current">Je stopt met zwemmen tegen de stroom</div>
+          <div class="impact-title" data-nl="Je realiseert dat de stroom altijd al jouw kant opging" data-en="You realise the current was always flowing your way">Je realiseert dat de stroom altijd al jouw kant opging</div>
           <p class="impact-desc" data-nl="Je begrijpt welke energie van jou is en welke je aanneemt van anderen. Je keuzes worden lichter." data-en="You understand which energy is yours and which you absorb from others. Your choices become lighter.">Je begrijpt welke energie van jou is en welke je aanneemt van anderen. Je keuzes worden lichter.</p>
         </div>
         <div class="impact-item">
           <div class="impact-num">02</div>
-          <div class="impact-title" data-nl="Je herkent je cyclische patronen" data-en="You recognise your cyclical patterns">Je herkent je cyclische patronen</div>
+          <div class="impact-title" data-nl="Je stopt verrast te zijn door je eigen leven" data-en="You stop being surprised by your own life">Je stopt verrast te zijn door je eigen leven</div>
           <p class="impact-desc" data-nl="Waarom bepaalde periodes moeizaam gaan en andere vanzelf vloeien — BaZi en Saju geven je de kalender van jouw leven." data-en="Why certain periods feel heavy and others flow — BaZi and Saju give you the calendar of your life.">Waarom bepaalde periodes moeizaam gaan en andere vanzelf vloeien — BaZi en Saju geven je de kalender van jouw leven.</p>
         </div>
         <div class="impact-item">
           <div class="impact-num">03</div>
-          <div class="impact-title" data-nl="Je beslist vanuit jezelf" data-en="You decide from within yourself">Je beslist vanuit jezelf</div>
+          <div class="impact-title" data-nl="Voor het eerst beslis je zonder spijt" data-en="For the first time you decide without regret">Voor het eerst beslis je zonder spijt</div>
           <p class="impact-desc" data-nl="Je autoriteit (HD), je dag-meester (BaZi), je levenspadgetal — elk systeem wijst naar dezelfde waarheid: jij weet het al." data-en="Your authority (HD), your day master (BaZi), your life path number — each system points to the same truth: you already know.">Je autoriteit (HD), je dag-meester (BaZi), je levenspadgetal — elk systeem wijst naar dezelfde waarheid: jij weet het al.</p>
         </div>
         <div class="impact-item">
@@ -1010,7 +1068,7 @@
           <button class="faq-q" data-nl="Is dit voor iedereen, of alleen voor mensen die al 'in de spiritualiteit zitten'?" data-en="Is this for everyone, or only for people already into spirituality?">Is dit voor iedereen, of alleen voor mensen die al 'in de spiritualiteit zitten'?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner" data-nl="Voor iedereen. Mijn meest onverwachte cliënten zijn ingenieurs, CEO's en mensen die zichzelf omschrijven als 'sceptici'. Spiritualiteit is niet vereist — nieuwsgierigheid naar jezelf is genoeg. De systemen zijn structuren. Je hoeft er niets in te geloven; je hoeft alleen te observeren of ze resoneren." data-en="For everyone. My most unexpected clients are engineers, CEOs and people who describe themselves as 'sceptics'. Spirituality is not required — curiosity about yourself is enough. The systems are structures. You don't need to believe in them; you only need to observe whether they resonate.">Voor iedereen. Mijn meest onverwachte cliënten zijn ingenieurs, CEO's en mensen die zichzelf omschrijven als 'sceptici'. Spiritualiteit is niet vereist — nieuwsgierigheid naar jezelf is genoeg. De systemen zijn structuren. Je hoeft er niets in te geloven; je hoeft alleen te observeren of ze resoneren.</div></div>
+          <div class="faq-a"><div class="faq-a-inner" data-nl="Voor iedereen. Ingenieurs, CEO's, leraren, mensen die zichzelf omschrijven als 'sceptici'. Spiritualiteit is niet vereist — nieuwsgierigheid naar jezelf is genoeg. De systemen zijn structuren. Je hoeft er niets in te geloven; je hoeft alleen te observeren of ze resoneren." data-en="For everyone. Engineers, CEOs, teachers, people who call themselves 'sceptics'. Spirituality is not required — curiosity about yourself is enough. The systems are structures. You don't need to believe in them; you only need to observe whether they resonate.">Voor iedereen. Ingenieurs, CEO's, leraren, mensen die zichzelf omschrijven als 'sceptici'. Spiritualiteit is niet vereist — nieuwsgierigheid naar jezelf is genoeg. De systemen zijn structuren. Je hoeft er niets in te geloven; je hoeft alleen te observeren of ze resoneren.</div></div>
         </div>
 
       </div>
@@ -1022,14 +1080,14 @@
     <div class="section-wrap">
       <div class="contact-layout">
         <div class="reveal">
-          <p class="section-tag" data-nl="In contact" data-en="Get in touch">In contact</p>
-          <h2 class="section-title" data-nl="Start je <em>reis</em>" data-en="Begin your <em>journey</em>">Start je <em>reis</em></h2>
+          <p class="section-tag" data-nl="In gesprek" data-en="Get in touch">In gesprek</p>
+          <h2 class="section-title" data-nl="Klaar om te zien<br/>wie jij werkelijk <em>bent?</em>" data-en="Ready to see<br/>who you truly <em>are?</em>">Klaar om te zien<br/>wie jij werkelijk <em>bent?</em></h2>
           <div class="divider"></div>
-          <p data-nl="Voor het boeken van een reading, coaching sessie of cursus — of gewoon om een vraag te stellen. Ik reageer binnen 48 uur." data-en="For booking a reading, coaching session or course — or simply to ask a question. I respond within 48 hours.">Voor het boeken van een reading, coaching sessie of cursus. Ik reageer binnen 48 uur.</p>
+          <p data-nl="Voor vragen, persoonlijke begeleiding of gewoon om iets te delen. Ik reageer binnen 48 uur." data-en="For questions, personal guidance or simply to share something. I respond within 48 hours.">Voor vragen, persoonlijke begeleiding of gewoon om iets te delen. Ik reageer binnen 48 uur.</p>
           <div class="contact-social">
             <a href="https://www.instagram.com/theorderofthequietpath" target="_blank">Instagram</a>
             <a href="https://tiktok.com/@theorderofthequietpath" target="_blank">TikTok</a>
-            <a href="https://linktr.ee" target="_blank">Linktree</a>
+            <a href="https://linktr.ee/theorderofthequietpath" target="_blank">Linktree</a>
           </div>
         </div>
         <div class="reveal">
@@ -1096,9 +1154,22 @@
         <a href="#testimonials" data-nl="Ervaringen" data-en="Testimonials">Ervaringen</a>
       </div>
     </div>
+    <div style="max-width:1100px;margin:0 auto;padding:0 60px 40px;">
+      <div class="newsletter-bar">
+        <div>
+          <h4 data-nl="Ontvang de stille gids." data-en="Receive the quiet guide.">Ontvang de stille gids.</h4>
+          <p data-nl="Inzichten over zelfkennis, de vijf systemen en bewust leven — direct in je inbox. Geen spam." data-en="Insights on self-knowledge, the five systems and conscious living — straight to your inbox. No spam.">Inzichten over zelfkennis, de vijf systemen en bewust leven — direct in je inbox. Geen spam.</p>
+        </div>
+        <form class="newsletter-form" action="https://formspree.io/f/xnjodpqn" method="POST" onsubmit="this.querySelector('.newsletter-btn').textContent='✓';return true;">
+          <input type="hidden" name="_subject" value="Nieuwsbrief inschrijving" />
+          <input class="newsletter-input" type="email" name="email" placeholder="jouw@email.com" required />
+          <button class="newsletter-btn" type="submit" data-nl="Inschrijven →" data-en="Subscribe →">Inschrijven →</button>
+        </form>
+      </div>
+    </div>
     <div class="footer-bottom">
       <p data-nl="© 2026 · Shi Ming Dao — Timothy Raeymaekers · Alle rechten voorbehouden" data-en="© 2026 · Shi Ming Dao — Timothy Raeymaekers · All rights reserved">© 2026 · Shi Ming Dao — Timothy Raeymaekers · Alle rechten voorbehouden</p>
-      <p data-nl="TEDx spreker · Human Design · BaZi · Saju · Numerologie · Astrologie" data-en="TEDx speaker · Human Design · BaZi · Saju · Numerology · Astrology">TEDx spreker · Human Design · BaZi · Saju · Numerologie · Astrologie</p>
+      <p data-nl="Human Design · BaZi · Saju · Numerologie · Astrologie" data-en="Human Design · BaZi · Saju · Numerology · Astrology">Human Design · BaZi · Saju · Numerologie · Astrologie</p>
     </div>
   </footer>
 
@@ -1163,21 +1234,46 @@
   reveals.forEach(el => obs.observe(el));
   window.addEventListener('load', () => { reveals.forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible'); }); });
 
-  // NAV SCROLL SPY
+  // NAV SCROLL SPY + SCROLL HIDE
+  const navEl = document.querySelector('nav');
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const curr = window.scrollY;
+    if (curr > lastScroll && curr > 100) navEl.classList.add('hide');
+    else navEl.classList.remove('hide');
+    lastScroll = curr;
+  }, { passive: true });
+
   const navSections = ['hero','over','disciplines','diensten','testimonials','calculators','blog','faq','contact'];
-  const navLinks = document.querySelectorAll('.nav-links a');
+  const navLinks = document.querySelectorAll('.nav-links a:not(.nav-cta)');
   const spyObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
         const id = e.target.id;
         navLinks.forEach(a => {
           const href = a.getAttribute('href');
-          a.style.color = (href === '#' + id || (id === 'hero' && href === '#hero')) ? 'var(--gold-light)' : '';
+          a.style.color = (href === '#' + id) ? 'var(--gold-light)' : '';
         });
       }
     });
-  }, { threshold: 0.35 });
+  }, { threshold: 0.3 });
   navSections.forEach(id => { const el = document.getElementById(id); if (el) spyObs.observe(el); });
+
+  // DISCIPLINES ACCORDION
+  document.querySelectorAll('.disc-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const discId = card.dataset.disc;
+      const panel  = document.getElementById('disc-' + discId);
+      const isOpen = card.classList.contains('active');
+      document.querySelectorAll('.disc-card').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.disc-panel').forEach(p => p.classList.remove('active'));
+      if (!isOpen && panel) {
+        card.classList.add('active');
+        panel.classList.add('active');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  });
 
   // FAQ ACCORDION
   document.querySelectorAll('.faq-q').forEach(btn => {
