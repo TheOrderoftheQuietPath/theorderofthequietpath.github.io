@@ -56,6 +56,17 @@
     .nav-links a:hover { color: var(--gold-light); }
     .lang-btn { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--gold-light); background: transparent; border: 1px solid rgba(184,146,42,0.4); padding: 5px 12px; cursor: pointer; transition: all 0.3s; }
     .lang-btn:hover { background: rgba(184,146,42,0.15); border-color: var(--gold-light); }
+    .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; background: transparent; border: none; cursor: pointer; padding: 4px; z-index: 210; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--gold-light); transition: all 0.3s ease; transform-origin: center; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 199; background: rgba(28,24,20,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 36px; opacity: 0; transition: opacity 0.35s ease; }
+    .mobile-menu.open { opacity: 1; }
+    .mobile-menu a { font-family: 'Libre Baskerville', serif; font-size: 1.6rem; font-weight: 400; font-style: italic; color: rgba(245,242,237,0.75); text-decoration: none; letter-spacing: 0.04em; transition: color 0.3s; }
+    .mobile-menu a:hover { color: var(--gold-light); }
+    .mobile-menu .mobile-lang-btn { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold-light); background: transparent; border: 1px solid rgba(184,146,42,0.5); padding: 8px 20px; cursor: pointer; margin-top: 12px; transition: all 0.3s; }
+    .mobile-menu .mobile-lang-btn:hover { background: rgba(184,146,42,0.15); }
 
     /* HERO */
     #hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 60px 80px; background: var(--bg); position: relative; overflow: hidden; }
@@ -104,20 +115,20 @@
 
     /* SERVICES */
     #diensten { background: var(--bg); }
-    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 60px; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 60px; }
     .service-card { background: var(--surface); padding: 44px 36px; border-top: 3px solid var(--stone-light); transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s; }
-    .service-card:hover { border-color: var(--gold); box-shadow: 0 12px 40px rgba(0,0,0,0.08); transform: translateY(-3px); }
+    .service-card:hover { border-color: var(--gold); box-shadow: 0 16px 48px rgba(0,0,0,0.10); transform: translateY(-5px); }
     .service-icon { font-size: 1.8rem; margin-bottom: 20px; }
     .service-name { font-family: 'Libre Baskerville', serif; font-size: 1.15rem; font-weight: 400; margin-bottom: 12px; color: var(--ink); }
     .service-desc { font-size: 0.88rem; color: var(--ink2); line-height: 1.75; margin-bottom: 24px; }
-    .service-tag { display: inline-block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage-dark); border: 1px solid var(--sage-light); padding: 4px 12px; background: rgba(74,124,111,0.04); }
+    .service-tag { display: inline-block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terracotta); border: 1px solid rgba(184,90,58,0.25); padding: 4px 12px; background: rgba(184,90,58,0.04); }
 
     /* CALCULATORS */
     #calculators { background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%); }
     .calc-tabs { display: flex; gap: 0; margin-top: 50px; margin-bottom: 40px; border-bottom: 2px solid var(--stone-light); flex-wrap: wrap; }
     .calc-tab { font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; padding: 14px 24px; cursor: pointer; color: var(--ink3); background: transparent; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.3s; }
     .calc-tab:hover { color: var(--gold); }
-    .calc-tab.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 500; }
+    .calc-tab.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 500; background: rgba(184,146,42,0.06); }
     .calc-panel { display: none; }
     .calc-panel.active { display: block; }
     .calc-form { background: var(--surface); border: 1px solid var(--stone-light); padding: 44px; max-width: 720px; }
@@ -205,11 +216,17 @@
 
     /* BLOG */
     #blog { background: var(--bg); }
-    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 60px; }
-    .blog-card { background: var(--surface); overflow: hidden; transition: box-shadow 0.3s; cursor: pointer; }
-    .blog-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
-    .blog-card-img { aspect-ratio: 16/9; background: var(--bg2); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
-    .blog-card-img-placeholder { font-size: 2rem; opacity: 0.3; }
+    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 60px; }
+    .blog-card { background: var(--surface); overflow: hidden; transition: box-shadow 0.3s, transform 0.3s; cursor: pointer; }
+    .blog-card:hover { box-shadow: 0 16px 48px rgba(0,0,0,0.10); transform: translateY(-3px); }
+    .blog-card-img { aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+    .blog-card-img-placeholder { font-size: 2.2rem; position: relative; z-index: 1; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15)); opacity: 0.85; }
+    .blog-grid .blog-card:nth-child(1) .blog-card-img { background: linear-gradient(135deg, #2a3a35 0%, #4a7c6f 100%); }
+    .blog-grid .blog-card:nth-child(2) .blog-card-img { background: linear-gradient(135deg, #3a2f1a 0%, #8b6914 100%); }
+    .blog-grid .blog-card:nth-child(3) .blog-card-img { background: linear-gradient(135deg, #2e2a38 0%, #6b5a8a 100%); }
+    .blog-grid .blog-card:nth-child(4) .blog-card-img { background: linear-gradient(135deg, #1e2e2a 0%, #3d6b5c 100%); }
+    .blog-grid .blog-card:nth-child(5) .blog-card-img { background: linear-gradient(135deg, #2a1e1e 0%, #7a3a2a 100%); }
+    .blog-grid .blog-card:nth-child(6) .blog-card-img { background: linear-gradient(135deg, #1a2030 0%, #2a4a6a 100%); }
     .blog-card-body { padding: 28px; }
     .blog-card-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 14px; }
     .blog-card-tag { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-light); padding: 3px 10px; background: rgba(184,146,42,0.04); }
@@ -239,8 +256,8 @@
 
     /* BUTTONS */
     .btn { display: inline-block; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; padding: 14px 32px; transition: all 0.3s; cursor: pointer; border: none; }
-    .btn-primary { background: var(--ink); color: var(--bg); }
-    .btn-primary:hover { background: var(--slate); }
+    .btn-primary { background: linear-gradient(135deg, var(--ink) 0%, var(--slate) 100%); color: var(--bg); }
+    .btn-primary:hover { background: linear-gradient(135deg, var(--slate) 0%, var(--ink) 100%); box-shadow: 0 6px 20px rgba(26,24,20,0.25); }
     .btn-sage { background: var(--sage-dark); color: white; }
     .btn-sage:hover { background: var(--slate); }
     .btn-outline { border: 1px solid var(--stone); color: var(--ink); background: transparent; }
@@ -258,6 +275,7 @@
     @media (max-width: 900px) {
       nav { padding: 18px 24px; }
       .nav-links { display: none; }
+      .hamburger { display: flex; }
       #hero { padding: 100px 24px 60px; }
       .hero-grid, .about-layout, .contact-layout { grid-template-columns: 1fr; gap: 40px; }
       .section-wrap { padding: 70px 24px; }
@@ -326,7 +344,19 @@
       <a href="#contact" data-nl="Contact" data-en="Contact">Contact</a>
       <button class="lang-btn" id="langToggle">EN</button>
     </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Navigatie">
+    <a href="#over" data-nl="Over" data-en="About">Over</a>
+    <a href="#diensten" data-nl="Diensten" data-en="Services">Diensten</a>
+    <a href="#calculators" data-nl="Calculators" data-en="Calculators">Calculators</a>
+    <a href="#blog" data-nl="Blog" data-en="Blog">Blog</a>
+    <a href="#contact" data-nl="Contact" data-en="Contact">Contact</a>
+    <button class="mobile-lang-btn" id="mobileLangToggle">EN</button>
+  </div>
 
   <!-- HERO -->
   <section id="hero">
@@ -337,7 +367,7 @@
         <h1 class="hero-title" data-nl="Jij bent geen<br/>toeval.<br/><em>Ontdek het bewijs.</em>" data-en="You are no<br/>coincidence.<br/><em>Discover the proof.</em>">Jij bent geen<br/>toeval.<br/><em>Ontdek het bewijs.</em></h1>
         <p class="hero-desc" data-nl="Op het moment dat jij geboren werd, stonden de planeten op een unieke positie. De Chinese kalender noteerde een specifieke combinatie van elementen. De getallen in je naam droegen een frequentie. The Order of the Quiet Path helpt je dat patroon lezen — en leven." data-en="The moment you were born, the planets held a unique position. The Chinese calendar recorded a specific combination of elements. The numbers in your name carried a frequency. The Order of the Quiet Path helps you read that pattern — and live it.">Op het moment dat jij geboren werd, stonden de planeten op een unieke positie. De Chinese kalender noteerde een specifieke combinatie van elementen. The Order of the Quiet Path helpt je dat patroon lezen — en leven.</p>
         <div class="hero-btns">
-          <a href="#calculators" class="btn btn-primary" data-nl="Bereken je gratis chart" data-en="Calculate your free chart">Bereken je gratis chart</a>
+          <a href="#calculators" class="btn btn-primary" data-nl="Ontdek je blauwdruk — gratis" data-en="Discover your blueprint — free">Ontdek je blauwdruk — gratis</a>
           <a href="#contact" class="btn btn-outline" data-nl="Boek een verdiepende sessie" data-en="Book an in-depth session">Boek een verdiepende sessie</a>
         </div>
       </div>
@@ -483,37 +513,37 @@
         <div class="service-card reveal">
           <div class="service-icon">☯</div>
           <div class="service-name">BaZi Reading</div>
-          <p class="service-desc">Volledige analyse van je Vier Pilaren: dag-meester, elementen, lopende gelukspilaren en jaarverwachtingen. Inclusief advies over timing, loopbaan en relaties.</p>
+          <p class="service-desc">Jouw geboortemoment codeerde een uniek samenspel van elementen. We lezen de dag-meester, de lopende gelukspilaren en wat het huidige jaar jou brengt — van loopbaan tot liefde.</p>
           <span class="service-tag">Op aanvraag</span>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">한</div>
           <div class="service-name">Saju Reading</div>
-          <p class="service-desc">Koreaanse Vier Pilaren met diepgaande focus op karakter, relatiedynamiek en levensdoel. Inclusief gendercorrectie en energiestroom-analyse.</p>
+          <p class="service-desc">De Koreaanse versie legt de nadruk op wie je innerlijk bent — je karakter, je relaties, je roeping. Stiller, intiemer, en net zo precies als zijn Chinese tegenhanger.</p>
           <span class="service-tag">Op aanvraag</span>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">◈</div>
           <div class="service-name">Human Design Reading</div>
-          <p class="service-desc">Volledige bodygraph-duiding: type, strategie, autoriteit, profiel, gedefinieerde centra, actieve kanalen en incarnatiekruis &#8212; vertaald naar concrete leefsuggesties.</p>
+          <p class="service-desc">Je bodygraph is een kaart van hoe jij energie ontvangt, verwerkt en uitdrukt. Type, strategie, autoriteit, profiel — alle lagen geduid zodat je eindelijk begrijpt hoe jij werkt.</p>
           <span class="service-tag">Op aanvraag</span>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">∞</div>
           <div class="service-name">Numerologie Analyse</div>
-          <p class="service-desc">Alle kerngetallen geduid in hun onderlinge wisselwerking, aangevuld met persoonlijke jaarcycli en naamsanalyse. Voor wie wil begrijpen wat de getallen in zijn leven betekenen.</p>
+          <p class="service-desc">Elk getal in je naam en geboortedatum draagt een frequentie. We duiden levenspad, zielsgetal, persoonlijkheid en bestemming — en leggen uit hoe ze samen jouw verhaal vertellen.</p>
           <span class="service-tag">Op aanvraag</span>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">◯</div>
           <div class="service-name" data-nl="1-op-1 Coaching" data-en="1-on-1 Coaching">1-op-1 Coaching</div>
-          <p class="service-desc">Persoonlijke begeleiding die alle disciplines integreert in één coherent verhaal over jouw leven. Voor wie op een keerpunt staat of patronen wil doorbreken.</p>
+          <p class="service-desc">Soms is lezen niet genoeg. In een persoonlijke sessie weven we alle systemen tot één verhaal over jóuw leven — voor wie durft te kijken naar wat werkelijk speelt.</p>
           <span class="service-tag">Op afspraak</span>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">☽</div>
           <div class="service-name">AI-Reading &amp; Cursussen</div>
-          <p class="service-desc">Uitgebreide gepersonaliseerde AI-readings die meerdere systemen combineren. Online cursussen rond bewustzijn, Zen, Tao&#239;sme en kosmische zelfkennis &#8212; in eigen tempo.</p>
+          <p class="service-desc">Diepgaande AI-readings die meerdere systemen weven tot één persoonlijk verslag. En cursussen voor wie het patroon zelf wil leren lezen — stap voor stap, in eigen tempo.</p>
           <span class="service-tag">Online</span>
         </div>
       </div>
@@ -544,7 +574,7 @@
           <p data-nl="Berekening op basis van je geboortegegevens hierboven. Het uurpilaar vereist een exacte geboortetijd." data-en="Calculation based on your birth data above. The hour pillar requires an exact birth time.">Vul je geboortegegevens in. Het uurpilaar vereist een exacte geboortetijd.</p>
           <div id="bazi-form-slot"></div>
           <div class="calc-note" data-nl="⚠ Indicatieve berekening. Voor een volledige professionele BaZi analyse inclusief lopende gelukspilaren, neem contact op." data-en="⚠ Indicative calculation. For a full professional BaZi analysis including luck pillars, please get in touch.">⚠ Indicatieve berekening. Voor een volledige professionele analyse, neem contact op.</div>
-          <button class="btn btn-primary" onclick="withLoading(this,()=>calcBazi())" data-nl="Bereken BaZi Chart" data-en="Calculate BaZi Chart">Bereken BaZi Chart</button>
+          <button class="btn btn-primary" onclick="withLoading(this,()=>calcBazi())" data-nl="Onthul mijn Vier Pilaren" data-en="Reveal my Four Pillars">Onthul mijn Vier Pilaren</button>
           <div class="calc-result" id="bazi-result">
             <div class="result-title" data-nl="Jouw BaZi Chart" data-en="Your BaZi Chart">Jouw BaZi Chart</div>
             <div class="bazi-chart" id="bazi-pillars"></div>
@@ -562,7 +592,7 @@
           <p data-nl="De Koreaanse variant van de Vier Pilaren met nadruk op karakter en relaties." data-en="The Korean variant of the Four Pillars with emphasis on character and relationships.">Vul je geboortegegevens in. Saju houdt rekening met geslacht voor de energierichting.</p>
           <div id="saju-form-slot"></div>
           <div class="calc-note" data-nl="⚠ Indicatieve berekening. Professionele Saju analyse op aanvraag." data-en="⚠ Indicative calculation. Professional Saju analysis on request.">⚠ Indicatieve berekening. Professionele Saju analyse op aanvraag.</div>
-          <button class="btn btn-primary" onclick="withLoading(this,()=>calcSaju())" data-nl="Bereken Saju Chart" data-en="Calculate Saju Chart">Bereken Saju Chart</button>
+          <button class="btn btn-primary" onclick="withLoading(this,()=>calcSaju())" data-nl="Onthul mijn Saju Patroon" data-en="Reveal my Saju Pattern">Onthul mijn Saju Patroon</button>
           <div class="calc-result" id="saju-result">
             <div class="result-title" data-nl="Jouw Saju Chart" data-en="Your Saju Chart">Jouw Saju Chart</div>
             <div class="saju-chart" id="saju-pillars"></div>
@@ -605,7 +635,7 @@
             <p style="font-size:0.88rem;color:var(--ink2);margin-bottom:20px;line-height:1.7;" data-nl="Berekening op basis van je geboortegegevens hierboven. Persoonlijkheid (zwart/oranje) = geboortemoment · Design (rood) = ~88° voor geboorte." data-en="Calculated from your birth data above. Personality (black/orange) = birth moment · Design (red) = ~88° before birth.">Vul je exacte geboortegegevens in. Persoonlijkheid = geboortemoment · Design = ~88° voor geboorte.</p>
             <div id="hd-form-slot"></div>
             <div class="calc-note" data-nl="⚠ Een exacte geboortetijd is essentieel — zelfs 1 uur verschil kan je type of autoriteit wijzigen." data-en="⚠ An exact birth time is essential — even 1 hour difference can change your type or authority.">⚠ Een exacte geboortetijd is essentieel — zelfs 1 uur verschil kan je type of autoriteit wijzigen.</div>
-            <button class="btn btn-primary" onclick="withLoading(this,()=>hdCalculate())" data-nl="Bereken Human Design Chart" data-en="Calculate Human Design Chart">Bereken Human Design Chart</button>
+            <button class="btn btn-primary" onclick="withLoading(this,()=>hdCalculate())" data-nl="Onthul mijn Bodygraph" data-en="Reveal my Bodygraph">Onthul mijn Bodygraph</button>
           </div>
           <div id="hd-error" style="display:none;"></div>
           <div id="hd-result" style="display:none;">
@@ -683,7 +713,7 @@
           <h3 data-nl="Numerologisch Profiel" data-en="Numerological Profile">Numerologisch Profiel</h3>
           <p data-nl="Berekening op basis van je naam en geboortedatum hierboven." data-en="Calculation based on your name and birth date above.">Vul je volledige naam (zoals op geboorteakte) en geboortedatum in.</p>
           <div id="num-form-slot"></div>
-          <button class="btn btn-primary" onclick="withLoading(this,()=>calcNumerology())" data-nl="Bereken Numerologie" data-en="Calculate Numerology">Bereken Numerologie</button>
+          <button class="btn btn-primary" onclick="withLoading(this,()=>calcNumerology())" data-nl="Onthul mijn Getallenprofiel" data-en="Reveal my Number Profile">Onthul mijn Getallenprofiel</button>
           <div class="calc-result" id="num-result">
             <div class="result-title" data-nl="Jouw Numerologisch Profiel" data-en="Your Numerological Profile">Jouw Numerologisch Profiel</div>
             <div class="num-grid" id="num-cards"></div>
@@ -857,14 +887,30 @@
   reveals.forEach(el => obs.observe(el));
   window.addEventListener('load', () => { reveals.forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible'); }); });
 
-  // TABS
+  // TABS — with fade transition + localStorage persistence
+  const initialTab = localStorage.getItem('toqp-tab') || 'bazi';
+  function switchTab(tabId) {
+    document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
+    const panels = document.querySelectorAll('.calc-panel');
+    panels.forEach(p => { p.style.opacity = '0'; p.style.pointerEvents = 'none'; });
+    const activeTab = document.querySelector(`.calc-tab[data-tab="${tabId}"]`);
+    if (activeTab) activeTab.classList.add('active');
+    const panel = document.getElementById('panel-' + tabId);
+    if (panel) {
+      panels.forEach(p => p.classList.remove('active'));
+      panel.classList.add('active');
+      requestAnimationFrame(() => {
+        panel.style.transition = 'opacity 0.3s ease';
+        panel.style.opacity = '1';
+        panel.style.pointerEvents = '';
+      });
+    }
+    localStorage.setItem('toqp-tab', tabId);
+  }
+  // Restore last active tab
+  switchTab(initialTab);
   document.querySelectorAll('.calc-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
-    });
+    tab.addEventListener('click', () => switchTab(tab.dataset.tab));
   });
 
   // LANG — persist in localStorage
@@ -874,12 +920,44 @@
     document.getElementById('langToggle').textContent = l === 'nl' ? 'EN' : 'NL';
     document.documentElement.lang = l;
   }
+  function applyLangMobile(l) {
+    document.getElementById('mobileLangToggle').textContent = l === 'nl' ? 'EN' : 'NL';
+  }
   applyLang(lang);
+  applyLangMobile(lang);
   document.getElementById('langToggle').addEventListener('click', function() {
     lang = lang === 'nl' ? 'en' : 'nl';
     localStorage.setItem('toqp-lang', lang);
     applyLang(lang);
+    applyLangMobile(lang);
   });
+  document.getElementById('mobileLangToggle').addEventListener('click', function() {
+    lang = lang === 'nl' ? 'en' : 'nl';
+    localStorage.setItem('toqp-lang', lang);
+    applyLang(lang);
+    applyLangMobile(lang);
+  });
+
+  // ─── HAMBURGER MENU ───
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu   = document.getElementById('mobileMenu');
+  function openMenu() {
+    mobileMenu.style.display = 'flex';
+    requestAnimationFrame(() => mobileMenu.classList.add('open'));
+    hamburgerBtn.classList.add('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    mobileMenu.classList.remove('open');
+    hamburgerBtn.classList.remove('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    setTimeout(() => { mobileMenu.style.display = ''; }, 350);
+  }
+  hamburgerBtn.addEventListener('click', () => mobileMenu.classList.contains('open') ? closeMenu() : openMenu());
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 
   // ─── BAZI DATA ───
   const HS = [
