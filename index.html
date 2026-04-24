@@ -610,7 +610,7 @@
                 <div class="hd-info-row"><span class="hd-info-label" data-nl="Autoriteit" data-en="Authority">Autoriteit</span><span class="hd-info-value" id="hdi-authority"></span></div>
                 <div class="hd-info-row"><span class="hd-info-label" data-nl="Profiel" data-en="Profile">Profiel</span><span class="hd-info-value" id="hdi-profile"></span></div>
                 <div class="hd-info-row"><span class="hd-info-label" data-nl="Definitie" data-en="Definition">Definitie</span><span class="hd-info-value" id="hdi-definition"></span></div>
-                <div class="hd-info-row"><span class="hd-info-label" data-nl="Kanalen" data-en="Channels">Kanalen</span><span class="hd-info-value" id="hdi-channels" style="font-size:0.8rem;"></span></div>
+                <div class="hd-info-row"><span class="hd-info-label" data-nl="Kanalen" data-en="Channels">Kanalen</span><span class="hd-info-value" id="hdi-channels" style="font-size:0.78rem;line-height:1.8;"></span></div>
                 <div class="hd-info-row"><span class="hd-info-label" data-nl="Incarnatiekruis" data-en="Incarnation Cross">Incarnatiekruis</span><span class="hd-info-value" id="hdi-cross" style="font-size:0.8rem;"></span></div>
               </div>
               <div style="background:var(--surface);border:1px solid var(--stone-light);padding:24px;">
@@ -1509,7 +1509,7 @@ async function hdCalculate(){
   document.getElementById('hdi-dsun').textContent=`Poort ${dGates['sun']}.${dLines['sun']} — ${GATE_NAMES[dGates['sun']]||''}`;
   document.getElementById('hdi-dearth').textContent=`Poort ${dGates['earth']}.${dLines['earth']} — ${GATE_NAMES[dGates['earth']]||''}`;
   // Kanalen
-  document.getElementById('hdi-channels').textContent=activeChannels.length>0?activeChannels.map(ch=>`${ch.g1}–${ch.g2}`).join(' · '):'—';
+  document.getElementById('hdi-channels').innerHTML=activeChannels.length>0?activeChannels.map(ch=>chLabel(ch.g1,ch.g2)).join('<span style="color:var(--stone-light)"> · </span>'):'—';
   // Variables block hidden in local fallback (no variables data)
   document.getElementById('hdi-variables-block').style.display='none';
 
@@ -1604,6 +1604,54 @@ const HD_CENTER_DESC = {
     open:    'Je ervaart de stressenergie van anderen en de omgeving sterk. Pas op voor gejaagdheid van buitenaf — niet alle urgentie die je voelt is de jouwe.'
   }
 };
+
+// Channel names — keyed as "min-max"
+const HD_CHANNEL_NAMES = {
+  '1-8':   'Inspiratie',
+  '2-14':  'Het Ritme',
+  '3-60':  'Mutatie',
+  '4-63':  'Logica',
+  '5-15':  'Ritme',
+  '6-59':  'Intimiteit',
+  '7-31':  'De Alpha',
+  '9-52':  'Concentratie',
+  '10-20': 'Ontwaakproces',
+  '10-57': 'Perfecte Vorm',
+  '11-56': 'Nieuwsgierigheid',
+  '12-22': 'Openheid',
+  '13-33': 'De Verkwister',
+  '16-48': 'De Golflengte',
+  '17-62': 'Aanvaarding',
+  '18-58': 'Beoordeling',
+  '19-49': 'Synthese',
+  '20-34': 'Charisma',
+  '20-57': 'De Hersengolf',
+  '21-45': 'De Geldlijn',
+  '23-43': 'Structurering',
+  '24-61': 'Bewustzijn',
+  '25-51': 'Initiatie',
+  '26-44': 'Overgave',
+  '27-50': 'Bewaring',
+  '28-38': 'De Strijd',
+  '29-46': 'Ontdekking',
+  '30-41': 'Herkenning',
+  '32-54': 'Transformatie',
+  '34-57': 'Kracht',
+  '35-36': 'Vergankelijkheid',
+  '37-40': 'Gemeenschap',
+  '39-55': 'Emotie',
+  '42-53': 'Rijping',
+  '47-64': 'Abstractie',
+  '49-19': 'Synthese',
+};
+function chName(g1,g2){
+  const k=[Math.min(g1,g2),Math.max(g1,g2)].join('-');
+  return HD_CHANNEL_NAMES[k]||'';
+}
+function chLabel(g1,g2){
+  const n=chName(g1,g2);
+  return n ? `${g1}–${g2} <em style="color:var(--ink3)">${n}</em>` : `${g1}–${g2}`;
+}
 
 const HD_CHANNELS=[
   [64,47],[61,24],[63,4],           // Head ↔ Ajna
@@ -2121,8 +2169,9 @@ function renderHDFromAPI(data) {
   document.getElementById('hdi-notself').textContent = data.notself;
   document.getElementById('hdi-signature').textContent = data.signature;
   // Kanalen
-  const chList = (data.activeChannels||[]).map(ch=>`${ch.gates[0]}–${ch.gates[1]}`).join(' · ');
-  document.getElementById('hdi-channels').textContent = chList||'—';
+  document.getElementById('hdi-channels').innerHTML = (data.activeChannels||[]).length>0
+    ? (data.activeChannels).map(ch=>chLabel(ch.gates[0],ch.gates[1])).join('<span style="color:var(--stone-light)"> · </span>')
+    : '—';
   // Variables
   if(data.variables) {
     const v = data.variables;
