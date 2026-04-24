@@ -1520,9 +1520,7 @@ async function hdCalculate(){
   // Center summary
   const defCenters=Object.entries(centerDef).filter(([,v])=>v!=='undefined').map(([k])=>k);
   const undefCenters=Object.entries(centerDef).filter(([,v])=>v==='undefined').map(([k])=>k);
-  document.getElementById('hd-center-summary').innerHTML=
-    `<strong>Gedefinieerd:</strong> ${defCenters.length>0?defCenters.join(', '):'Geen'}<br/><br/>`+
-    `<strong>Open:</strong> ${undefCenters.length>0?undefCenters.join(', '):'Geen'}`;
+  document.getElementById('hd-center-summary').innerHTML = renderCenterSummary(defCenters, undefCenters);
 
   // Planets table
   let html='<div class="planet-row head"><span></span><span>Planeet</span><span style="color:#c9956c">Pers.</span><span style="color:#c05a5a">Design</span></div>';
@@ -1567,6 +1565,46 @@ function countComponents(centerDef,activeChannels){
 // Every gate has one fixed (x,y). Channels = straight lines between gate pairs.
 
 // 36 canonical channels as [g1, g2] pairs
+// Short center descriptions — defined vs open
+const HD_CENTER_DESC = {
+  Head: {
+    defined: 'Jouw geest staat onder constante mentale druk en genereert voortdurend vragen en inspiratie. Je denkt op een consistente, herkenbare manier.',
+    open:    'Je pikt inspiratie en vragen op van anderen. Je hoeft niet elk idee dat in je opkomt te beantwoorden — leer onderscheid te maken tussen jouw vragen en die van een ander.'
+  },
+  Ajna: {
+    defined: 'Je hebt een vaste manier van denken en conceptualiseren. Jouw mening is consistent — je ziet de wereld door een herkenbare intellectuele lens.',
+    open:    'Je geest is flexibel en open voor meerdere perspectieven tegelijk. Pas op voor de druk om zeker te lijken — jouw kracht ligt juist in het open blijven.'
+  },
+  Throat: {
+    defined: 'Je hebt een consistente stem en uitdrukkingsvermogen. Communicatie en actie komen moeiteloos op gang vanuit jouw eigen ritme.',
+    open:    'Je aanpast je uitdrukking aan de situatie en de mensen om je heen. Vermijd spreken om aandacht te trekken — wacht tot je echt iets te zeggen hebt.'
+  },
+  G: {
+    defined: 'Je hebt een stabiel en consistent gevoel van identiteit en richting. Je weet wie je bent, ongeacht de omgeving.',
+    open:    'Je identiteit en levensrichting zijn beïnvloedbaar door de omgeving en de mensen om je heen. Dit is een gave — je bent in staat jezelf aan te passen en anderen te spiegelen.'
+  },
+  Will: {
+    defined: 'Je hebt toegang tot consistente wilskracht en ego-energie. Je kunt beloftes doen en nakomen — maar rust is net zo belangrijk als inspanning.',
+    open:    'Jouw wilskracht is niet constant aanwezig. Je hoeft jezelf niets te bewijzen — vermijd overbeloftes en gun jezelf rust zonder schuldgevoel.'
+  },
+  Solar: {
+    defined: 'Je hebt een emotionele golf die jouw leven kleurt. Wacht de golf af voor je beslissingen neemt — helderheid komt met tijd, nooit in het moment.',
+    open:    'Je voelt de emoties van anderen heel sterk. Pas op dat je andermans gevoelens niet voor de jouwe houdt — creëer afstand wanneer de druk te hoog wordt.'
+  },
+  Sacral: {
+    defined: 'Je hebt toegang tot een krachtige levensenergiegenerator. Jouw lichaam geeft duidelijke signalen van "ja" of "nee" — vertrouw die gut-respons.',
+    open:    'Je hebt geen consistente toegang tot sacrale levensenergie. Ken je limieten, laad op wanneer nodig, en wees voorzichtig met het overnemen van andermans energie.'
+  },
+  Spleen: {
+    defined: 'Je hebt een betrouwbaar instinct en immuunsysteem. Jouw lichaam spreekt in flitsen van intuïtie in het nu — vertrouw die stem.',
+    open:    'Je bent gevoelig voor de gezondheid en angsten van anderen. Je kunt onbewust vasthouden aan wat niet goed voor je is uit angst. Luister naar subtiele lichaamssignalen.'
+  },
+  Root: {
+    defined: 'Je hebt een consistente aandrijving en stressrespons. Je werkt goed onder druk en met deadlines — jouw worteladrenalinesysteem is betrouwbaar.',
+    open:    'Je ervaart de stressenergie van anderen en de omgeving sterk. Pas op voor gejaagdheid van buitenaf — niet alle urgentie die je voelt is de jouwe.'
+  }
+};
+
 const HD_CHANNELS=[
   [64,47],[61,24],[63,4],           // Head ↔ Ajna
   [17,62],[43,23],[11,56],           // Ajna ↔ Throat
@@ -1681,6 +1719,34 @@ function hd_cp(s){
 }
 const BG_SHAPES=HD_SHAPES,BG_LABELS=HD_LABELS,CENTER_POS=HD_SHAPES;
 function centerPoint(s){return hd_cp(s);}
+
+function renderCenterSummary(defCenters, undefCenters) {
+  const NL_NAMES = {Head:'Hoofd',Ajna:'Ajna',Throat:'Keel',G:'G-centrum',Will:'Ego/Wilskracht',
+    Solar:'Zonnevlecht',Sacral:'Sacraal',Spleen:'Milt',Root:'Wortel'};
+  function block(center, isDefined) {
+    const label = NL_NAMES[center] || center;
+    const desc = (HD_CENTER_DESC[center] || {})[isDefined ? 'defined' : 'open'] || '';
+    const color = isDefined ? 'var(--sage-dark)' : 'var(--stone)';
+    const tag = isDefined ? 'Gedefinieerd' : 'Open';
+    return `<div style="margin-bottom:12px;">
+      <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:3px;">
+        <span style="font-weight:500;color:var(--ink2);">${label}</span>
+        <span style="font-size:0.65rem;color:${color};text-transform:uppercase;letter-spacing:0.08em;">${tag}</span>
+      </div>
+      <div style="color:var(--ink3);font-size:0.72rem;line-height:1.6;">${desc}</div>
+    </div>`;
+  }
+  let html = '';
+  if (defCenters.length > 0) {
+    html += `<div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--sage-dark);margin-bottom:8px;font-weight:500;">Gedefinieerd</div>`;
+    html += defCenters.map(c => block(c, true)).join('');
+  }
+  if (undefCenters.length > 0) {
+    html += `<div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--stone);margin-bottom:8px;margin-top:${defCenters.length>0?'14px':'0'};font-weight:500;">Open</div>`;
+    html += undefCenters.map(c => block(c, false)).join('');
+  }
+  return html || '—';
+}
 
 function drawBodygraph(centerDef,activeChannels,halfChannels){
   const svg=document.getElementById("hd-bodygraph-svg");
@@ -2084,9 +2150,7 @@ function renderHDFromAPI(data) {
   // Bodygraph
   drawBodygraph(data.centerDefinitions, data.activeChannels, data.halfChannels);
   // Center summary
-  document.getElementById('hd-center-summary').innerHTML =
-    `<strong>${lang==='nl'?'Gedefinieerd':'Defined'}:</strong> ${data.definedCenters.join(', ')||'—'}<br/><br/>` +
-    `<strong>${lang==='nl'?'Open':'Open'}:</strong> ${data.undefinedCenters.join(', ')||'—'}`;
+  document.getElementById('hd-center-summary').innerHTML = renderCenterSummary(data.definedCenters||[], data.undefinedCenters||[]);
   // Planets table
   if(data.activations) {
     const icons = {sun:'☀',earth:'⊕',moon:'☽',mercury:'☿',venus:'♀',mars:'♂',
