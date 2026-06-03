@@ -436,7 +436,7 @@ function App() {
   const tool = toolId ? toolById(toolId) : null;
 
   return (
-    <div className="app" id="qp-app-root">
+    <div className={`app${IS_EMBEDDED ? ' embedded' : ''}`} id="qp-app-root">
       <div className="wrap">
         {!IS_EMBEDDED && (
           <div className="topbar">

@@ -90,6 +90,7 @@ a { color: inherit; }
 /* ---- layout ---- */
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 32px; }
 .app { min-height: 100vh; padding-bottom: 80px; }
+.app.embedded { min-height: 0; }
 .hairline { height: 1px; background: var(--line); border: 0; margin: 0; }
 .center { text-align: center; }
 .stack > * + * { margin-top: var(--g, 16px); }
