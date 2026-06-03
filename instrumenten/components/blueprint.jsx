@@ -217,25 +217,58 @@ function Blueprint({ ctx, onBack }) {
       systems.numerology = window.QP.numerology.compute(birth);
     } catch(e) { console.warn('Num error:', e); }
 
-    // Stuur naar backend
+    // Stuur naar backend via SSE streaming
     try {
-      const res = await fetch(`${BACKEND_URL}/api/report`, {
+      const response = await fetch(`${BACKEND_URL}/api/report`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ birth, systems }),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setErrMsg(data.error || 'Onbekende fout.');
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        setErrMsg(data.error || `Server fout (${response.status}). Probeer opnieuw.`);
         setPhase('error');
         return;
       }
 
-      setReportHTML(data.report);
-      setPhase('report');
-      window.scrollTo(0, 0);
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let fullHTML = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop(); // bewaar onvolledig stuk
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          try {
+            const event = JSON.parse(line.slice(6));
+            if (event.type === 'chunk') {
+              fullHTML += event.text;
+            } else if (event.type === 'done') {
+              setReportHTML(fullHTML);
+              setPhase('report');
+              window.scrollTo(0, 0);
+            } else if (event.type === 'error') {
+              setErrMsg(event.message || 'Rapport generatie mislukt.');
+              setPhase('error');
+            }
+          } catch (parseErr) { /* skip malformed line */ }
+        }
+      }
+
+      // Fallback als 'done' event gemist werd
+      if (fullHTML && phase !== 'report') {
+        setReportHTML(fullHTML);
+        setPhase('report');
+        window.scrollTo(0, 0);
+      }
 
     } catch (e) {
       console.error(e);
