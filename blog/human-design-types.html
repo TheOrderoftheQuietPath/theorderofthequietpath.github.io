@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>De vijf Human Design types — wie ben jij? | Het Stille Pad</title>
+  <meta name="description" content="Generator, Manifesterende Generator, Projector, Manifestor of Reflector? Ontdek wat jouw Human Design type zegt over hoe jij energie gebruikt, beslist en in het leven navigeert." />
+  <link rel="canonical" href="https://theorderofthequietpath.github.io/blog/human-design-types.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&family=Cinzel:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body { background: #f5f2ed; color: #1c1814; font-family: 'Jost', sans-serif; font-weight: 300; line-height: 1.7; }
+    a { color: inherit; text-decoration: none; }
+    :root {
+      --ink: #1c1814; --ink2: #3d3830; --ink3: #7a736a;
+      --sage: #4a7c6f; --sage-dark: #2d5c52; --gold: #b8922a; --gold-lt: #d4ae58;
+      --bg: #f5f2ed; --bg2: #ede7de; --surface: #fff; --stone: #c8bfb0;
+    }
+    /* Nav */
+    nav { background: rgba(28,24,20,0.97); padding: 0 40px; height: 60px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .nav-logo { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gold-lt); text-transform: uppercase; }
+    .nav-back { font-size: 0.72rem; letter-spacing: 0.08em; color: rgba(245,242,237,0.6); transition: color 0.2s; }
+    .nav-back:hover { color: var(--gold-lt); }
+    /* Article layout */
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 64px 24px 96px; }
+    .article-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+    .article-tag { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage); }
+    .article-date { font-size: 0.72rem; color: var(--ink3); }
+    h1 { font-family: 'Libre Baskerville', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 400; line-height: 1.15; margin-bottom: 24px; }
+    h1 em { color: var(--sage-dark); font-style: italic; }
+    .article-intro { font-size: 1.08rem; color: var(--ink2); line-height: 1.75; margin-bottom: 40px; border-left: 3px solid var(--gold); padding-left: 20px; }
+    h2 { font-family: 'Libre Baskerville', serif; font-size: 1.45rem; font-weight: 400; margin: 48px 0 16px; }
+    h3 { font-family: 'Libre Baskerville', serif; font-size: 1.1rem; font-weight: 400; margin: 32px 0 12px; color: var(--sage-dark); }
+    p { color: var(--ink2); margin-bottom: 18px; font-size: 0.97rem; }
+    strong { color: var(--ink); font-weight: 500; }
+    .type-card { background: var(--surface); border: 1px solid var(--stone); border-left: 4px solid var(--sage); padding: 28px 28px 24px; margin: 32px 0; }
+    .type-card--gold { border-left-color: var(--gold); }
+    .type-pct { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink3); margin-bottom: 6px; }
+    .type-name { font-family: 'Libre Baskerville', serif; font-size: 1.3rem; font-weight: 400; margin-bottom: 10px; }
+    .type-strategy { font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sage); margin-bottom: 16px; }
+    .divider { width: 40px; height: 1px; background: var(--gold); margin: 36px 0; }
+    .cta-block { background: var(--ink); color: rgba(245,242,237,0.9); padding: 36px 32px; margin-top: 56px; text-align: center; }
+    .cta-block h3 { font-family: 'Libre Baskerville', serif; font-size: 1.3rem; font-weight: 400; color: rgba(245,242,237,0.95); margin-bottom: 12px; }
+    .cta-block p { color: rgba(245,242,237,0.6); font-size: 0.9rem; margin-bottom: 20px; }
+    .btn { display: inline-block; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 13px 32px; background: var(--gold); color: #fff; border: none; cursor: pointer; transition: background 0.2s; }
+    .btn:hover { background: #9a7520; }
+    footer { background: var(--ink); padding: 28px 40px; text-align: center; font-size: 0.72rem; color: rgba(245,242,237,0.3); }
+    @media (max-width: 600px) { nav { padding: 0 20px; } .article-wrap { padding: 40px 20px 64px; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="../" class="nav-logo">The Order of the Quiet Path</a>
+    <a href="../" class="nav-back">← Terug naar de site</a>
+  </nav>
+
+  <article class="article-wrap">
+    <div class="article-meta">
+      <span class="article-tag">Human Design</span>
+      <span class="article-date">5 april 2026</span>
+    </div>
+
+    <h1>De vijf Human Design types —<br/><em>wie ben jij eigenlijk?</em></h1>
+
+    <p class="article-intro">Human Design verdeelt de mensheid in vijf energetische types. Elk type heeft een andere manier van werken, beslissen en navigeren. Zodra je weet welk type jij bent, begrijp je ook waarom bepaalde strategieën voor anderen werken maar voor jou niet.</p>
+
+    <p>Human Design werd in 1987 ontvangen door Ra Uru Hu — een synthese van de I Tjing, de Kabbala, het chakrasysteem, de Rig Veda en de kwantumfysica. Het centrale instrument is de bodygraph: een diagram van negen centra, 36 kanalen en 64 poorten die samen jouw energetisch ontwerp in kaart brengen.</p>
+
+    <p>Het type wordt bepaald door welke centra gedefinieerd zijn en hoe ze met elkaar verbonden zijn. Niet door je geboortedatum alleen — door de exacte stand van de planeten op het moment van je eerste ademhaling én op een moment 88 dagen daarvoor.</p>
+
+    <div class="divider"></div>
+    <h2>De vijf types in detail</h2>
+
+    <div class="type-card">
+      <div class="type-pct">~37% van de mensheid</div>
+      <div class="type-name">Generator</div>
+      <div class="type-strategy">Strategie: Wacht om te reageren</div>
+      <p>De Generator is de motor van de samenleving. Jij hebt een gedefinieerd sacraal centrum — een constante energiebron die zich laadt wanneer je doet waar je werkelijk zin in hebt, en leegloopt wanneer je werkt aan dingen die je niet aanspreken.</p>
+      <p>Het grootste misverstand over Generators: dat wachten passief is. Het is dat niet. Wachten om te reageren betekent niet stilzitten en niets doen — het betekent <strong>niet initiëren vanuit het hoofd</strong>. Jouw sacrale "ja" of "nee" is een lichamelijke respons, geen mentale beslissing. Een buikgevoel dat reageert op wat het leven op je pad brengt.</p>
+      <p>De niet-zelf manifestatie van de Generator is <strong>frustratie</strong>. Als je dat kent — die sluimerende ergernis dat dingen niet lopen zoals je wilt — is dat het signaal dat je te veel dingen doet waar je lijf eigenlijk "nee" op zegt.</p>
+      <h3>Hoe een Generator floreert</h3>
+      <p>Generators floreren wanneer ze werk doen dat ze echt aantrekt — niet werk dat ze zouden "moeten" doen. De kunst is het onderscheid leren voelen tussen een sacraal "ja" (een gevoel van expansie, zin, energie) en een sacraal "nee" (een contractie, moeheid, weerstand). Dat gevoel is altijd sneller dan de gedachte.</p>
+    </div>
+
+    <div class="type-card">
+      <div class="type-pct">~33% van de mensheid</div>
+      <div class="type-name">Manifesterende Generator</div>
+      <div class="type-strategy">Strategie: Reageer, informeer, doe</div>
+      <p>De Manifesterende Generator combineert de sacrale energie van de Generator met de capaciteit van de Manifestor om direct actie te ondernemen. Jij bent snel, veelzijdig, en doet vaak meerdere dingen tegelijk — niet omdat je ongeorganiseerd bent, maar omdat zo je ontwerp werkt.</p>
+      <p>Manifesterende Generators springen stappen over, draaien terug, proberen opnieuw — en dat is de bedoeling. Jouw leerproces is non-lineair. <strong>Dat is geen fout. Dat is efficiëntie op jouw manier.</strong></p>
+      <p>De niet-zelf manifestatie is ook frustratie, maar met een extra laag: <strong>woede</strong> wanneer je je beklemd voelt of niet mag bewegen. Je hebt ruimte nodig om te kunnen schakelen.</p>
+      <h3>De sleutel: informeren</h3>
+      <p>Omdat Manifesterende Generators een motorcentrum hebben dat verbonden is met de keel, kunnen ze dingen in gang zetten — maar dat creëert weerstand bij anderen die niet worden meegenomen. Informeren vóór je handelt is niet om toestemming vragen. Het is de mensen om je heen meenemen zodat jij vrij kunt blijven bewegen.</p>
+    </div>
+
+    <div class="type-card type-card--gold">
+      <div class="type-pct">~20% van de mensheid</div>
+      <div class="type-name">Projector</div>
+      <div class="type-strategy">Strategie: Wacht op de uitnodiging</div>
+      <p>De Projector heeft geen gedefinieerd sacraal centrum en is dus <strong>niet gebouwd voor continue, repetitieve arbeid</strong>. Jouw kracht is niet volume maar richting — je ziet hoe anderen werken, hoe systemen functioneren, wat er ontbreekt en wat er beter kan. Je bent gemaakt om te begeleiden, niet om te zwoegen.</p>
+      <p>Projectors absorberen de energie van anderen. In kleine hoeveelheden is dat een gave — je kunt je volledig afstemmen op iemand. In grote hoeveelheden put het je uit. Veel Projectors zijn chronisch vermoeid omdat ze proberen bij te houden wat Generators doen — een wedstrijd die ze nooit kunnen winnen en ook nooit hoeven te winnen.</p>
+      <p>De niet-zelf manifestatie is <strong>verbittering</strong>. Dat schrijnende gevoel niet gezien te worden, terwijl je zo duidelijk ziet wat anderen niet zien.</p>
+      <h3>Wat de uitnodiging verandert</h3>
+      <p>De uitnodiging is niet slechts beleefdheid — het is de energetische erkenning die een Projector nodig heeft om zijn gaven te kunnen inzetten. Wanneer een Projector zijn inzichten deelt zonder gevraagd te worden, stuit hij op weerstand. Wanneer hij gevraagd wordt — dan opent zich de ruimte waarin zijn talent voluit kan werken. De uitnodiging is de sleutel. En die komt, als je jezelf zichtbaar maakt op de juiste plekken.</p>
+    </div>
+
+    <div class="type-card">
+      <div class="type-pct">~9% van de mensheid</div>
+      <div class="type-name">Manifestor</div>
+      <div class="type-strategy">Strategie: Informeer voor je handelt</div>
+      <p>De Manifestor is het enige type dat werkelijk kan initiëren — zelfstandig, zonder externe trigger. Jij hebt een motorcentrum dat direct verbonden is met de keel, waardoor je dingen in de wereld kunt brengen vanuit jezelf. In oude culturen waren Manifestors de leiders, de oprichters, de mensen die bewegingen in gang zetten.</p>
+      <p>Maar Manifestors zijn zeldzaam, en hun energie is onbegrijpelijk voor de meeste mensen. Anderen voelen de kracht van een Manifestor — soms als inspirerend, soms als overweldigend. Dat creëert een onbewust patroon van weerstand: mensen proberen de Manifestor te controleren of te stoppen.</p>
+      <p>De niet-zelf manifestatie is <strong>woede</strong> — de frustratie van iemand die voortdurend tegengehouden wordt.</p>
+      <h3>Vrijheid door transparantie</h3>
+      <p>Informeren is het antwoord. Niet om toestemming te vragen — de Manifestor vraagt geen toestemming — maar om de mensen in zijn omgeving te informeren over wat er gaat gebeuren. Die simpele handeling lost de meeste weerstand op en geeft de Manifestor de vrijheid die hij nodig heeft.</p>
+    </div>
+
+    <div class="type-card type-card--gold">
+      <div class="type-pct">~1% van de mensheid</div>
+      <div class="type-name">Reflector</div>
+      <div class="type-strategy">Strategie: Wacht een maancyclus</div>
+      <p>De Reflector heeft geen enkel vast gedefinieerd centrum — alle negen centra zijn open. Dat maakt de Reflector extreem gevoelig voor zijn omgeving: hij weerspiegelt de gezondheid van de gemeenschap en de mensen om hem heen. Wie jij bent op maandag is letterlijk anders dan wie jij bent op donderdag — afhankelijk van wie je hebt ontmoet, waar je geweest bent, wat je hebt meegedragen.</p>
+      <p>Dit is geen gebrek aan identiteit. Het is een uitzonderlijk zeldzame gave. Reflectors zijn de barometers van een groep — als het niet goed gaat met de Reflector, gaat het niet goed met de omgeving. Als de Reflector floreert, is de omgeving gezond.</p>
+      <p>De niet-zelf manifestatie is <strong>teleurstelling</strong> — het gevoel dat het leven nooit helemaal samenvalt met wat het zou kunnen zijn.</p>
+      <h3>De maancyclus als anker</h3>
+      <p>Reflectors nemen 28 dagen de tijd voor grote beslissingen — niet als vertragingstactiek, maar omdat ze de maan nodig hebben als referentiekader. In die 28 dagen activeren verschillende maanstanden alle poorten van hun kaart, waardoor ze een volledig beeld krijgen van hoe een beslissing aanvoelt vanuit verschillende perspectieven. Rustige, stabiele omgevingen zijn voor Reflectors geen luxe maar noodzaak.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>Welk type ben jij?</h2>
+    <p>Je type kan je niet zelf bepalen aan de hand van een beschrijving — het wordt berekend op basis van je exacte geboortegegevens. De meeste mensen herkennen hun type onmiddellijk zodra ze het lezen, maar de kaart geeft de zekerheid.</p>
+    <p>Wat je nodig hebt: je exacte geboortedatum, geboortetijd (zo exact mogelijk) en geboorteplaats. Met die gegevens berekent de Human Design calculator je type, strategie, autoriteit, profiel en bodygraph.</p>
+
+    <div class="cta-block">
+      <h3>Bereken jouw Human Design type</h3>
+      <p>Gratis. Direct. Zonder registratie. Jouw volledige bodygraph inclusief type, strategie, autoriteit en profiel.</p>
+      <a href="../instrumenten/" class="btn">Open de gratis calculator →</a>
+    </div>
+  </article>
+
+  <footer>
+    © 2026 The Order of the Quiet Path · <a href="../" style="color:rgba(245,242,237,0.4);">Terug naar de site</a>
+  </footer>
+</body>
+</html>

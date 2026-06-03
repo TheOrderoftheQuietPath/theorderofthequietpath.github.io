@@ -879,3 +879,50 @@ body.premium-print .gate-overlay { display: none !important; }
 }
 .soulmap__cta p { font-size: 0.9rem; line-height: 1.65; color: oklch(0.70 0.014 270); }
 
+
+/* ── Lead magnet ───────────────────────────────────────────────────────────── */
+.lead-magnet {
+  position: relative;
+  background: var(--night);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 28px 28px 20px;
+  margin: 32px 0;
+  animation: fadeUp 0.4s ease both;
+}
+.lead-magnet--done {
+  display: flex; align-items: center; gap: 14px;
+  background: oklch(0.25 0.03 150);
+  border-color: oklch(0.55 0.12 150);
+  color: oklch(0.85 0.08 150);
+  font-size: 0.9rem;
+}
+.lead-magnet--done span { font-size: 1.3rem; }
+.lm-close {
+  position: absolute; top: 12px; right: 14px;
+  font-size: 0.8rem; color: var(--muted);
+  cursor: pointer; padding: 4px 6px; transition: color 0.15s;
+}
+.lm-close:hover { color: var(--ink); }
+.lm-label {
+  font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold-deep);
+  margin-bottom: 10px;
+}
+.lead-magnet h4 {
+  font-family: var(--serif); font-size: 1.15rem; font-weight: 400;
+  color: oklch(0.92 0.012 80); margin-bottom: 6px;
+}
+.lead-magnet > p {
+  font-size: 0.88rem; color: var(--muted); margin-bottom: 16px;
+}
+.lm-form {
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+.lm-form .input {
+  min-width: 220px;
+}
+.lm-privacy {
+  font-size: 0.72rem !important; color: oklch(0.45 0.01 270) !important;
+  margin-top: 10px !important; margin-bottom: 0 !important;
+}

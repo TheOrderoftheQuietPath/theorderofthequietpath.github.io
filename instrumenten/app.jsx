@@ -331,6 +331,63 @@ function Hub({ onPick, saved, onOpenSaved, onDeleteSaved, onOpenSoulMap }) {
 /* --- Embedded-modus detectie --- */
 const IS_EMBEDDED = new URLSearchParams(location.search).get('embed') === '1';
 
+/* --- Lead magnet: e-mailcaptatie na eerste resultaat --- */
+const NODE_API = 'https://toqp-backend.onrender.com';
+
+function LeadMagnet({ toolName, birth, onDismiss }) {
+  const [email, setEmail] = React.useState('');
+  const [status, setStatus] = React.useState('idle'); // idle | loading | done | error
+
+  async function submit(e) {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setStatus('loading');
+    try {
+      await fetch(`${NODE_API}/api/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), tool: toolName, name: birth?.name || '' }),
+      });
+      localStorage.setItem('qp_subscribed', '1');
+      setStatus('done');
+      setTimeout(onDismiss, 2800);
+    } catch {
+      setStatus('error');
+    }
+  }
+
+  if (status === 'done') return (
+    <div className="lead-magnet lead-magnet--done">
+      <span>✓</span>
+      <p>Bedankt — check je inbox voor je gratis Mini-Blauwdruk.</p>
+    </div>
+  );
+
+  return (
+    <div className="lead-magnet">
+      <div className="lm-close" onClick={onDismiss} title="Sluiten">✕</div>
+      <div className="lm-label">✦ &nbsp;Gratis</div>
+      <h4>Ontvang je persoonlijke Mini-Blauwdruk</h4>
+      <p>Een beknopte duiding van je {toolName}-resultaat — per e-mail, direct.</p>
+      <form onSubmit={submit} className="lm-form">
+        <input
+          type="email" required
+          className="input"
+          placeholder="jouw@email.com"
+          value={email}
+          onChange={e => { setEmail(e.target.value); setStatus('idle'); }}
+          style={{ flex: 1 }}
+        />
+        <button type="submit" className="btn btn-gold btn-sm" disabled={status === 'loading'}>
+          {status === 'loading' ? '…' : 'Verstuur →'}
+        </button>
+      </form>
+      {status === 'error' && <p style={{ color: 'var(--el-Vuur)', fontSize: '0.8rem', marginTop: 6 }}>Kon niet verzenden. Probeer opnieuw.</p>}
+      <p className="lm-privacy">Geen spam. Enkel dit rapport. Uitschrijven kan altijd.</p>
+    </div>
+  );
+}
+
 /* --- App --- */
 function App() {
   const [view, setView] = React.useState('hub');     // hub | form | result | blueprint | soulmap
@@ -341,6 +398,8 @@ function App() {
   const [toast, toastNode] = useToast();
   const [premium, setPremium] = React.useState(() => localStorage.getItem('qp_premium') === '1');
   const [showUnlock, setShowUnlock] = React.useState(false);
+  const [showLead, setShowLead] = React.useState(false);
+  const alreadySubscribed = localStorage.getItem('qp_subscribed') === '1';
 
   function unlock(code) {
     if (validateCode(code)) {
@@ -387,6 +446,10 @@ function App() {
     setToolId(tid); setBirth(b); setData(result); setView('result');
     if (save) saveChart(tid, b);
     scrollTop();
+    // Toon lead magnet na eerste resultaat (alleen als nog niet ingeschreven)
+    if (!alreadySubscribed) {
+      setTimeout(() => setShowLead(true), 3500);
+    }
   }
 
   function scrollTop() {
@@ -533,6 +596,13 @@ function App() {
                 </div>
               </div>
               {tool.render(data, birth, ctx)}
+              {showLead && !alreadySubscribed && (
+                <LeadMagnet
+                  toolName={tool.name}
+                  birth={birth}
+                  onDismiss={() => setShowLead(false)}
+                />
+              )}
             </div>
           )}
         </div>
