@@ -328,6 +328,9 @@ function Hub({ onPick, saved, onOpenSaved, onDeleteSaved, onOpenSoulMap }) {
   );
 }
 
+/* --- Embedded-modus detectie --- */
+const IS_EMBEDDED = new URLSearchParams(location.search).get('embed') === '1';
+
 /* --- App --- */
 function App() {
   const [view, setView] = React.useState('hub');     // hub | form | result | blueprint | soulmap
@@ -383,11 +386,35 @@ function App() {
     const result = t.compute(b);
     setToolId(tid); setBirth(b); setData(result); setView('result');
     if (save) saveChart(tid, b);
-    window.scrollTo(0, 0);
+    scrollTop();
   }
 
-  function pick(tid) { setToolId(tid); setView('form'); window.scrollTo(0, 0); }
-  function goHub() { setView('hub'); history.replaceState(null, '', location.pathname); window.scrollTo(0, 0); }
+  function scrollTop() {
+    if (IS_EMBEDDED) {
+      // Scroll het iframe in de parent-pagina naar de bovenrand van het frame
+      window.parent.postMessage({ type: 'qp-scroll-top' }, '*');
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function postHeight() {
+    if (!IS_EMBEDDED) return;
+    const h = document.getElementById('qp-app-root')?.scrollHeight || document.body.scrollHeight;
+    window.parent.postMessage({ type: 'qp-resize', height: h }, '*');
+  }
+
+  // Hoogte doorgeven aan parent bij elke render
+  React.useEffect(() => {
+    if (!IS_EMBEDDED) return;
+    const ro = new ResizeObserver(postHeight);
+    const el = document.getElementById('qp-app-root') || document.body;
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  function pick(tid) { setToolId(tid); setView('form'); scrollTop(); }
+  function goHub() { setView('hub'); history.replaceState(null, '', location.pathname + location.search); scrollTop(); }
 
   function share() {
     const enc = encodeState(toolId, birth);
@@ -405,22 +432,24 @@ function App() {
   const tool = toolId ? toolById(toolId) : null;
 
   return (
-    <div className="app">
+    <div className="app" id="qp-app-root">
       <div className="wrap">
-        <div className="topbar">
-          <div className="brand" onClick={goHub}>
-            <span className="brand-mark"><b>Het Stille Pad</b></span>
+        {!IS_EMBEDDED && (
+          <div className="topbar">
+            <div className="brand" onClick={goHub}>
+              <span className="brand-mark"><b>Het Stille Pad</b></span>
+            </div>
+            <nav className="topnav">
+              <a onClick={goHub} style={{ cursor: 'pointer' }}>Instrumenten</a>
+              <a onClick={() => { setView('blueprint'); scrollTop(); }}
+                 style={{ cursor: 'pointer', color: 'var(--gold-deep)', fontWeight: 600 }}>
+                ✦ Zielsblauwdruk
+              </a>
+              <a href={CONTACT_URL} target="_blank" rel="noopener">Contact</a>
+            </nav>
           </div>
-          <nav className="topnav">
-            <a onClick={goHub} style={{ cursor: 'pointer' }}>Instrumenten</a>
-            <a onClick={() => { setView('blueprint'); window.scrollTo(0,0); }}
-               style={{ cursor: 'pointer', color: 'var(--gold-deep)', fontWeight: 600 }}>
-              ✦ Zielsblauwdruk
-            </a>
-            <a href={CONTACT_URL} target="_blank" rel="noopener">Contact</a>
-          </nav>
-        </div>
-        <hr className="hairline" />
+        )}
+        {!IS_EMBEDDED && <hr className="hairline" />}
 
         <div style={{ paddingTop: 8 }}>
           {view === 'soulmap' && (() => {
@@ -429,7 +458,7 @@ function App() {
             return (
               <div className="fade-in" style={{ paddingTop: 14 }}>
                 <button className="backlink" onClick={goHub}>← Alle instrumenten</button>
-                <SoulMap group={group} onOrder={() => { setView('blueprint'); window.scrollTo(0,0); }} />
+                <SoulMap group={group} onOrder={() => { setView('blueprint'); scrollTop(); }} />
               </div>
             );
           })()}
@@ -439,8 +468,8 @@ function App() {
               <Hub onPick={pick} saved={saved}
                 onOpenSaved={(s) => runTool(s.toolId, s.birth, false)}
                 onDeleteSaved={deleteSaved}
-                onOpenSoulMap={() => { setView('soulmap'); window.scrollTo(0,0); }} />
-              <div className="blueprint-teaser" onClick={() => { setView('blueprint'); window.scrollTo(0,0); }}>
+                onOpenSoulMap={() => { setView('soulmap'); scrollTop(); }} />
+              <div className="blueprint-teaser" onClick={() => { setView('blueprint'); scrollTop(); }}>
                 <div className="label" style={{ marginBottom: 10 }}>✦ &nbsp;Nieuw</div>
                 <h2>Persoonlijk Zielsblauwdruk Rapport</h2>
                 <p>Vijf systemen. Eén coherent verhaal over wie jij bent — geschreven over jou persoonlijk. 30-40 pagina's coachingstaal.</p>
@@ -506,17 +535,19 @@ function App() {
 
         {showUnlock && <UnlockModal onUnlock={unlock} onClose={() => setShowUnlock(false)} />}
 
-        <div className="foot">
-          <div>
-            <div className="fm">Het Stille Pad</div>
-            <div className="fc">Kosmische zelfkennis · gratis instrumenten</div>
+        {!IS_EMBEDDED && (
+          <div className="foot">
+            <div>
+              <div className="fm">Het Stille Pad</div>
+              <div className="fc">Kosmische zelfkennis · gratis instrumenten</div>
+            </div>
+            <div className="fl">
+              <a href="https://www.instagram.com/theorderofthequietpath" target="_blank" rel="noopener">Instagram</a>
+              <a href="https://tiktok.com/@theorderofthequietpath" target="_blank" rel="noopener">TikTok</a>
+              <a href={CONTACT_URL} target="_blank" rel="noopener">Contact</a>
+            </div>
           </div>
-          <div className="fl">
-            <a href="https://www.instagram.com/theorderofthequietpath" target="_blank" rel="noopener">Instagram</a>
-            <a href="https://tiktok.com/@theorderofthequietpath" target="_blank" rel="noopener">TikTok</a>
-            <a href={CONTACT_URL} target="_blank" rel="noopener">Contact</a>
-          </div>
-        </div>
+        )}
       </div>
       {toastNode}
     </div>
