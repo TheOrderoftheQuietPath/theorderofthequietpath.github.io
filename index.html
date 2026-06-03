@@ -255,16 +255,17 @@
       font-size: 0.83rem; color: var(--ink2); line-height: 1.6;
     }
 
-    /* ── Calculators ───────────────────────────────────────────────────── */
-    #calculators { background: var(--bg); }
-    .calc-header { text-align: center; max-width: 640px; margin: 0 auto 40px; }
-    .calc-free-pill {
-      display: inline-block; font-family: 'Cinzel', serif;
-      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
-      background: #e6f0ee; color: var(--sage-dark); border: 1px solid #b8d4ce;
-      padding: 4px 14px; margin-bottom: 16px;
+    /* ── Calculators CTA ───────────────────────────────────────────────── */
+    .tools-preview {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
     }
-    .calc-frame-wrap { width: var(--wrap); margin: 0 auto; }
+    .tool-pill {
+      font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.1em;
+      padding: 10px 20px; border: 1px solid rgba(184,146,42,0.3);
+      color: rgba(245,242,237,0.7); transition: all 0.2s;
+      text-decoration: none;
+    }
+    .tool-pill:hover { border-color: var(--gold-lt); color: var(--gold-lt); background: rgba(184,146,42,0.07); }
 
     /* ── Testimonials ──────────────────────────────────────────────────── */
     #testimonials { background: var(--bg2); }
@@ -592,36 +593,24 @@
     </div>
   </section>
 
-  <!-- CALCULATORS -->
-  <section id="calculators">
-    <div class="calc-header reveal">
-      <span class="calc-free-pill" data-nl="Gratis · Direct · Zonder account" data-en="Free · Instant · No account">Gratis · Direct · Zonder account</span>
-      <h2 class="h2" data-nl="Jouw kosmisch <em>profiel</em> in seconden" data-en="Your cosmic <em>profile</em> in seconds">Jouw kosmisch <em style="color:var(--sage-dark);">profiel</em> in seconden</h2>
-      <div class="divider" style="margin:24px auto;"></div>
-      <p class="lede" data-nl="Kies een systeem, vul je geboortegegevens in en lees direct wat het over je zegt." data-en="Choose a system, enter your birth data and instantly read what it says about you.">Kies een systeem, vul je geboortegegevens in en lees direct wat het over je zegt.</p>
+  <!-- CALCULATORS CTA -->
+  <section id="calculators" style="background:var(--ink);">
+    <div class="wrap" style="text-align:center;">
+      <p class="tag" style="color:rgba(184,146,42,0.7);" data-nl="Gratis · Direct · Zonder account" data-en="Free · Instant · No account">Gratis · Direct · Zonder account</p>
+      <h2 class="h2 reveal" style="color:rgba(245,242,237,0.95);margin-top:14px;" data-nl="Jouw kosmisch <em>profiel</em> in seconden" data-en="Your cosmic <em>profile</em> in seconds">Jouw kosmisch <em style="color:var(--gold-lt);">profiel</em> in seconden</h2>
+      <div class="divider reveal" style="background:var(--gold);margin:24px auto;"></div>
+      <p class="lede reveal" style="color:rgba(245,242,237,0.6);margin:0 auto 40px;" data-nl="Kies een systeem, vul je geboortegegevens in en lees direct wat het over je zegt. Geen betaling, geen registratie." data-en="Choose a system, enter your birth data and instantly read what it says about you. No payment, no registration.">Kies een systeem, vul je geboortegegevens in en lees direct wat het over je zegt. Geen betaling, geen registratie.</p>
+
+      <div class="tools-preview reveal">
+        <a href="instrumenten/" class="tool-pill">◈ Human Design</a>
+        <a href="instrumenten/" class="tool-pill">☯ BaZi</a>
+        <a href="instrumenten/" class="tool-pill">명 Saju</a>
+        <a href="instrumenten/" class="tool-pill">∞ Numerologie</a>
+        <a href="instrumenten/" class="tool-pill">✦ Astrologie</a>
+      </div>
+
+      <a href="instrumenten/" class="btn btn-gold reveal" style="margin-top:36px;font-size:0.88rem;padding:16px 40px;" data-nl="Open de gratis calculators →" data-en="Open the free calculators →">Open de gratis calculators →</a>
     </div>
-    <div class="calc-frame-wrap">
-      <iframe
-        id="qp-calc-frame"
-        src="instrumenten/?embed=1"
-        title="Gratis Calculators"
-        scrolling="no"
-        style="width:100%;border:none;display:block;min-height:640px;transition:height 0.3s ease;"
-        loading="lazy">
-      </iframe>
-    </div>
-    <script>
-      window.addEventListener('message', function(e) {
-        if (!e.data) return;
-        var f = document.getElementById('qp-calc-frame');
-        if (!f) return;
-        if (e.data.type === 'qp-resize') {
-          var h = Math.min(e.data.height + 32, 4000); // max 4000px als veiligheidsgrens
-          f.style.height = h + 'px';
-        }
-        if (e.data.type === 'qp-scroll-top') f.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    </script>
   </section>
 
   <!-- TESTIMONIALS -->
@@ -918,13 +907,6 @@
     document.getElementById('langToggle').addEventListener('click', function() { applyLang(lang === 'nl' ? 'en' : 'nl'); });
 
     // ── Iframe resize / scroll ──────────────────────────────────────────
-    window.addEventListener('message', function(e) {
-      if (!e.data) return;
-      var f = document.getElementById('qp-calc-frame');
-      if (!f) return;
-      if (e.data.type === 'qp-resize') f.style.height = (e.data.height + 48) + 'px';
-      if (e.data.type === 'qp-scroll-top') f.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
   </script>
 </body>
 </html>
