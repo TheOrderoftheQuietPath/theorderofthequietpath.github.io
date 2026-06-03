@@ -461,6 +461,44 @@ a { color: inherit; }
 .blueprint-report .section-body li { margin-bottom: 8px; }
 .blueprint-report .section-body strong { color: var(--ink); font-weight: 600; }
 
+/* Rapport sub-structuur */
+.blueprint-report .section-body h3 {
+  font-family: var(--serif); font-weight: 400; font-size: 1.25rem;
+  color: var(--ink); margin: 36px 0 14px; letter-spacing: -0.01em;
+  border-bottom: 1px solid var(--line); padding-bottom: 8px;
+}
+.blueprint-report .section-body h4 {
+  font-family: var(--serif); font-weight: 500; font-size: 1.05rem;
+  color: var(--ink); margin: 0 0 8px;
+}
+.blueprint-report .insight {
+  border-left: 3px solid var(--gold); background: var(--gold-tint);
+  padding: 16px 20px; margin: 24px 0; border-radius: 0 var(--r) var(--r) 0;
+  font-size: 1rem; color: var(--ink);
+}
+.blueprint-report .action-item {
+  border: 1px solid var(--line); border-radius: var(--r);
+  padding: 18px 20px; margin: 14px 0; background: var(--card);
+}
+.blueprint-report .action-item h4 {
+  color: var(--gold-deep); font-family: var(--sans); font-weight: 600;
+  font-size: 0.95rem; margin-bottom: 8px; text-transform: none;
+}
+.blueprint-report .week-block {
+  border-left: 3px solid var(--indigo); background: var(--indigo-tint);
+  padding: 18px 20px; margin: 16px 0; border-radius: 0 var(--r) var(--r) 0;
+}
+.blueprint-report .week-block h4 {
+  color: var(--indigo); font-size: 1rem; margin-bottom: 10px;
+}
+.blueprint-report .daily-intention {
+  margin-top: 10px; font-size: 0.88rem; color: var(--ink-soft);
+}
+.blueprint-report .report-closing {
+  margin-top: 40px; padding: 32px 0; border-top: 1px solid var(--line-2);
+  font-family: var(--serif); font-size: 1.1rem; color: var(--ink-soft); font-style: italic;
+}
+
 /* Print styles voor rapport */
 @media print {
   .blueprint-report-actions { display: none !important; }
