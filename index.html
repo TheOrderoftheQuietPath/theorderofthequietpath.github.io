@@ -458,6 +458,90 @@
     .btn-calc:hover { background: var(--sage-dark); }
     .btn-calc.secondary { background: transparent; border: 1px solid var(--stone); color: var(--ink2); }
     .btn-calc.secondary:hover { background: var(--ink); color: var(--bg); }
+
+    /* ── Calculators sectie label ── */
+    #calculators .section-wrap { padding-top: 0; }
+    .calc-section-header { padding: 72px 0 32px; text-align: center; }
+    .calc-free-badge {
+      display: inline-block; font-family: 'Cinzel', serif; font-size: 0.62rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      background: #2d5c52; color: #e8f0ee;
+      padding: 5px 14px; margin-bottom: 16px;
+    }
+
+    /* ── Gratis vs Betaald vergelijking ── */
+    .free-vs-paid {
+      display: grid; grid-template-columns: 1fr auto 1fr; gap: 0;
+      align-items: stretch; margin: 40px 0; max-width: 720px;
+    }
+    .fvp-col {
+      padding: 32px 28px; display: flex; flex-direction: column; gap: 16px;
+      border: 1px solid var(--stone-light);
+    }
+    .fvp-free { background: var(--surface); }
+    .fvp-paid { background: var(--ink); color: rgba(245,242,237,0.9); }
+    .fvp-paid h3 { color: rgba(245,242,237,0.95); }
+    .fvp-paid .fvp-list { color: rgba(245,242,237,0.7); }
+    .fvp-arrow {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 16px; font-size: 1.4rem; color: var(--gold);
+      background: var(--bg2); border-top: 1px solid var(--stone-light);
+      border-bottom: 1px solid var(--stone-light);
+    }
+    .fvp-badge {
+      display: inline-block; font-family: 'Cinzel', serif; font-size: 0.6rem;
+      letter-spacing: 0.18em; text-transform: uppercase; padding: 3px 10px;
+    }
+    .fvp-badge--free { background: #e8f0ee; color: #2d5c52; border: 1px solid #b0cec8; }
+    .fvp-badge--paid { background: rgba(184,146,42,0.2); color: var(--gold-light); border: 1px solid rgba(184,146,42,0.3); }
+    .fvp-col h3 { font-family: 'Libre Baskerville', serif; font-size: 1.15rem; font-weight: 400; margin: 0; }
+    .fvp-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: var(--ink2); }
+    .fvp-list li::before { content: '✓  '; color: var(--sage); }
+    .fvp-paid .fvp-list li::before { color: var(--gold-light); }
+    @media (max-width: 640px) {
+      .free-vs-paid { grid-template-columns: 1fr; }
+      .fvp-arrow { padding: 12px; border: none; border-left: 1px solid var(--stone-light); border-right: 1px solid var(--stone-light); transform: rotate(90deg); height: 48px; }
+    }
+
+    /* ── Rapport kaarten ── */
+    .rapport-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+      margin-top: 40px;
+    }
+    @media (max-width: 900px) { .rapport-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .rapport-grid { grid-template-columns: 1fr; } }
+    .rapport-card {
+      background: var(--surface); padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 10px;
+      border: 1px solid var(--stone-light); position: relative;
+    }
+    .rapport-card--highlight {
+      background: var(--ink); color: rgba(245,242,237,0.9);
+      border-color: var(--ink);
+    }
+    .rapport-card--highlight .rapport-name,
+    .rapport-card--highlight .rapport-sub,
+    .rapport-card--highlight .rapport-desc { color: rgba(245,242,237,0.85); }
+    .rapport-card--highlight .rapport-price { color: var(--gold-light); }
+    .rapport-badge {
+      position: absolute; top: -1px; left: -1px; right: -1px;
+      background: var(--gold); color: var(--ink);
+      font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.18em;
+      text-transform: uppercase; text-align: center; padding: 5px;
+    }
+    .rapport-card--highlight { padding-top: 42px; }
+    .rapport-icon { font-size: 1.4rem; color: var(--gold); }
+    .rapport-name { font-family: 'Libre Baskerville', serif; font-size: 1rem; font-weight: 400; }
+    .rapport-sub { font-size: 0.72rem; color: var(--ink3); letter-spacing: 0.04em; }
+    .rapport-price { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--gold); margin: 4px 0; }
+    .rapport-desc { font-size: 0.82rem; color: var(--ink2); line-height: 1.6; flex: 1; }
+    .rapport-cta { margin-top: 8px; text-align: center; padding: 10px 16px; font-size: 0.78rem; }
+    .rapport-note {
+      margin-top: 28px; padding: 16px 20px;
+      border-left: 3px solid var(--sage-light);
+      background: var(--bg2); font-size: 0.83rem; color: var(--ink2); line-height: 1.6;
+    }
+    #diensten { background: var(--bg); }
   </style>
 </head>
 <body>
@@ -490,7 +574,7 @@
   <!-- HERO -->
   <section id="hero">
     <div class="hero-bg-circle"></div>
-    <div class="hero-grid">
+    <div class="hero-grid hero-grid--single">
       <div class="hero-left">
         <p class="hero-tag" data-nl="Human Design · BaZi · Saju · Numerologie · Astrologie" data-en="Human Design · BaZi · Saju · Numerology · Astrology">Human Design · BaZi · Saju · Numerologie · Astrologie</p>
         <h1 class="hero-title" data-nl="Wat als alles wat je<br/>als 'fout' ervaart<br/><em>gewoon je ontwerp is?</em>" data-en="What if everything you<br/>experience as 'wrong'<br/><em>is just your design?</em>">Wat als alles wat je<br/>als 'fout' ervaart<br/><em>gewoon je ontwerp is?</em></h1>
@@ -500,13 +584,7 @@
           <a href="#testimonials" class="btn btn-outline" data-nl="Wat anderen ervoeren" data-en="What others experienced">Wat anderen ervoeren</a>
         </div>
       </div>
-      <div class="hero-right">
-        <div class="hero-card"><div class="hero-card-icon">☯</div><div class="hero-card-text"><h4>BaZi &amp; Saju</h4><p data-nl="Vier Pilaren van Lot — Chinees &amp; Koreaans systeem" data-en="Four Pillars of Destiny — Chinese &amp; Korean system">Vier Pilaren van Lot — Chinees &amp; Koreaans systeem</p></div></div>
-        <div class="hero-card"><div class="hero-card-icon">✦</div><div class="hero-card-text"><h4 data-nl="Westerse Astrologie" data-en="Western Astrology">Westerse Astrologie</h4><p data-nl="Geboortehoroscoop · Ascendant · Planeetposities" data-en="Birth chart · Ascendant · Planetary positions">Geboortehoroscoop · Ascendant · Planeetposities</p></div></div>
-        <div class="hero-card"><div class="hero-card-icon">◈</div><div class="hero-card-text"><h4>Human Design</h4><p data-nl="Type · Strategie · Autoriteit · Profiel · Bodygraph" data-en="Type · Strategy · Authority · Profile · Bodygraph">Type · Strategie · Autoriteit · Profiel · Bodygraph</p></div></div>
-        <div class="hero-card"><div class="hero-card-icon">∞</div><div class="hero-card-text"><h4 data-nl="Numerologie" data-en="Numerology">Numerologie</h4><p data-nl="Levenspad · Zielsgetal · Persoonlijkheid · Bestemming" data-en="Life path · Soul urge · Personality · Destiny">Levenspad · Zielsgetal · Persoonlijkheid · Bestemming</p></div></div>
       </div>
-    </div>
     <a href="#stats" class="hero-scroll" aria-label="Scroll naar beneden">
       <span data-nl="Ontdek meer" data-en="Discover more">Ontdek meer</span>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
@@ -562,80 +640,83 @@
   </section>
 
   <!-- DISCIPLINES -->
-  <section id="diensten" style="background:linear-gradient(160deg,#ede7de 0%,#e8e0d4 100%);">
+  <section id="diensten">
     <div class="section-wrap">
       <div class="reveal">
-        <p class="section-tag" data-nl="Gratis starten" data-en="Start free">Gratis starten</p>
-        <h2 class="section-title" data-nl="Vijf tools.<br/>Nul drempel.<br/><em>Direct inzicht.</em>" data-en="Five tools.<br/>Zero barrier.<br/><em>Immediate insight.</em>">Vijf tools.<br/>Nul drempel.<br/><em>Direct inzicht.</em></h2>
+        <p class="section-tag" data-nl="Persoonlijke Rapporten" data-en="Personal Reports">Persoonlijke Rapporten</p>
+        <h2 class="section-title" data-nl="Van calculator<br/>naar <em>jouw verhaal.</em>" data-en="From calculator<br/>to <em>your story.</em>">Van calculator<br/>naar <em>jouw verhaal.</em></h2>
         <div class="divider"></div>
-        <p class="section-sub" data-nl="Geen account. Geen betaling. Geen reden om te wachten. Vul je geboortegegevens in en lees wat de systemen over jou zeggen." data-en="No account. No payment. No reason to wait. Enter your birth data and read what the systems say about you.">Geen account. Geen betaling. Geen reden om te wachten. Vul je geboortegegevens in en lees wat de systemen over jou zeggen.</p>
+        <p class="section-sub" data-nl="De calculators tonen je de cijfers en structuren. Een rapport vertelt je wat ze betekenen — over jou persoonlijk, in gewone coachingstaal, door iemand die alle systemen beheerst." data-en="The calculators show you the numbers and structures. A report tells you what they mean — about you personally, in plain coaching language, by someone who masters all systems.">De calculators tonen je de cijfers en structuren. Een rapport vertelt je wat ze betekenen — over jou persoonlijk, in gewone coachingstaal, door iemand die alle systemen beheerst.</p>
       </div>
 
-      <div class="free-tier-intro reveal">
-        <div>
-          <h3 data-nl="Alles hieronder is gratis." data-en="Everything below is free.">Alles hieronder is gratis.</h3>
-          <p data-nl="Kies een systeem, voer je geboortegegevens in, en ontdek direct je persoonlijk profiel. Geen registratie, geen verborgen stappen." data-en="Choose a system, enter your birth data, and instantly discover your personal profile. No registration, no hidden steps.">Kies een systeem, voer je geboortegegevens in, en ontdek direct je persoonlijk profiel. Geen registratie, geen verborgen stappen.</p>
+      <div class="free-vs-paid reveal">
+        <div class="fvp-col fvp-free">
+          <div class="fvp-badge fvp-badge--free">Gratis</div>
+          <h3>Calculators</h3>
+          <ul class="fvp-list">
+            <li>Directe berekening</li>
+            <li>Ruwe data &amp; structuren</li>
+            <li>5 systemen beschikbaar</li>
+            <li>Geen uitleg nodig</li>
+          </ul>
+          <a href="#calculators" class="btn btn-outline" style="margin-top:auto">Ga naar calculators →</a>
         </div>
-        <a href="#calculators" class="btn btn-primary" data-nl="Naar de calculators →" data-en="Go to calculators →">Naar de calculators →</a>
+        <div class="fvp-arrow">→</div>
+        <div class="fvp-col fvp-paid">
+          <div class="fvp-badge fvp-badge--paid">Betaald</div>
+          <h3>Persoonlijk Rapport</h3>
+          <ul class="fvp-list">
+            <li>Geschreven over <em>jou</em></li>
+            <li>Begrijpelijke coachingstaal</li>
+            <li>Alle systemen gecombineerd</li>
+            <li>Binnen 24 uur in je mailbox</li>
+          </ul>
+          <a href="#rapport-opties" class="btn btn-primary" style="margin-top:auto">Bekijk rapporten →</a>
+        </div>
       </div>
 
-      <div class="free-tools-grid reveal">
-        <a href="#calculators" class="free-tool" onclick="switchTab('hd');return true;">
-          <div class="free-tool-icon">◈</div>
-          <div class="free-tool-name">Human Design</div>
-          <div class="free-tool-tag" data-nl="Bodygraph · Type · Autoriteit" data-en="Bodygraph · Type · Authority">Bodygraph · Type · Autoriteit</div>
-        </a>
-        <a href="#calculators" class="free-tool" onclick="switchTab('bazi');return true;">
-          <div class="free-tool-icon">☯</div>
-          <div class="free-tool-name">BaZi</div>
-          <div class="free-tool-tag" data-nl="Vier Pilaren · Dag-Meester" data-en="Four Pillars · Day Master">Vier Pilaren · Dag-Meester</div>
-        </a>
-        <a href="#calculators" class="free-tool" onclick="switchTab('saju');return true;">
-          <div class="free-tool-icon">한</div>
-          <div class="free-tool-name">Saju</div>
-          <div class="free-tool-tag" data-nl="Koreaanse Vier Pilaren" data-en="Korean Four Pillars">Koreaanse Vier Pilaren</div>
-        </a>
-        <a href="#calculators" class="free-tool" onclick="switchTab('numerology');return true;">
-          <div class="free-tool-icon">∞</div>
-          <div class="free-tool-name" data-nl="Numerologie" data-en="Numerology">Numerologie</div>
-          <div class="free-tool-tag" data-nl="Levenspad · Zielsgetal" data-en="Life path · Soul urge">Levenspad · Zielsgetal</div>
-        </a>
-        <a href="#calculators" class="free-tool" onclick="switchTab('western');return true;">
-          <div class="free-tool-icon">✦</div>
-          <div class="free-tool-name" data-nl="Astrologie" data-en="Astrology">Astrologie</div>
-          <div class="free-tool-tag" data-nl="Horoscoop · Ascendant" data-en="Horoscope · Ascendant">Horoscoop · Ascendant</div>
-        </a>
+      <div id="rapport-opties" class="rapport-grid reveal">
+        <div class="rapport-card rapport-card--highlight">
+          <div class="rapport-badge">Meest volledig</div>
+          <div class="rapport-icon">◯</div>
+          <div class="rapport-name" data-nl="Persoonlijk Zielsblauwdruk" data-en="Personal Soul Blueprint">Persoonlijk Zielsblauwdruk</div>
+          <div class="rapport-sub" data-nl="Alle vijf systemen gecombineerd" data-en="All five systems combined">Alle vijf systemen gecombineerd</div>
+          <div class="rapport-price">€39</div>
+          <p class="rapport-desc" data-nl="Eén coherent verhaal dat Human Design, BaZi, Astrologie, Saju en Numerologie combineert. 30–40 pagina's. Geschreven als coaching, niet als handleiding." data-en="One coherent story combining Human Design, BaZi, Astrology, Saju and Numerology. 30–40 pages. Written as coaching, not a manual.">Eén coherent verhaal dat Human Design, BaZi, Astrologie, Saju en Numerologie combineert. 30–40 pagina's.</p>
+          <a href="instrumenten/" class="btn btn-primary rapport-cta">Bestel →</a>
+        </div>
+        <div class="rapport-card">
+          <div class="rapport-icon">◈</div>
+          <div class="rapport-name">Human Design</div>
+          <div class="rapport-sub" data-nl="Type · Autoriteit · Kanalen · Centra" data-en="Type · Authority · Channels · Centers">Type · Autoriteit · Kanalen · Centra</div>
+          <div class="rapport-price">€15</div>
+          <p class="rapport-desc" data-nl="Diepgaand rapport over jouw energietype, strategie, autoriteit, profiel en alle centra en kanalen. 15–20 pagina's." data-en="In-depth report on your energy type, strategy, authority, profile and all centers and channels. 15–20 pages.">Diepgaand rapport: energietype, strategie, autoriteit, profiel en alle kanalen. 15–20 pagina's.</p>
+          <a href="instrumenten/" class="btn btn-outline rapport-cta">Bestel →</a>
+        </div>
+        <div class="rapport-card">
+          <div class="rapport-icon">☯</div>
+          <div class="rapport-name">BaZi &amp; Saju</div>
+          <div class="rapport-sub" data-nl="Dagmeester · Elementen · Gelukspilaren" data-en="Day Master · Elements · Luck Pillars">Dagmeester · Elementen · Gelukspilaren</div>
+          <div class="rapport-price">€12</div>
+          <p class="rapport-desc" data-nl="Vier pilaren, dag-meester, elementbalans en alle gelukspilaren decade per decade. 12–16 pagina's." data-en="Four pillars, day master, element balance and all luck pillars decade by decade. 12–16 pages.">Vier pilaren, dag-meester, elementbalans en gelukspilaren. 12–16 pagina's.</p>
+          <a href="instrumenten/" class="btn btn-outline rapport-cta">Bestel →</a>
+        </div>
+        <div class="rapport-card">
+          <div class="rapport-icon">∞</div>
+          <div class="rapport-name" data-nl="Numerologie" data-en="Numerology">Numerologie</div>
+          <div class="rapport-sub" data-nl="Levenspad · Uitdrukking · Zielsdrang" data-en="Life path · Expression · Soul urge">Levenspad · Uitdrukking · Zielsdrang</div>
+          <div class="rapport-price">€9</div>
+          <p class="rapport-desc" data-nl="Alle kerngetallen en hun wisselwerking. 8–12 pagina's." data-en="All core numbers and their interplay. 8–12 pages.">Alle kerngetallen en hun wisselwerking. 8–12 pagina's.</p>
+          <a href="instrumenten/" class="btn btn-outline rapport-cta">Bestel →</a>
+        </div>
       </div>
 
-      <div class="paid-divider reveal">
-        <div class="paid-label" data-nl="Persoonlijke begeleiding — op aanvraag" data-en="Personal guidance — on request">Persoonlijke begeleiding — op aanvraag</div>
-        <div class="services-grid">
-          <div class="service-card">
-            <div class="service-icon">◈</div>
-            <div class="service-name" data-nl="Human Design Reading" data-en="Human Design Reading">Human Design Reading</div>
-            <p class="service-desc" data-nl="Je bodygraph geduid in de context van jouw leven — type, strategie, autoriteit, profiel en kanalen vertaald naar hoe jij werkt." data-en="Your bodygraph interpreted in the context of your life — type, strategy, authority, profile and channels translated to how you function.">Je bodygraph geduid in de context van jouw leven — type, strategie, autoriteit, profiel en kanalen vertaald naar hoe jij werkt.</p>
-            <span class="service-tag" data-nl="Op aanvraag" data-en="On request">Op aanvraag</span>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">☯</div>
-            <div class="service-name" data-nl="BaZi &amp; Saju Reading" data-en="BaZi &amp; Saju Reading">BaZi &amp; Saju Reading</div>
-            <p class="service-desc" data-nl="De dag-meester, de lopende gelukspilaren en wat de huidige periode voor jou betekent — van loopbaan tot relaties tot timing." data-en="The day master, the running luck pillars and what the current period means for you — from career to relationships to timing.">De dag-meester, de lopende gelukspilaren en wat de huidige periode voor jou betekent — van loopbaan tot relaties tot timing.</p>
-            <span class="service-tag" data-nl="Op aanvraag" data-en="On request">Op aanvraag</span>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">◯</div>
-            <div class="service-name" data-nl="De Volledige Blauwdruk" data-en="The Full Blueprint">De Volledige Blauwdruk</div>
-            <p class="service-desc" data-nl="Alle systemen samen. Wanneer Human Design, BaZi en Numerologie naar hetzelfde patroon wijzen — dat is waar echte helderheid ontstaat." data-en="All systems together. When Human Design, BaZi and Numerology point to the same pattern — that is where real clarity emerges.">Alle systemen samen. Wanneer Human Design, BaZi en Numerologie naar hetzelfde patroon wijzen — dat is waar echte helderheid ontstaat.</p>
-            <span class="service-tag" data-nl="Signatuurpakket" data-en="Signature package">Signatuurpakket</span>
-          </div>
-        </div>
-        <div style="margin-top:28px;text-align:center;">
-          <a href="#contact" class="btn btn-outline" data-nl="Vraag meer informatie aan" data-en="Request more information">Vraag meer informatie aan</a>
-        </div>
+      <div class="rapport-note reveal">
+        <p data-nl="Hoe het werkt: koop via Gumroad → vul je geboortegegevens in → ontvang je persoonlijk rapport binnen 24 uur per e-mail. Geen account nodig." data-en="How it works: buy via Gumroad → fill in your birth data → receive your personal report within 24 hours by email. No account needed.">Hoe het werkt: koop via Gumroad → vul je geboortegegevens in → ontvang je persoonlijk rapport binnen 24 uur per e-mail.</p>
       </div>
     </div>
   </section>
-  <!-- TESTIMONIALS -->
+    <!-- TESTIMONIALS -->
   <section id="testimonials">
     <div class="section-wrap">
       <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto;">
@@ -676,17 +757,17 @@
   <section id="calculators">
     <div class="section-wrap">
       <div class="reveal">
-        <p class="section-tag" data-nl="Gratis tools" data-en="Free tools">Gratis tools</p>
+        <p class="section-tag" data-nl="Gratis · Direct · Zonder account" data-en="Free · Instant · No account">Gratis · Direct · Zonder account</p>
         <h2 class="section-title" data-nl="Jouw kosmisch <em>profiel</em> in seconden" data-en="Your cosmic <em>profile</em> in seconds">Jouw kosmisch <em>profiel</em> in seconden</h2>
         <div class="divider"></div>
-        <p class="section-sub" data-nl="Vijf gratis tools. Jouw geboortegegevens, ingevoerd één keer. Resultaten die je voor altijd bijblijven." data-en="Five free tools. Your birth data, entered once. Results that stay with you forever.">Vijf gratis tools. Jouw geboortegegevens, ingevoerd één keer. Resultaten die je voor altijd bijblijven.</p>
+        <p class="section-sub" data-nl="Kies een systeem hieronder, vul je geboortegegevens in en lees direct wat het over je zegt. Geen betaling, geen registratie." data-en="Choose a system below, enter your birth data and instantly read what it says about you. No payment, no registration.">Kies een systeem hieronder, vul je geboortegegevens in en lees direct wat het over je zegt. Geen betaling, geen registratie.</p>
       </div>
-      <!-- INLINE CALCULATOR (instrumenten app embedded) -->
-      <div style="margin-top: 40px;">
+
+      <div style="margin-top:32px;">
         <iframe
           id="qp-calc-frame"
           src="instrumenten/?embed=1"
-          title="Calculators — Het Stille Pad"
+          title="Gratis Calculators — Het Stille Pad"
           scrolling="no"
           style="width:100%;border:none;display:block;min-height:600px;transition:height 0.3s ease;"
           loading="lazy">
@@ -694,20 +775,19 @@
       </div>
 
       <script>
-        // Auto-resize iframe op basis van inhoud
         window.addEventListener('message', function(e) {
-          if (!e.data || e.data.type !== 'qp-resize') return;
-          var frame = document.getElementById('qp-calc-frame');
-          if (frame) frame.style.height = (e.data.height + 40) + 'px';
-        });
-        // Scroll pagina naar iframe top als de app navigeert
-        window.addEventListener('message', function(e) {
-          if (!e.data || e.data.type !== 'qp-scroll-top') return;
-          var frame = document.getElementById('qp-calc-frame');
-          if (frame) frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (!e.data) return;
+          if (e.data.type === 'qp-resize') {
+            var f = document.getElementById('qp-calc-frame');
+            if (f) f.style.height = (e.data.height + 40) + 'px';
+          }
+          if (e.data.type === 'qp-scroll-top') {
+            var f = document.getElementById('qp-calc-frame');
+            if (f) f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         });
       </script>
-
+    </div>
   </section>
 
   <!-- BLOG -->
