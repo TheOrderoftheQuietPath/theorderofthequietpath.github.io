@@ -111,7 +111,6 @@ function OrderForm({ onSubmit }) {
 
   function openGumroad() {
     window.open(report.gumroad, '_blank', 'noopener');
-    setTimeout(() => setStep(3), 1500);
   }
 
   async function submitOrder(e) {
@@ -192,9 +191,14 @@ function OrderForm({ onSubmit }) {
           style={{ marginTop: 20, width: '100%', justifyContent: 'center' }}>
           Betaal {report.price} via Gumroad →
         </button>
-        <button className="backlink" style={{ display: 'block', textAlign: 'center', marginTop: 16 }}
-          onClick={() => setStep(3)}>
-          Ik heb al betaald — vul gegevens in →
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '20px 0 0' }}>
+          <div style={{ flex: 1, height: 1, background: 'var(--line)' }}></div>
+          <span style={{ fontSize: '0.78rem', color: 'var(--muted)', fontFamily: 'var(--mono)' }}>al betaald?</span>
+          <div style={{ flex: 1, height: 1, background: 'var(--line)' }}></div>
+        </div>
+        <button className="btn btn-ghost" onClick={() => setStep(3)}
+          style={{ marginTop: 12, width: '100%', justifyContent: 'center' }}>
+          Ik heb betaald — vul mijn gegevens in →
         </button>
       </div>
     </div>
