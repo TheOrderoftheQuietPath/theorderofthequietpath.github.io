@@ -615,7 +615,10 @@
         if (!e.data) return;
         var f = document.getElementById('qp-calc-frame');
         if (!f) return;
-        if (e.data.type === 'qp-resize') f.style.height = (e.data.height + 48) + 'px';
+        if (e.data.type === 'qp-resize') {
+          var h = Math.min(e.data.height + 32, 4000); // max 4000px als veiligheidsgrens
+          f.style.height = h + 'px';
+        }
         if (e.data.type === 'qp-scroll-top') f.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     </script>

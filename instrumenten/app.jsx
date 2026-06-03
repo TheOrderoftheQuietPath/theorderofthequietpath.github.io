@@ -400,17 +400,21 @@ function App() {
 
   function postHeight() {
     if (!IS_EMBEDDED) return;
-    const h = document.getElementById('qp-app-root')?.scrollHeight || document.body.scrollHeight;
+    // offsetHeight = zichtbare hoogte zonder overflow, voorkomt feedback-loop
+    const el = document.getElementById('qp-app-root');
+    const h = el ? el.offsetHeight : document.documentElement.offsetHeight;
     window.parent.postMessage({ type: 'qp-resize', height: h }, '*');
   }
 
-  // Hoogte doorgeven aan parent bij elke render
+  // Hoogte doorgeven met debounce zodat snelle reflows niet escaleren
   React.useEffect(() => {
     if (!IS_EMBEDDED) return;
-    const ro = new ResizeObserver(postHeight);
+    let timer;
+    const debouncedPost = () => { clearTimeout(timer); timer = setTimeout(postHeight, 80); };
+    const ro = new ResizeObserver(debouncedPost);
     const el = document.getElementById('qp-app-root') || document.body;
     ro.observe(el);
-    return () => ro.disconnect();
+    return () => { ro.disconnect(); clearTimeout(timer); };
   }, []);
 
   function pick(tid) { setToolId(tid); setView('form'); scrollTop(); }
