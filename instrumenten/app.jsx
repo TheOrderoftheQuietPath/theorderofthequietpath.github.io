@@ -124,8 +124,8 @@ function useToast() {
   return [show, node];
 }
 
-/* --- Convergentie-teaser --- */
-function ConvergenceTeaser({ saved, onOpen }) {
+/* --- Convergentie: beste groep ophalen --- */
+function getBestGroup(saved) {
   const groups = {};
   saved.forEach((s) => {
     const key = (s.name || 'jij').toLowerCase().trim() || 'jij';
@@ -137,38 +137,137 @@ function ConvergenceTeaser({ saved, onOpen }) {
     if (tools.size >= 2 && (!best || tools.size > best.tools.size)) best = { g, tools, name: g[0].name };
   });
   if (!best) return null;
-
   const results = {};
   best.g.forEach((s) => {
     const t = toolById(s.toolId);
     if (t) results[s.toolId] = t.compute(s.birth);
   });
-  const tz = window.QP.convergence.teaser(results);
+  return { ...best, results };
+}
+
+/* --- Dimensie-kaart (één rij in de zielkaart) --- */
+function DimRow({ dim }) {
+  const ICONS = { kern: '◉', energie: '⚡', beslissen: '◈', relaties: '♡', bestemming: '✦' };
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <div className={'dim-row' + (open ? ' dim-row--open' : '')} onClick={() => setOpen(o => !o)}>
+      <div className="dim-row__head">
+        <span className="dim-icon">{ICONS[dim.id] || '·'}</span>
+        <div className="dim-meta">
+          <div className="dim-label">{dim.label}</div>
+          <div className="dim-systems">
+            {dim.entries.map((e, i) => (
+              <span key={i} className={'dim-sys-badge' + (dim.converges ? ' dim-sys-badge--match' : '')}>
+                {e.system}
+              </span>
+            ))}
+            {dim.entries.length === 0 && <span className="dim-sys-badge dim-sys-badge--empty">nog geen data</span>}
+          </div>
+        </div>
+        {dim.converges && <span className="dim-convergence-dot" title="Meerdere systemen bevestigen dit">●</span>}
+        <span className="dim-chevron">{open ? '▲' : '▼'}</span>
+      </div>
+      {open && dim.entries.length > 0 && (
+        <div className="dim-row__body">
+          {dim.entries.map((e, i) => (
+            <div key={i} className="dim-entry">
+              <span className="dim-entry__system">{e.system}</span>
+              <span className="dim-entry__text">{e.text}</span>
+            </div>
+          ))}
+          {dim.converges && (
+            <div className="dim-convergence-note">
+              ● Meerdere systemen bevestigen dit patroon — dit is geen toeval.
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* --- Volledige Zielkaart --- */
+function SoulMap({ group, onOrder }) {
+  const analysis = window.QP.convergence.analyze(group.results);
+  const name = group.name || 'Jij';
+
+  return (
+    <div className="soulmap">
+      <div className="soulmap__header">
+        <div className="label">Convergentie · {analysis.systemCount} systemen</div>
+        <h2 className="soulmap__title">
+          De Zielkaart van <em>{name}</em>
+        </h2>
+        <p className="soulmap__sub">
+          Wat {analysis.systemCount} onafhankelijke systemen — elk ontstaan in een andere cultuur en tijd — over dezelfde persoon zeggen.
+          Waar ze samenvallen, staat de waarheid.
+        </p>
+        <div className="soulmap__systems">
+          {analysis.systemNames.map((s, i) => <span key={i} className="sys-chip">{s}</span>)}
+        </div>
+      </div>
+
+      <div className="soulmap__dims">
+        {analysis.dimensions.map((dim) => <DimRow key={dim.id} dim={dim} />)}
+      </div>
+
+      {analysis.hasConvergence && (
+        <div className="soulmap__convergence-summary">
+          <div className="label" style={{ marginBottom: 8 }}>● Wat bevestigd wordt</div>
+          <p>
+            {analysis.dimensions.filter(d => d.converges).map(d => d.label).join(', ')} —
+            deze dimensies worden door meerdere systemen tegelijk benoemd.
+            Dat is de rode draad die geen enkel systeem alleen kan onthullen.
+          </p>
+        </div>
+      )}
+
+      <div className="soulmap__cta">
+        <div className="label" style={{ marginBottom: 10 }}>✦ &nbsp;Volgende stap</div>
+        <h3>Ontvang dit als persoonlijk rapport</h3>
+        <p>
+          Alle systemen gecombineerd in één coherent verhaal — geschreven als coaching,
+          niet als handleiding. 30–40 pagina's. Binnen 24 uur in je mailbox.
+        </p>
+        <button className="btn btn-gold" onClick={onOrder} style={{ marginTop: 16 }}>
+          Bestel het Zielsblauwdruk Rapport →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* --- Convergentie-teaser (compact, op de hub) --- */
+function ConvergenceTeaser({ saved, onOpenSoulMap }) {
+  const group = getBestGroup(saved);
+  if (!group) return null;
+  const tz = window.QP.convergence.teaser(group.results);
+  const name = group.name || 'jij';
 
   return (
     <div className="converge">
-      <div className="label">De volledige blauwdruk</div>
-      <h3>{best.tools.size} systemen, één patroon{best.name ? ` — ${best.name}` : ''}</h3>
+      <div className="label">Zielkaart · {group.tools.size} systemen</div>
+      <h3>{name.charAt(0).toUpperCase() + name.slice(1)} — {group.tools.size} systemen draaien in dezelfde richting</h3>
       {tz.hasOverlap ? (
-        <>
-          <p style={{ color: 'var(--ink-soft)' }}>Je gedraaide systemen wijzen niet toevallig in dezelfde richting. Waar ze samenvallen:</p>
-          <div className="words">
-            {tz.shared.map((w, i) => (
-              <span className="word" key={i}><b>{w.word}</b> &nbsp;· {w.systems.join(' + ')}</span>
-            ))}
-          </div>
-        </>
+        <p style={{ color: 'var(--ink-soft)', marginBottom: 14 }}>
+          Niet toevallig. {tz.analysis.dimensions.filter(d => d.converges).length} dimensies worden door meerdere systemen tegelijk bevestigd.
+          Dat is de rode draad die geen losse tool alleen kan tonen.
+        </p>
       ) : (
-        <p style={{ color: 'var(--ink-soft)' }}>Je hebt {best.tools.size} systemen gelezen. Wanneer ze naast elkaar worden gelegd, verschijnen de rode draden die geen losse tool kan tonen.</p>
+        <p style={{ color: 'var(--ink-soft)', marginBottom: 14 }}>
+          Je hebt {group.tools.size} systemen gelezen. De patronen worden zichtbaar als ze naast elkaar worden gelegd.
+        </p>
       )}
-      <p style={{ fontSize: '0.9rem', marginTop: 14 }}>Dit is waar echte helderheid ontstaat — de combinatiereading legt alle systemen over elkaar.</p>
-      <a className="btn btn-ghost btn-sm" href={CONTACT_URL} target="_blank" rel="noopener" style={{ marginTop: 16 }}>Vraag de volledige blauwdruk aan →</a>
+      <button className="btn btn-gold btn-sm" onClick={onOpenSoulMap} style={{ marginTop: 4 }}>
+        Open jouw Zielkaart →
+      </button>
     </div>
   );
 }
 
 /* --- Hub --- */
-function Hub({ onPick, saved, onOpenSaved, onDeleteSaved }) {
+function Hub({ onPick, saved, onOpenSaved, onDeleteSaved, onOpenSoulMap }) {
   return (
     <div className="fade-in">
       <div className="hub-hero">
@@ -221,7 +320,7 @@ function Hub({ onPick, saved, onOpenSaved, onDeleteSaved }) {
             })}
           </div>
           <div style={{ marginTop: 24 }}>
-            <ConvergenceTeaser saved={saved} />
+            <ConvergenceTeaser saved={saved} onOpenSoulMap={onOpenSoulMap} />
           </div>
         </div>
       )}
@@ -231,7 +330,7 @@ function Hub({ onPick, saved, onOpenSaved, onDeleteSaved }) {
 
 /* --- App --- */
 function App() {
-  const [view, setView] = React.useState('hub');     // hub | form | result | blueprint
+  const [view, setView] = React.useState('hub');     // hub | form | result | blueprint | soulmap
   const [toolId, setToolId] = React.useState(null);
   const [birth, setBirth] = React.useState(null);
   const [data, setData] = React.useState(null);
@@ -324,11 +423,23 @@ function App() {
         <hr className="hairline" />
 
         <div style={{ paddingTop: 8 }}>
+          {view === 'soulmap' && (() => {
+            const group = getBestGroup(saved);
+            if (!group) { setView('hub'); return null; }
+            return (
+              <div className="fade-in" style={{ paddingTop: 14 }}>
+                <button className="backlink" onClick={goHub}>← Alle instrumenten</button>
+                <SoulMap group={group} onOrder={() => { setView('blueprint'); window.scrollTo(0,0); }} />
+              </div>
+            );
+          })()}
+
           {view === 'hub' && (
             <>
               <Hub onPick={pick} saved={saved}
                 onOpenSaved={(s) => runTool(s.toolId, s.birth, false)}
-                onDeleteSaved={deleteSaved} />
+                onDeleteSaved={deleteSaved}
+                onOpenSoulMap={() => { setView('soulmap'); window.scrollTo(0,0); }} />
               <div className="blueprint-teaser" onClick={() => { setView('blueprint'); window.scrollTo(0,0); }}>
                 <div className="label" style={{ marginBottom: 10 }}>✦ &nbsp;Nieuw</div>
                 <h2>Persoonlijk Zielsblauwdruk Rapport</h2>

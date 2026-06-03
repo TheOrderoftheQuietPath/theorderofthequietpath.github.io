@@ -690,3 +690,191 @@ body.premium-print .gate-overlay { display: none !important; }
   body.premium-print details { open: true; }
   body.premium-print details .body { display: block !important; }
 }
+
+/* ===========================================================================
+   ZIELKAART — multi-dimensionele convergentie-weergave
+=========================================================================== */
+
+.soulmap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding-bottom: 48px;
+}
+.soulmap__header {
+  padding: 32px 0 28px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 8px;
+}
+.soulmap__title {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 400;
+  margin: 12px 0 10px;
+  line-height: 1.2;
+}
+.soulmap__sub {
+  color: var(--ink-soft);
+  font-size: 0.97rem;
+  line-height: 1.65;
+  max-width: 52ch;
+  margin-bottom: 16px;
+}
+.soulmap__systems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.sys-chip {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: 20px;
+  color: var(--muted);
+}
+
+/* ── Dimensie rijen ── */
+.soulmap__dims {
+  margin-top: 4px;
+}
+.dim-row {
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.dim-row:hover { background: var(--paper-2); }
+.dim-row--open { background: var(--paper-2); }
+
+.dim-row__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 4px;
+}
+.dim-icon {
+  font-size: 1.1rem;
+  color: var(--gold);
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.dim-meta { flex: 1; min-width: 0; }
+.dim-label {
+  font-size: 0.82rem;
+  font-family: var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 5px;
+}
+.dim-systems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.dim-sys-badge {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: var(--paper-2);
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+.dim-sys-badge--match {
+  background: var(--gold-tint);
+  color: var(--gold-deep);
+  border-color: var(--gold);
+}
+.dim-sys-badge--empty {
+  color: var(--faint);
+  border-color: var(--line);
+}
+.dim-convergence-dot {
+  color: var(--gold);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+.dim-chevron {
+  font-size: 0.6rem;
+  color: var(--faint);
+  flex-shrink: 0;
+}
+
+.dim-row__body {
+  padding: 4px 4px 20px 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dim-entry {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 12px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+@media (max-width: 520px) {
+  .dim-entry { grid-template-columns: 1fr; gap: 2px; }
+}
+.dim-entry__system {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding-top: 3px;
+}
+.dim-entry__text { color: var(--ink-soft); }
+
+.dim-convergence-note {
+  font-size: 0.8rem;
+  color: var(--gold-deep);
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
+  padding: 8px 12px;
+  background: var(--gold-tint);
+  border-radius: 4px;
+  border-left: 2px solid var(--gold);
+  margin-top: 4px;
+}
+
+/* ── Samenvatting convergentie ── */
+.soulmap__convergence-summary {
+  margin-top: 24px;
+  padding: 20px 22px;
+  background: var(--gold-tint);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* ── CTA ── */
+.soulmap__cta {
+  margin-top: 32px;
+  padding: 28px 28px;
+  background: var(--night);
+  border-radius: 8px;
+  color: oklch(0.88 0.015 85);
+}
+.soulmap__cta .label { color: var(--gold); }
+.soulmap__cta h3 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: oklch(0.95 0.010 85);
+  margin: 10px 0 8px;
+}
+.soulmap__cta p { font-size: 0.9rem; line-height: 1.65; color: oklch(0.70 0.014 270); }
+

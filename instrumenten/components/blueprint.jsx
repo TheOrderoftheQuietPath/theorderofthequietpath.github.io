@@ -98,6 +98,7 @@ function OrderForm({ onSubmit }) {
   });
   const [gender, setGender]     = React.useState('m');
   const [email, setEmail]       = React.useState('');
+  const [license, setLicense]   = React.useState('');
   const [err, setErr]           = React.useState('');
   const [loading, setLoading]   = React.useState(false);
 
@@ -142,7 +143,7 @@ function OrderForm({ onSubmit }) {
       const res = await fetch(`${BACKEND_URL}/api/order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ birth, systems, reportType: reportId, customerEmail: email }),
+        body: JSON.stringify({ birth, systems, reportType: reportId, customerEmail: email, licenseKey: license.trim() }),
       });
       const data = await res.json();
       if (!res.ok) { setErr(data.error || 'Fout bij verzenden.'); setLoading(false); return; }
@@ -228,6 +229,15 @@ function OrderForm({ onSubmit }) {
           <input className="input" type="email" value={email}
             onChange={e => setEmail(e.target.value)} placeholder="jouw@email.com" />
           <div className="hint">Hier ontvang je het rapport.</div>
+        </div>
+
+        <div className="field">
+          <label>Gumroad licentiesleutel</label>
+          <input className="input" value={license}
+            onChange={e => setLicense(e.target.value)}
+            placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX"
+            style={{ fontFamily: 'var(--mono)', letterSpacing: '0.08em', fontSize: '0.92rem' }} />
+          <div className="hint">Je vindt deze in de Gumroad bevestigingsmail na je aankoop.</div>
         </div>
 
         <div className="row">
