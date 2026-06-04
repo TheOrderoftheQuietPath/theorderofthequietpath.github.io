@@ -4,59 +4,51 @@ const BACKEND_URL = window.QP_BACKEND_URL || 'https://toqp-backend.onrender.com'
 
 const REPORTS = [
   {
+    id: 'blueprint',
+    name: 'The Quiet Path Blueprint',
+    subtitle: 'Persoonlijk patroonintelligentie rapport',
+    price: '€149',
+    gumroad: 'https://toqp.gumroad.com/l/QuietPathBlueprint',
+    pages: '10–12 pagina\'s · premium editoriaal design',
+    description: 'Geen systemen. Geen jargon. Alleen jouw patroon — in één coherent persoonlijk narratief dat voelt als herkenning, niet als uitleg.',
+    highlight: true,
+    flagship: true,
+  },
+  {
     id: 'full',
-    name: 'Persoonlijk Zielsblauwdruk',
+    name: 'Zielsblauwdruk Rapport',
     subtitle: 'Alle vijf systemen gecombineerd',
-    price: '€39',
+    price: '€79',
     gumroad: 'https://toqp.gumroad.com/l/Blauwdrukvandeziel',
     pages: '30–40 pagina\'s',
     description: 'Eén coherent rapport dat Human Design, BaZi, Astrologie, Saju en Numerologie combineert tot jouw persoonlijk levensverhaal.',
-    highlight: true,
   },
   {
     id: 'humandesign',
     name: 'Human Design',
     subtitle: 'Type · Autoriteit · Kanalen · Centra',
-    price: '€15',
+    price: '€49',
     gumroad: 'https://toqp.gumroad.com/l/HumanDesignRapport',
     pages: '15–20 pagina\'s',
     description: 'Diepgaand rapport over jouw energietype, strategie, autoriteit, profiel, alle centra en kanalen.',
   },
   {
-    id: 'astrology',
-    name: 'Westerse Astrologie',
-    subtitle: 'Zon · Maan · Ascendant · Planeten',
-    price: '€15',
-    gumroad: 'https://toqp.gumroad.com/l/AstrologieRapport',
-    pages: '12–18 pagina\'s',
-    description: 'Volledig rapport over je geboortehoroscoop — alle planeten, aspecten en wat ze zeggen over je karakter en leven.',
-  },
-  {
     id: 'bazi',
     name: 'BaZi — Vier Pilaren',
     subtitle: 'Dagmeester · Elementen · Gelukspilaren',
-    price: '€12',
+    price: '€49',
     gumroad: 'https://toqp.gumroad.com/l/BaZiRapport',
     pages: '12–16 pagina\'s',
     description: 'Je geboortepatroon in vier pilaren — dagmeester, elementbalans en alle gelukspilaren decade per decade.',
   },
   {
-    id: 'saju',
-    name: 'Saju — Koreaanse Vier Pilaren',
-    subtitle: 'Karakter · Relaties · Timing',
-    price: '€12',
-    gumroad: 'https://toqp.gumroad.com/l/SajuRapport',
-    pages: '12–16 pagina\'s',
-    description: 'Dezelfde vier pilaren als BaZi, maar in de Koreaanse stijl — met nadruk op karakter, relaties en geslachtsgebonden energierichting.',
-  },
-  {
     id: 'numerology',
     name: 'Numerologie',
     subtitle: 'Levenspad · Uitdrukking · Zielsdrang',
-    price: '€9',
+    price: '€29',
     gumroad: 'https://toqp.gumroad.com/l/NumerologieRapport',
     pages: '8–12 pagina\'s',
-    description: 'Jouw kerngetallen en hoe ze samenwerken — levenspad, uitdrukking, zielsdrang, persoonlijkheid en persoonlijk jaar.',
+    description: 'Jouw kerngetallen en hoe ze samenwerken — levenspad, uitdrukking, zielsdrang en persoonlijk jaar.',
   },
 ];
 
@@ -66,9 +58,10 @@ function ReportPicker({ selected, onSelect }) {
     <div className="report-picker">
       {REPORTS.map((r) => (
         <div key={r.id}
-          className={'rp-card' + (selected === r.id ? ' selected' : '') + (r.highlight ? ' highlight' : '')}
+          className={'rp-card' + (selected === r.id ? ' selected' : '') + (r.flagship ? ' flagship' : r.highlight ? ' highlight' : '')}
           onClick={() => onSelect(r.id)}>
-          {r.highlight && <div className="rp-badge">Meest volledig</div>}
+          {r.flagship && <div className="rp-badge rp-badge--flagship">✦ &nbsp;Flagship</div>}
+          {r.highlight && !r.flagship && <div className="rp-badge">Meest volledig</div>}
           <div className="rp-header">
             <div>
               <div className="rp-name">{r.name}</div>
@@ -87,7 +80,7 @@ function ReportPicker({ selected, onSelect }) {
 /* ── Bestelformulier ── */
 function OrderForm({ onSubmit }) {
   const CITIES = window.QP.places;
-  const [reportId, setReportId] = React.useState('full');
+  const [reportId, setReportId] = React.useState('blueprint');
   const [step, setStep]         = React.useState(1); // 1 = kies, 2 = betaal, 3 = gegevens
   const [name, setName]         = React.useState('');
   const [date, setDate]         = React.useState('');
