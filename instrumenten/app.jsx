@@ -328,8 +328,10 @@ function Hub({ onPick, saved, onOpenSaved, onDeleteSaved, onOpenSoulMap }) {
   );
 }
 
-/* --- Embedded-modus detectie --- */
-const IS_EMBEDDED = new URLSearchParams(location.search).get('embed') === '1';
+/* --- URL params --- */
+const IS_EMBEDDED   = new URLSearchParams(location.search).get('embed') === '1';
+const INITIAL_VIEW  = new URLSearchParams(location.search).get('view') || null;
+// bv. instrumenten/?view=blueprint opent direct de bestelpagina
 
 /* --- Lead magnet: e-mailcaptatie na eerste resultaat --- */
 const NODE_API = 'https://toqp-backend.onrender.com';
@@ -390,7 +392,7 @@ function LeadMagnet({ toolName, birth, onDismiss }) {
 
 /* --- App --- */
 function App() {
-  const [view, setView] = React.useState('hub');     // hub | form | result | blueprint | soulmap
+  const [view, setView] = React.useState(INITIAL_VIEW || 'hub'); // hub | form | result | blueprint | soulmap
   const [toolId, setToolId] = React.useState(null);
   const [birth, setBirth] = React.useState(null);
   const [data, setData] = React.useState(null);
