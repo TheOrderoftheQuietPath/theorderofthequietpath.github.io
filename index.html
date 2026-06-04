@@ -225,7 +225,7 @@
     .vs-paid .vs-list li::before { color: var(--gold-lt); }
 
     .rapport-cards {
-      display: grid; grid-template-columns: repeat(4, 1fr);
+      display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 2px; width: var(--wrap); margin: 0 auto;
     }
     .rc {
@@ -234,6 +234,26 @@
       border: 1px solid var(--stone); position: relative;
     }
     .rc--hero { background: var(--ink); color: rgba(245,242,237,0.88); padding-top: 46px; }
+    .rc--blueprint {
+      grid-column: 1 / -1; background: var(--ink);
+      color: rgba(245,242,237,0.9); padding: 48px 40px 36px;
+    }
+    .rc--blueprint .rc-desc { color: rgba(245,242,237,0.65); max-width: 72ch; }
+    .rc-features {
+      list-style: none; margin-top: 20px;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .rc-features li {
+      font-size: 0.85rem; color: rgba(245,242,237,0.65); padding: 9px 0 9px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.07); position: relative;
+    }
+    .rc-features li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
+    .rc-divider-label {
+      grid-column: 1 / -1; padding: 24px 0 8px; text-align: center;
+      font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--ink3);
+      border-top: 1px solid var(--stone); margin-top: 4px;
+    }
     .rc--hero .rc-name, .rc--hero .rc-sub { color: rgba(245,242,237,0.88); }
     .rc--hero .rc-price { color: var(--gold-lt); }
     .rc--hero .rc-desc  { color: rgba(245,242,237,0.6); }
@@ -522,9 +542,9 @@
           <span class="vs-badge vs-badge-paid" data-nl="Betaald" data-en="Paid">Betaald</span>
           <h3 data-nl="Persoonlijk Rapport" data-en="Personal Report">Persoonlijk Rapport</h3>
           <ul class="vs-list">
-            <li data-nl="Geschreven over jou" data-en="Written about you">Geschreven over jou</li>
-            <li data-nl="Begrijpelijke coachingstaal" data-en="Plain coaching language">Begrijpelijke coachingstaal</li>
-            <li data-nl="Alle systemen gecombineerd" data-en="All systems combined">Alle systemen gecombineerd</li>
+            <li data-nl="Geschreven over jou persoonlijk" data-en="Written about you personally">Geschreven over jou persoonlijk</li>
+            <li data-nl="Geen jargon — pure coaching" data-en="No jargon — pure coaching">Geen jargon — pure coaching</li>
+            <li data-nl="Huidig seizoen meegewogen" data-en="Current season included">Huidig seizoen meegewogen</li>
             <li data-nl="Binnen 24u in je mailbox" data-en="In your inbox within 24h">Binnen 24u in je mailbox</li>
           </ul>
           <a href="#rapport-opties" class="btn btn-gold btn-sm" style="margin-top:auto;" data-nl="Bekijk rapporten →" data-en="View reports →">Bekijk rapporten →</a>
@@ -532,39 +552,59 @@
       </div>
 
       <div id="rapport-opties" class="rapport-cards reveal">
-        <div class="rc rc--hero">
-          <div class="rc-ribbon" data-nl="Meest volledig" data-en="Most complete">Meest volledig</div>
-          <div class="rc-icon">◯</div>
-          <div class="rc-name" data-nl="Persoonlijk Zielsblauwdruk" data-en="Personal Soul Blueprint">Persoonlijk Zielsblauwdruk</div>
-          <div class="rc-sub" data-nl="Alle vijf systemen gecombineerd" data-en="All five systems combined">Alle vijf systemen gecombineerd</div>
-          <div class="rc-price">€39</div>
-          <p class="rc-desc" data-nl="Eén coherent verhaal — Human Design, BaZi, Astrologie, Saju & Numerologie. 30–40 pagina's coachingstaal." data-en="One coherent story — Human Design, BaZi, Astrology, Saju & Numerology. 30–40 pages of coaching language.">Eén coherent verhaal — Human Design, BaZi, Astrologie, Saju &amp; Numerologie. 30–40 pagina's coachingstaal.</p>
-          <div class="rc-cta"><a href="instrumenten/" class="btn btn-gold btn-sm" data-nl="Bestel →" data-en="Order →">Bestel →</a></div>
+
+        <!-- ── THE QUIET PATH BLUEPRINT (flagship, volledige breedte) ── -->
+        <div class="rc rc--blueprint" style="grid-column:1/-1;">
+          <div class="rc-ribbon" style="background:var(--gold);" data-nl="✦ &nbsp;Flagship — The Quiet Path" data-en="✦ &nbsp;Flagship — The Quiet Path">✦ &nbsp;Flagship — The Quiet Path</div>
+          <div style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;padding-top:12px;">
+            <div>
+              <div class="rc-icon" style="font-size:1.6rem;">◎</div>
+              <div class="rc-name" style="font-size:1.25rem;margin-top:8px;" data-nl="The Quiet Path Blueprint" data-en="The Quiet Path Blueprint">The Quiet Path Blueprint</div>
+              <div class="rc-sub" data-nl="Persoonlijk patroonintelligentie rapport" data-en="Personal pattern intelligence report">Persoonlijk patroonintelligentie rapport</div>
+              <p class="rc-desc" style="max-width:64ch;margin-top:14px;" data-nl="Geen systeemnamen. Geen jargon. Jouw terugkerende patronen, je actuele levensfase en drie concrete acties — geschreven door een coach die je doorgrond heeft. Het rapport leeft mee met het seizoen: iemand die vandaag bestelt krijgt andere context dan iemand die in januari bestelt." data-en="No system names. No jargon. Your recurring patterns, your current life phase and three concrete actions — written by a coach who truly sees you. The report lives with the season: someone ordering today receives different context than someone ordering in January.">Geen systeemnamen. Geen jargon. Jouw terugkerende patronen, je actuele levensfase en drie concrete acties — geschreven door een coach die je doorgrond heeft. Het rapport leeft mee met het seizoen: iemand die vandaag bestelt krijgt andere context dan iemand die in januari bestelt.</p>
+              <ul class="rc-features">
+                <li data-nl="Jouw Natuurlijke Flow — wie je van nature bent" data-en="Your Natural Flow — who you naturally are">Jouw Natuurlijke Flow — wie je van nature bent</li>
+                <li data-nl="Jouw Huidige Seizoen — wat er nu speelt in jouw leven" data-en="Your Current Season — what's happening in your life now">Jouw Huidige Seizoen — wat er nu speelt in jouw leven</li>
+                <li data-nl="De Interne Spiegel — jouw onbewuste patroon" data-en="The Internal Mirror — your unconscious pattern">De Interne Spiegel — jouw onbewuste patroon</li>
+                <li data-nl="Jouw Volgende Stap — 3 concrete acties voor de komende weken" data-en="Your Next Step — 3 concrete actions for the coming weeks">Jouw Volgende Stap — 3 concrete acties voor de komende weken</li>
+              </ul>
+            </div>
+            <div style="text-align:right;min-width:100px;">
+              <div class="rc-price" style="font-size:2rem;">€149</div>
+              <div style="font-size:0.72rem;color:var(--ink3);margin-bottom:16px;" data-nl="10–12 pagina's · premium design" data-en="10–12 pages · premium design">10–12 pagina's · premium design</div>
+              <a href="instrumenten/" class="btn btn-gold" style="white-space:nowrap;" data-nl="Bestel Blueprint →" data-en="Order Blueprint →">Bestel Blueprint →</a>
+            </div>
+          </div>
         </div>
+
+        <!-- ── Diepte-rapporten per systeem ── -->
+        <div class="rc-divider-label" style="grid-column:1/-1;" data-nl="Of ga dieper in één systeem" data-en="Or go deeper into one system">Of ga dieper in één systeem</div>
+
         <div class="rc">
           <div class="rc-icon">◈</div>
           <div class="rc-name">Human Design</div>
           <div class="rc-sub" data-nl="Type · Autoriteit · Kanalen · Centra" data-en="Type · Authority · Channels · Centers">Type · Autoriteit · Kanalen · Centra</div>
-          <div class="rc-price">€15</div>
-          <p class="rc-desc" data-nl="Energietype, strategie, autoriteit, profiel en alle kanalen. 15–20 pagina's." data-en="Energy type, strategy, authority, profile and all channels. 15–20 pages.">Energietype, strategie, autoriteit, profiel en alle kanalen. 15–20 pagina's.</p>
+          <div class="rc-price">€49</div>
+          <p class="rc-desc" data-nl="Jouw energietype, beslissingsautoriteit, actieve kanalen en alle centra — diepgaand uitgelegd en vertaald naar jouw dagelijks leven. 15–20 pagina's." data-en="Your energy type, decision authority, active channels and all centers — explained in depth and translated to your daily life. 15–20 pages.">Jouw energietype, beslissingsautoriteit, actieve kanalen en alle centra — diepgaand uitgelegd en vertaald naar jouw dagelijks leven. 15–20 pagina's.</p>
           <div class="rc-cta"><a href="instrumenten/" class="btn btn-outline btn-sm" data-nl="Bestel →" data-en="Order →">Bestel →</a></div>
         </div>
         <div class="rc">
           <div class="rc-icon">☯</div>
           <div class="rc-name">BaZi &amp; Saju</div>
           <div class="rc-sub" data-nl="Dagmeester · Elementen · Gelukspilaren" data-en="Day Master · Elements · Luck Pillars">Dagmeester · Elementen · Gelukspilaren</div>
-          <div class="rc-price">€12</div>
-          <p class="rc-desc" data-nl="Vier pilaren, dag-meester, elementbalans en gelukspilaren decade per decade. 12–16 pagina's." data-en="Four pillars, day master, element balance and luck pillars decade by decade. 12–16 pages.">Vier pilaren, dag-meester, elementbalans en gelukspilaren decade per decade. 12–16 pagina's.</p>
+          <div class="rc-price">€49</div>
+          <p class="rc-desc" data-nl="Jouw dagmeester, elementbalans en alle gelukspilaren — wat elke levensdecade voor jou betekent. 12–16 pagina's." data-en="Your day master, element balance and all luck pillars — what each life decade means for you. 12–16 pages.">Jouw dagmeester, elementbalans en alle gelukspilaren — wat elke levensdecade voor jou betekent. 12–16 pagina's.</p>
           <div class="rc-cta"><a href="instrumenten/" class="btn btn-outline btn-sm" data-nl="Bestel →" data-en="Order →">Bestel →</a></div>
         </div>
         <div class="rc">
           <div class="rc-icon">∞</div>
           <div class="rc-name" data-nl="Numerologie" data-en="Numerology">Numerologie</div>
           <div class="rc-sub" data-nl="Levenspad · Uitdrukking · Zielsdrang" data-en="Life path · Expression · Soul urge">Levenspad · Uitdrukking · Zielsdrang</div>
-          <div class="rc-price">€9</div>
-          <p class="rc-desc" data-nl="Alle kerngetallen en hun wisselwerking. 8–12 pagina's." data-en="All core numbers and their interplay. 8–12 pages.">Alle kerngetallen en hun wisselwerking. 8–12 pagina's.</p>
+          <div class="rc-price">€29</div>
+          <p class="rc-desc" data-nl="Jouw levenspadgetal, uitdrukking, zielsdrang en persoonlijk jaar — alle kerngetallen en hun wisselwerking. 8–12 pagina's." data-en="Your life path, expression, soul urge and personal year — all core numbers and their interplay. 8–12 pages.">Jouw levenspadgetal, uitdrukking, zielsdrang en persoonlijk jaar — alle kerngetallen en hun wisselwerking. 8–12 pagina's.</p>
           <div class="rc-cta"><a href="instrumenten/" class="btn btn-outline btn-sm" data-nl="Bestel →" data-en="Order →">Bestel →</a></div>
         </div>
+
       </div>
 
       <div class="rapport-note reveal" data-nl="Hoe het werkt: koop via Gumroad → vul je geboortegegevens in → ontvang je persoonlijk rapport binnen 24 uur per e-mail. Geen account nodig." data-en="How it works: buy via Gumroad → fill in your birth data → receive your personal report within 24 hours by email. No account needed.">
